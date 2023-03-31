@@ -1,0 +1,14 @@
+{
+  "curtain.menu.title": "Current Curtain Mod rules: ",
+  "curtain.menu.categories": "Browse Categories: ",
+  "curtain.menu.version": "Curtain Mod version: %s",
+  "curtain.menu.category": "Curtain Mod rules matching “%s” :",
+  "curtain.menu.change": "The value of %s has been changed to %s",
+  "curtain.menu.change.default": "The default value of %s has been changed to %s",
+  "curtain.menu.as_default": "[Set as default]",
+
+  "curtain.rules.language.name": "Language",
+  "curtain.rules.language.desc": "The Language of Curtain",
+
+  "curtain.categories.feature": "FEATURE"
+}

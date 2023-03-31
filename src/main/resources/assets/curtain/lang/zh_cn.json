@@ -1,0 +1,14 @@
+{
+  "curtain.menu.title": "目前启用的 Curtain Mod 选项：",
+  "curtain.menu.categories": "浏览分类：",
+  "curtain.menu.version": "Curtain Mod 版本：%s",
+  "curtain.menu.category": "Curtain Mod 中符合 “%s” 的选项：",
+  "curtain.menu.change": "%s 的值已更改为 %s",
+  "curtain.menu.change.default": "%s 的默认值已更改为 %s",
+  "curtain.menu.as_default": "[设为默认]",
+
+  "curtain.rules.language.name": "语言",
+  "curtain.rules.language.desc": "窗帘的语言",
+
+  "curtain.categories.feature": "特性"
+}
