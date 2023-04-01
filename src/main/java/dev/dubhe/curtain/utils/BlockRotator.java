@@ -1,7 +1,7 @@
 package dev.dubhe.curtain.utils;
 
 import dev.dubhe.curtain.CurtainRules;
-import dev.dubhe.curtain.fakes.PistonBlockInterface;
+import dev.dubhe.curtain.features.player.fakes.IPistonBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
 import net.minecraft.core.Direction;
@@ -58,7 +58,7 @@ public class BlockRotator {
             Direction face = blockstate.getValue(DirectionalBlock.FACING);
             if (block instanceof PistonBaseBlock
                     && (blockstate.getValue(PistonBaseBlock.EXTENDED)
-                    || (((PistonBlockInterface) block).publicShouldExtend(world, blockpos, face)
+                    || (((IPistonBlock) block).publicShouldExtend(world, blockpos, face)
                     && (new PistonStructureResolver(world, blockpos, face, true)).resolve()))) {
                 return stack;
             }

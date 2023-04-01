@@ -58,7 +58,7 @@ public class RuleManager {
             Rule annotation = field.getAnnotation(Rule.class);
             if (null == annotation) continue;
             String[] categories = annotation.categories();
-            Class<? extends Validator<?>>[] validators = annotation.validators();
+            Class<? extends IValidator<?>>[] validators = annotation.validators();
             String[] suggestions = annotation.suggestions();
             CurtainRule<?> rule = CurtainRule.newRule(categories, validators, suggestions, field);
             String name = rule.getNormalName();
@@ -112,24 +112,24 @@ public class RuleManager {
                 if (!object.has(name)) continue;
                 JsonElement element = object.get(name);
                 CurtainRule<?> rule = RULES.get(name);
-                if(null == rule) throw RuleException.nu11();
+                if (null == rule) throw RuleException.nu11();
                 Object value = rule.getValue();
                 if (value instanceof String)
-                    rule.setValue(element.getAsString(), String.class);
+                    this.setValue(rule, element.getAsString());
                 else if (value instanceof Boolean)
-                    rule.setValue(element.getAsBoolean(), Boolean.class);
+                    this.setValue(rule, element.getAsBoolean());
                 else if (value instanceof Byte)
-                    rule.setValue(element.getAsByte(), Byte.class);
+                    this.setValue(rule, element.getAsByte());
                 else if (value instanceof Short)
-                    rule.setValue(element.getAsShort(), Short.class);
+                    this.setValue(rule, element.getAsShort());
                 else if (value instanceof Integer)
-                    rule.setValue(element.getAsInt(), Integer.class);
+                    this.setValue(rule, element.getAsInt());
                 else if (value instanceof Long)
-                    rule.setValue(element.getAsLong(), Long.class);
+                    this.setValue(rule, element.getAsLong());
                 else if (value instanceof Float)
-                    rule.setValue(element.getAsFloat(), Float.class);
+                    this.setValue(rule, element.getAsFloat());
                 else if (value instanceof Double)
-                    rule.setValue(element.getAsDouble(), Double.class);
+                    this.setValue(rule, element.getAsDouble());
                 else
                     throw RuleException.type();
                 ruleMap.put(name, rule);
@@ -138,6 +138,11 @@ public class RuleManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void setValue(CurtainRule<?> rule, Object newValue) {
+        if (rule.validate(this.server.createCommandSourceStack(), String.valueOf(newValue)))
+            rule.setValue(newValue, newValue.getClass());
     }
 
     public String getId() {

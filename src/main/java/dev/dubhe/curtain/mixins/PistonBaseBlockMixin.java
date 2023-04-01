@@ -1,6 +1,6 @@
 package dev.dubhe.curtain.mixins;
 
-import dev.dubhe.curtain.fakes.PistonBlockInterface;
+import dev.dubhe.curtain.features.player.fakes.IPistonBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(PistonBaseBlock.class)
-public abstract class PistonBaseBlockMixin implements PistonBlockInterface {
+public abstract class PistonBaseBlockMixin implements IPistonBlock {
     @Shadow
     protected abstract boolean getNeighborSignal(Level p_60178_, BlockPos p_60179_, Direction p_60180_);
 

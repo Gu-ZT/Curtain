@@ -11,9 +11,9 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.dubhe.curtain.CurtainRules;
-import dev.dubhe.curtain.fakes.ServerPlayerInterface;
-import dev.dubhe.curtain.helpers.EntityPlayerActionPack;
-import dev.dubhe.curtain.patches.EntityPlayerMPFake;
+import dev.dubhe.curtain.features.player.fakes.IServerPlayer;
+import dev.dubhe.curtain.features.player.helpers.EntityPlayerActionPack;
+import dev.dubhe.curtain.features.player.patches.EntityPlayerMPFake;
 import dev.dubhe.curtain.utils.CommandHelper;
 import dev.dubhe.curtain.utils.Messenger;
 import net.minecraft.commands.CommandSourceStack;
@@ -296,14 +296,14 @@ public class PlayerCommand {
     private static int stop(CommandContext<CommandSourceStack> context) {
         if (cantManipulate(context)) return 0;
         ServerPlayer player = getPlayer(context);
-        ((ServerPlayerInterface) player).getActionPack().stopAll();
+        ((IServerPlayer) player).getActionPack().stopAll();
         return 1;
     }
 
     private static int manipulate(CommandContext<CommandSourceStack> context, Consumer<EntityPlayerActionPack> action) {
         if (cantManipulate(context)) return 0;
         ServerPlayer player = getPlayer(context);
-        action.accept(((ServerPlayerInterface) player).getActionPack());
+        action.accept(((IServerPlayer) player).getActionPack());
         return 1;
     }
 

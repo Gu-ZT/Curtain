@@ -1,7 +1,7 @@
 package dev.dubhe.curtain.mixins;
 
 import dev.dubhe.curtain.CurtainRules;
-import dev.dubhe.curtain.fakes.EntityInterface;
+import dev.dubhe.curtain.features.player.fakes.IEntity;
 import dev.dubhe.curtain.utils.BlockRotator;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
@@ -17,7 +17,7 @@ public class DirectionMixin {
         if (CurtainRules.placementRotationFix) {
             yaw = entity.getViewYRot(f);
         } else {
-            yaw = ((EntityInterface) entity).getMainYaw(f);
+            yaw = ((IEntity) entity).getMainYaw(f);
         }
         if (BlockRotator.flippinEligibility(entity)) {
             yaw += 180f;

@@ -23,7 +23,7 @@ public class MenuHelper {
         MutableComponent main = Component.empty();
         MutableComponent title = TranslationHelper.translate(MENU_TITLE).withStyle(Style.EMPTY.withBold(true));
         main.append(title).append("\n");
-        for (CurtainRule<?> rule : Curtain.manager.ruleMap.values()) {
+        for (CurtainRule<?> rule : Curtain.rules.ruleMap.values()) {
             main.append(rule(rule)).append("\n");
         }
         String v = ModList.get().getModFileById(Curtain.MODID).versionString();

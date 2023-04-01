@@ -1,6 +1,6 @@
 package dev.dubhe.curtain.mixins;
 
-import dev.dubhe.curtain.fakes.ClientConnectionInterface;
+import dev.dubhe.curtain.features.player.fakes.IClientConnection;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.network.Connection;
@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Connection.class)
-public abstract class ClientConnectionMixin implements ClientConnectionInterface {
+public abstract class ClientConnectionMixin implements IClientConnection {
     @Inject(method = "channelRead0(Lio/netty/channel/ChannelHandlerContext;Lnet/minecraft/network/protocol/Packet;)V",at = @At("HEAD"))
     private void packetInCount(ChannelHandlerContext channelHandlerContext, Packet<?> packet, CallbackInfo ci){
     }

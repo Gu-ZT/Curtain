@@ -1,11 +1,10 @@
 package dev.dubhe.curtain;
 
 import dev.dubhe.curtain.api.rules.RuleManager;
-import dev.dubhe.curtain.event.LevelEventHandler;
-import dev.dubhe.curtain.event.ServerLifecycleEventHandler;
+import dev.dubhe.curtain.events.MyEventHandlers;
+import dev.dubhe.curtain.features.logging.LoggerManager;
 import dev.dubhe.curtain.utils.TranslationHelper;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -22,13 +21,13 @@ public class Curtain implements ICurtain {
     public static final String MODID = "curtain";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
     public static final List<ICurtain> subMods = new ArrayList<>();
-    public static RuleManager manager = null;
+    public static RuleManager rules = null;
+    public static LoggerManager loggers = null;
 
     public Curtain() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::commonSetup);
-        MinecraftForge.EVENT_BUS.register(new ServerLifecycleEventHandler());
-        MinecraftForge.EVENT_BUS.register(new LevelEventHandler());
+        MyEventHandlers.register();
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

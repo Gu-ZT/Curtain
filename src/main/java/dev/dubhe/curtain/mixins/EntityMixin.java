@@ -1,7 +1,7 @@
 package dev.dubhe.curtain.mixins;
 
-import dev.dubhe.curtain.fakes.EntityInterface;
-import dev.dubhe.curtain.patches.EntityPlayerMPFake;
+import dev.dubhe.curtain.features.player.fakes.IEntity;
+import dev.dubhe.curtain.features.player.patches.EntityPlayerMPFake;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import javax.annotation.Nullable;
 
 @Mixin(Entity.class)
-public abstract class EntityMixin implements EntityInterface {
+public abstract class EntityMixin implements IEntity {
     @Shadow
     public float yRot;
 

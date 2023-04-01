@@ -28,14 +28,14 @@ import static dev.dubhe.curtain.utils.TranslationKeys.RULE_NAME;
 
 public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
     private final String[] categories;
-    private final List<Validator<T>> validators;
+    private final List<IValidator<T>> validators;
     private final String[] suggestions;
     private final Field field;
     private final T defaultValue;
 
 
     @SuppressWarnings("unchecked")
-    private CurtainRule(String[] categories, List<Validator<T>> validators, String[] suggestions, Field field) {
+    private CurtainRule(String[] categories, List<IValidator<T>> validators, String[] suggestions, Field field) {
         this.categories = categories;
         this.validators = validators;
         this.suggestions = suggestions;
@@ -61,18 +61,18 @@ public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
     }
 
     public boolean validate(CommandSourceStack source, String newValue) {
-        for (Validator<T> validator : validators) {
+        for (IValidator<T> validator : validators) {
             if (!validator.validate(source, this, newValue)) return false;
         }
         return true;
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> CurtainRule<T> newRule(String[] categories, Class<? extends Validator<?>> @NotNull [] validators, String[] suggestions, Field field) {
-        List<Validator<T>> validators1 = new ArrayList<>();
-        for (Class<? extends Validator<?>> validator : validators) {
+    public static <T> CurtainRule<T> newRule(String[] categories, Class<? extends IValidator<?>> @NotNull [] validators, String[] suggestions, Field field) {
+        List<IValidator<T>> validators1 = new ArrayList<>();
+        for (Class<? extends IValidator<?>> validator : validators) {
             try {
-                validators1.add((Validator<T>) validator.getDeclaredConstructor().newInstance());
+                validators1.add((IValidator<T>) validator.getDeclaredConstructor().newInstance());
             } catch (NoSuchMethodException | InstantiationException | IllegalAccessException |
                      InvocationTargetException e) {
                 e.printStackTrace();

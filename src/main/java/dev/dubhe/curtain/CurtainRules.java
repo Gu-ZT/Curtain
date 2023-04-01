@@ -2,7 +2,7 @@ package dev.dubhe.curtain;
 
 import dev.dubhe.curtain.api.rules.CurtainRule;
 import dev.dubhe.curtain.api.rules.Rule;
-import dev.dubhe.curtain.api.rules.Validator;
+import dev.dubhe.curtain.api.rules.IValidator;
 import dev.dubhe.curtain.api.rules.Validators;
 import dev.dubhe.curtain.utils.TranslationHelper;
 import net.minecraft.commands.CommandSourceStack;
@@ -20,7 +20,7 @@ import static dev.dubhe.curtain.api.rules.Categories.SURVIVAL;
 
 public class CurtainRules {
     public static final ThreadLocal<Boolean> impendingFillSkipUpdates = ThreadLocal.withInitial(() -> false);
-    public static class LanguageValidator implements Validator<String> {
+    public static class LanguageValidator implements IValidator<String> {
         @Override
         public boolean validate(CommandSourceStack source, CurtainRule<String> rule, String newValue) {
             return TranslationHelper.getLanguages().contains(newValue);
@@ -34,7 +34,7 @@ public class CurtainRules {
     )
     public static String language = "zh_cn";
 
-    public static class ViewDistanceValidator implements Validator<Integer> {
+    public static class ViewDistanceValidator implements IValidator<Integer> {
         @Override
         public boolean validate(CommandSourceStack source, CurtainRule<Integer> rule, String newValue) {
             int value;
@@ -117,4 +117,19 @@ public class CurtainRules {
 
     @Rule(categories = CREATIVE, suggestions = {"true", "false"})
     public static boolean interactionUpdates = true;
+
+    public static class DefaultLoggersValidator implements IValidator<String> {
+        @Override
+        public boolean validate(CommandSourceStack source, CurtainRule<String> rule, String newValue) {
+            Curtain.loggers.change(newValue);
+            return true;
+        }
+    }
+
+    @Rule(
+            categories = {CREATIVE, SURVIVAL},
+            validators = DefaultLoggersValidator.class,
+            suggestions = {"none", "tps", "mobcaps", "mobcaps,tps"}
+    )
+    public static String defaultLoggers = "none";
 }

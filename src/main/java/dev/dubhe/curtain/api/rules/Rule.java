@@ -7,6 +7,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Rule {
     String[] categories();
-    Class<? extends Validator<?>>[] validators() default {};
+    Class<? extends IValidator<?>>[] validators() default {};
     String[] suggestions();
 }

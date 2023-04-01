@@ -56,7 +56,7 @@ public class RuleCommand {
 
     private static ArgumentType<?> getValue(Class<?> type) {
         if (type == String.class) {
-            return StringArgumentType.word();
+            return StringArgumentType.string();
         } else if (type == Boolean.class || type == boolean.class) {
             return BoolArgumentType.bool();
         } else if (type == Byte.class || type ==byte.class) {
@@ -74,7 +74,7 @@ public class RuleCommand {
         } else throw RuleException.type();
     }
 
-    private static int getValue(CommandContext<CommandSourceStack> context, CurtainRule<?> rule) {
+    private static int getValue(@NotNull CommandContext<CommandSourceStack> context, CurtainRule<?> rule) {
         context.getSource().sendSuccess(MenuHelper.rule(rule), false);
         return 1;
     }
@@ -92,8 +92,8 @@ public class RuleCommand {
         rule.setValue(obj, rule.getType());
         String ruleName = rule.getNameComponent().getString();
         if (setDefault) {
-            Curtain.manager.setDefault(rule.getNormalName());
-            Curtain.manager.saveToFile();
+            Curtain.rules.setDefault(rule.getNormalName());
+            Curtain.rules.saveToFile();
             context.getSource().sendSuccess(
                     TranslationHelper.translate(CHANGE_DEFAULT, ruleName, obj).withStyle(ChatFormatting.GRAY),
                     false
