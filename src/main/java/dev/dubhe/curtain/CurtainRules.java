@@ -4,18 +4,15 @@ import dev.dubhe.curtain.api.rules.CurtainRule;
 import dev.dubhe.curtain.api.rules.Rule;
 import dev.dubhe.curtain.api.rules.Validator;
 import dev.dubhe.curtain.api.rules.Validators;
-import dev.dubhe.curtain.api.rules.Validators;
 import dev.dubhe.curtain.utils.TranslationHelper;
 import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.ServerInterface;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.ServerInterface;
 
 import static dev.dubhe.curtain.api.rules.Categories.CREATIVE;
 import static dev.dubhe.curtain.api.rules.Categories.FEATURE;
+import static dev.dubhe.curtain.api.rules.Categories.COMMAND;
 
 
 public class CurtainRules {
@@ -60,7 +57,14 @@ public class CurtainRules {
             }
         }
     }
-    
+
+    @Rule(
+            categories = CREATIVE,
+            validators = ViewDistanceValidator.class,
+            suggestions = {"0", "12", "16", "32"}
+    )
+    public static Integer viewDistance = 0;
+
     @Rule(
             categories = {CREATIVE},
             suggestions = {"true","false"}

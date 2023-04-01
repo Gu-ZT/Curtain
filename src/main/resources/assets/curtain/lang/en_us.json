@@ -19,6 +19,9 @@
   "curtain.rules.command_player.name": "commandPlayer",
   "curtain.rules.command_player.desc": "Enable /player command to control/summon players",
 
+  "curtain.rules.view_distance.name": "viewDistance",
+  "curtain.rules.view_distance.desc": "Change the server sight distance, set to 0 to use the default value",
+
   "curtain.categories.feature": "FEATURE",
   "curtain.categories.creative": "CREATIVE",
   "curtain.categories.command": "COMMAND"
