@@ -11,11 +11,13 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.ServerInterface;
 
 import static dev.dubhe.curtain.api.rules.Categories.CREATIVE;
+import static dev.dubhe.curtain.api.rules.Categories.SURVIVAL;
 import static dev.dubhe.curtain.api.rules.Categories.FEATURE;
 import static dev.dubhe.curtain.api.rules.Categories.COMMAND;
 
 
 public class CurtainRules {
+    public static final ThreadLocal<Boolean> impendingFillSkipUpdates = ThreadLocal.withInitial(() -> false);
     public static class LanguageValidator implements Validator<String> {
         @Override
         public boolean validate(CommandSourceStack source, CurtainRule<String> rule, String newValue) {
@@ -29,7 +31,7 @@ public class CurtainRules {
             suggestions = {"zh_cn", "en_us"}
     )
     public static String language = "zh_cn";
-    
+
     public static class ViewDistanceValidator implements Validator<Integer> {
         @Override
         public boolean validate(CommandSourceStack source, CurtainRule<Integer> rule, String newValue) {
@@ -83,4 +85,16 @@ public class CurtainRules {
             suggestions = {"ops", "true", "false"}
     )
     public static String commandPlayer = "ops";
+
+    @Rule(
+            categories = {CREATIVE, SURVIVAL, FEATURE},
+            suggestions = {"true", "false"}
+    )
+    public static boolean flippinCactus = false;
+
+    @Rule(categories = {CREATIVE}, suggestions = {"true", "false"})
+    public static boolean fillUpdates = true;
+
+    @Rule(categories = {CREATIVE}, suggestions = {"true", "false"})
+    public static boolean interactionUpdates = true;
 }
