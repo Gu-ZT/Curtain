@@ -19,6 +19,9 @@
   "curtain.rules.command_player.name": "玩家控制",
   "curtain.rules.command_player.desc": "启用/player命令以控制/召唤玩家",
 
+  "curtain.rules.view_distance.name": "自定义视距",
+  "curtain.rules.view_distance.desc": "改变服务器视距，设为0以使用默认值",
+
   "curtain.categories.feature": "特性",
   "curtain.categories.creative": "创造",
   "curtain.categories.command": "命令"
