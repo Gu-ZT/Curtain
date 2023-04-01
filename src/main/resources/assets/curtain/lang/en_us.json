@@ -10,5 +10,9 @@
   "curtain.rules.language.name": "Language",
   "curtain.rules.language.desc": "The Language of Curtain",
 
-  "curtain.categories.feature": "FEATURE"
+  "curtain.rules.xp_no_cooldown.name": "XpNoCoolDown",
+  "curtain.rules.xp_no_cooldown.desc": "Players absorb XP instantly, without delay.",
+
+  "curtain.categories.feature": "FEATURE",
+  "curtain.categories.creative": "CREATIVE"
 }

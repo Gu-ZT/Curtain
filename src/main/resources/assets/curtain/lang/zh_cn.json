@@ -10,5 +10,9 @@
   "curtain.rules.language.name": "语言",
   "curtain.rules.language.desc": "窗帘的语言",
 
-  "curtain.categories.feature": "特性"
+  "curtain.rules.xp_no_cooldown.name": "经验吸收无冷却",
+  "curtain.rules.xp_no_cooldown.desc": "玩家将会立刻吸收经验球",
+
+  "curtain.categories.feature": "特性",
+  "curtain.categories.creative": "创造"
 }

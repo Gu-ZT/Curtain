@@ -22,4 +22,10 @@ public class CurtainRules {
             suggestions = {"zh_cn", "en_us"}
     )
     public static String language = "zh_cn";
+
+    @Rule(
+            categories = {CREATIVE},
+            suggestions = {"true","false"}
+    )
+    public static Boolean xpNoCooldown = false;
 }
