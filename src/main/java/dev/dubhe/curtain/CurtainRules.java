@@ -10,10 +10,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.ServerInterface;
 
-import static dev.dubhe.curtain.api.rules.Categories.CREATIVE;
-import static dev.dubhe.curtain.api.rules.Categories.SURVIVAL;
-import static dev.dubhe.curtain.api.rules.Categories.FEATURE;
 import static dev.dubhe.curtain.api.rules.Categories.COMMAND;
+import static dev.dubhe.curtain.api.rules.Categories.CREATIVE;
+import static dev.dubhe.curtain.api.rules.Categories.FEATURE;
 import static dev.dubhe.curtain.api.rules.Categories.SURVIVAL;
 
 
@@ -99,9 +98,9 @@ public class CurtainRules {
     )
     public static boolean flippinCactus = false;
 
-    @Rule(categories = {CREATIVE}, suggestions = {"true", "false"})
+    @Rule(categories = CREATIVE, suggestions = {"true", "false"})
     public static boolean fillUpdates = true;
 
-    @Rule(categories = {CREATIVE}, suggestions = {"true", "false"})
+    @Rule(categories = CREATIVE, suggestions = {"true", "false"})
     public static boolean interactionUpdates = true;
 }

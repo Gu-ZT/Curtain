@@ -7,9 +7,6 @@
   "mixins": [
     "ClientConnectionMixin",
     "ServerPlayer_actionPackMixin",
-    "rule.missing_tools.PickaxeItemMixin",
-    "rule.xp_no_cooldown.ExperienceOrbMixin",
-    "rule.xp_no_cooldown.PlayerMixin",
     "rule.fill_updates.BlockInputMixin",
     "rule.fill_updates.CloneCommandsMixin",
     "rule.fill_updates.CommandsMixin",
@@ -18,7 +15,11 @@
     "rule.fill_updates.LevelMixin",
     "rule.fill_updates.SetBlockCommandMixin",
     "rule.fill_updates.StructureBlockEntityMixin",
-    "rule.fill_updates.StructureTemplateMixin"
+    "rule.fill_updates.StructureTemplateMixin",
+    "rule.interaction_updates.ServerGamePacketListenerImplMixin",
+    "rule.missing_tools.PickaxeItemMixin",
+    "rule.xp_no_cooldown.ExperienceOrbMixin",
+    "rule.xp_no_cooldown.PlayerMixin"
   ],
   "client": [
   ],
