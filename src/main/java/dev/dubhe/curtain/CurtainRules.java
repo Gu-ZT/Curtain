@@ -10,7 +10,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.ServerInterface;
 
-import static dev.dubhe.curtain.api.rules.Categories.CREATIVE
+import static dev.dubhe.curtain.api.rules.Categories.CREATIVE;
 import static dev.dubhe.curtain.api.rules.Categories.FEATURE;
 import static dev.dubhe.curtain.api.rules.Categories.COMMAND;
 
