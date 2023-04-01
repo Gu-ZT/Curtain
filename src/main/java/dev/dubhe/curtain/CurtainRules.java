@@ -10,13 +10,16 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.ServerInterface;
 
-import static dev.dubhe.curtain.api.rules.Categories.CREATIVE;
-import static dev.dubhe.curtain.api.rules.Categories.FEATURE;
+import static dev.dubhe.curtain.api.rules.Categories.BUGFIX;
 import static dev.dubhe.curtain.api.rules.Categories.COMMAND;
+import static dev.dubhe.curtain.api.rules.Categories.CREATIVE;
+import static dev.dubhe.curtain.api.rules.Categories.DISPENSER;
+import static dev.dubhe.curtain.api.rules.Categories.FEATURE;
 import static dev.dubhe.curtain.api.rules.Categories.SURVIVAL;
 
 
 public class CurtainRules {
+    public static final ThreadLocal<Boolean> impendingFillSkipUpdates = ThreadLocal.withInitial(() -> false);
     public static class LanguageValidator implements Validator<String> {
         @Override
         public boolean validate(CommandSourceStack source, CurtainRule<String> rule, String newValue) {
@@ -90,4 +93,28 @@ public class CurtainRules {
             suggestions = {"true", "false"}
     )
     public static boolean missingTools = false;
+
+    @Rule(
+            categories = {CREATIVE, SURVIVAL, FEATURE},
+            suggestions = {"true", "false"}
+    )
+    public static boolean flippinCactus = false;
+
+    @Rule(
+            categories = {FEATURE, DISPENSER},
+            suggestions = {"true", "false"}
+    )
+    public static boolean rotatorBlock = false;
+
+    @Rule(
+            categories = BUGFIX,
+            suggestions = {"true", "false"}
+    )
+    public static boolean placementRotationFix = false;
+
+    @Rule(categories = CREATIVE, suggestions = {"true", "false"})
+    public static boolean fillUpdates = true;
+
+    @Rule(categories = CREATIVE, suggestions = {"true", "false"})
+    public static boolean interactionUpdates = true;
 }
