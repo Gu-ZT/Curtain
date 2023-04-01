@@ -3,8 +3,13 @@ package dev.dubhe.curtain;
 import dev.dubhe.curtain.api.rules.CurtainRule;
 import dev.dubhe.curtain.api.rules.Rule;
 import dev.dubhe.curtain.api.rules.Validator;
+import dev.dubhe.curtain.api.rules.Validators;
+import dev.dubhe.curtain.api.rules.Validators;
 import dev.dubhe.curtain.utils.TranslationHelper;
 import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.ServerInterface;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.ServerInterface;
@@ -27,9 +32,8 @@ public class CurtainRules {
             suggestions = {"zh_cn", "en_us"}
     )
     public static String language = "zh_cn";
-
+    
     public static class ViewDistanceValidator implements Validator<Integer> {
-
         @Override
         public boolean validate(CommandSourceStack source, CurtainRule<Integer> rule, String newValue) {
             int value;
@@ -56,11 +60,23 @@ public class CurtainRules {
             }
         }
     }
+    
+    @Rule(
+            categories = {CREATIVE},
+            suggestions = {"true","false"}
+    )
+    public static Boolean xpNoCooldown = false;
 
     @Rule(
-            categories = CREATIVE,
-            validators = ViewDistanceValidator.class,
-            suggestions = {"0", "12", "16", "32"}
+            categories = {COMMAND},
+            suggestions = {"true","false"}
     )
-    public static Integer viewDistance = 0;
+    public static Boolean allowSpawningOfflinePlayers = false;
+
+    @Rule(
+            categories = {COMMAND},
+            validators = {Validators.CommandLevel.class},
+            suggestions = {"ops", "true", "false"}
+    )
+    public static String commandPlayer = "ops";
 }

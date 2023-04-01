@@ -10,5 +10,16 @@
   "curtain.rules.language.name": "Language",
   "curtain.rules.language.desc": "The Language of Curtain",
 
-  "curtain.categories.feature": "FEATURE"
+  "curtain.rules.xp_no_cooldown.name": "XpNoCoolDown",
+  "curtain.rules.xp_no_cooldown.desc": "Players absorb XP instantly, without delay.",
+
+  "curtain.rules.allow_spawning_offline_players.name": "allowSpawningOfflinePlayers",
+  "curtain.rules.allow_spawning_offline_players.desc": "Weather allow spawn offline players using /player command.",
+
+  "curtain.rules.command_player.name": "commandPlayer",
+  "curtain.rules.command_player.desc": "Enable /player command to control/summon players",
+
+  "curtain.categories.feature": "FEATURE",
+  "curtain.categories.creative": "CREATIVE",
+  "curtain.categories.command": "COMMAND"
 }

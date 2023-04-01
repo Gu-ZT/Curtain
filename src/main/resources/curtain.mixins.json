@@ -1,10 +1,14 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "dev.dubhe.curtain.mixin",
+  "package": "dev.dubhe.curtain.mixins",
   "compatibilityLevel": "JAVA_8",
   "refmap": "curtain.refmap.json",
   "mixins": [
+    "ClientConnectionMixin",
+    "ServerPlayer_actionPackMixin",
+    "Rule_XpNoCooldown.ExperienceOrbMixin",
+    "Rule_XpNoCooldown.PlayerMixin"
   ],
   "client": [
   ],
