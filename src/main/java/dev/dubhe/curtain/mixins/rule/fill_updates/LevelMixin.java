@@ -13,7 +13,8 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(Level.class)
 public class LevelMixin {
     @ModifyConstant(
-            method = "setBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;II)Z",
+            method = "markAndNotifyBlock", //setBlockState main
+            remap = false,
             constant = @Constant(intValue = 16)
     )
     private int addFillUpdatesInt(int original) {
