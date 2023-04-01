@@ -1,4 +1,4 @@
-package dev.dubhe.curtain.mixins.Rule_XpNoCooldown;
+package dev.dubhe.curtain.mixins.rule.xp_no_cooldown;
 
 import dev.dubhe.curtain.CurtainRules;
 import net.minecraft.world.entity.Entity;

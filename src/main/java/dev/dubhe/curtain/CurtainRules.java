@@ -14,6 +14,7 @@ import static dev.dubhe.curtain.api.rules.Categories.CREATIVE;
 import static dev.dubhe.curtain.api.rules.Categories.SURVIVAL;
 import static dev.dubhe.curtain.api.rules.Categories.FEATURE;
 import static dev.dubhe.curtain.api.rules.Categories.COMMAND;
+import static dev.dubhe.curtain.api.rules.Categories.SURVIVAL;
 
 
 public class CurtainRules {
@@ -26,8 +27,8 @@ public class CurtainRules {
     }
 
     @Rule(
-            categories = {FEATURE},
-            validators = {LanguageValidator.class},
+            categories = FEATURE,
+            validators = LanguageValidator.class,
             suggestions = {"zh_cn", "en_us"}
     )
     public static String language = "zh_cn";
@@ -65,26 +66,32 @@ public class CurtainRules {
             validators = ViewDistanceValidator.class,
             suggestions = {"0", "12", "16", "32"}
     )
-    public static Integer viewDistance = 0;
+    public static int viewDistance = 0;
 
     @Rule(
-            categories = {CREATIVE},
-            suggestions = {"true","false"}
+            categories = CREATIVE,
+            suggestions = {"true", "false"}
     )
-    public static Boolean xpNoCooldown = false;
+    public static boolean xpNoCooldown = false;
 
     @Rule(
-            categories = {COMMAND},
-            suggestions = {"true","false"}
+            categories = COMMAND,
+            suggestions = {"true", "false"}
     )
-    public static Boolean allowSpawningOfflinePlayers = false;
+    public static boolean allowSpawningOfflinePlayers = false;
 
     @Rule(
-            categories = {COMMAND},
+            categories = COMMAND,
             validators = {Validators.CommandLevel.class},
             suggestions = {"ops", "true", "false"}
     )
     public static String commandPlayer = "ops";
+
+    @Rule(
+            categories = SURVIVAL,
+            suggestions = {"true", "false"}
+    )
+    public static boolean missingTools = false;
 
     @Rule(
             categories = {CREATIVE, SURVIVAL, FEATURE},
