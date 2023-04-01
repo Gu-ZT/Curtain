@@ -7,6 +7,15 @@
   "mixins": [
     "ClientConnectionMixin",
     "ServerPlayer_actionPackMixin",
+    "Rule_fillUpdates.BlockInputMixin",
+    "Rule_fillUpdates.CloneCommandsMixin",
+    "Rule_fillUpdates.CommandsMixin",
+    "Rule_fillUpdates.FillCommandMixin",
+    "Rule_fillUpdates.LevelChunkMixin",
+    "Rule_fillUpdates.LevelMixin",
+    "Rule_fillUpdates.SetBlockCommandMixin",
+    "Rule_fillUpdates.StructureBlockEntityMixin",
+    "Rule_fillUpdates.StructureTemplateMixin",
     "Rule_XpNoCooldown.ExperienceOrbMixin",
     "Rule_XpNoCooldown.PlayerMixin"
   ],
