@@ -26,7 +26,23 @@ public class RuleManager {
     private final String id;
 
     static {
-        Collections.addAll(LIMIT, String.class, Boolean.class, Byte.class, Short.class, Integer.class, Long.class, Float.class, Double.class);
+        Collections.addAll(LIMIT,
+                String.class,
+                Boolean.class,
+                Byte.class,
+                Short.class,
+                Integer.class,
+                Long.class,
+                Float.class,
+                Double.class,
+                boolean.class,
+                byte.class,
+                short.class,
+                int.class,
+                long.class,
+                float.class,
+                double.class
+        );
     }
 
     public RuleManager(MinecraftServer server, String id) {

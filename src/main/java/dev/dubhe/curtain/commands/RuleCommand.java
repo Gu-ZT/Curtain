@@ -57,19 +57,19 @@ public class RuleCommand {
     private static ArgumentType<?> getValue(Class<?> type) {
         if (type == String.class) {
             return StringArgumentType.word();
-        } else if (type == Boolean.class) {
+        } else if (type == Boolean.class || type == boolean.class) {
             return BoolArgumentType.bool();
-        } else if (type == Byte.class) {
+        } else if (type == Byte.class || type ==byte.class) {
             return IntegerArgumentType.integer();
-        } else if (type == Short.class) {
+        } else if (type == Short.class || type == short.class) {
             return IntegerArgumentType.integer();
-        } else if (type == Integer.class) {
+        } else if (type == Integer.class || type == int.class) {
             return IntegerArgumentType.integer();
-        } else if (type == Long.class) {
+        } else if (type == Long.class || type == long.class) {
             return IntegerArgumentType.integer();
-        } else if (type == Float.class) {
+        } else if (type == Float.class || type == float.class) {
             return FloatArgumentType.floatArg();
-        } else if (type == Double.class) {
+        } else if (type == Double.class || type == double.class) {
             return DoubleArgumentType.doubleArg();
         } else throw RuleException.type();
     }
