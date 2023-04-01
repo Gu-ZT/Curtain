@@ -1,4 +1,4 @@
-package dev.dubhe.curtain.mixins.Rule_fillUpdates;
+package dev.dubhe.curtain.mixins.rule.fill_updates;
 
 import com.mojang.brigadier.ParseResults;
 import dev.dubhe.curtain.CurtainRules;
