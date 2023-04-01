@@ -5,6 +5,8 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "curtain.refmap.json",
   "mixins": [
+    "ClientConnectionMixin",
+    "ServerPlayer_actionPackMixin",
     "Rule_XpNoCooldown.ExperienceOrbMixin",
     "Rule_XpNoCooldown.PlayerMixin"
   ],

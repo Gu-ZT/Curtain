@@ -13,6 +13,13 @@
   "curtain.rules.xp_no_cooldown.name": "经验吸收无冷却",
   "curtain.rules.xp_no_cooldown.desc": "玩家将会立刻吸收经验球",
 
+  "curtain.rules.allow_spawning_offline_players.name": "允许离线模式假人生成",
+  "curtain.rules.allow_spawning_offline_players.desc": "是否允许通过/player命令生成离线模式的假人",
+
+  "curtain.rules.command_player.name": "玩家控制",
+  "curtain.rules.command_player.desc": "启用/player命令以控制/召唤玩家",
+
   "curtain.categories.feature": "特性",
-  "curtain.categories.creative": "创造"
+  "curtain.categories.creative": "创造",
+  "curtain.categories.command": "命令"
 }
