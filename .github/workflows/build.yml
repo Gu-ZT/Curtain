@@ -27,8 +27,6 @@ jobs:
             ~/.gradle/caches
             ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
 
       - name: make gradle wrapper executable
         if: ${{ runner.os != 'Windows' }}
