@@ -7,8 +7,9 @@
   "mixins": [
     "ClientConnectionMixin",
     "ServerPlayer_actionPackMixin",
-    "Rule_XpNoCooldown.ExperienceOrbMixin",
-    "Rule_XpNoCooldown.PlayerMixin"
+    "rule.missing_tools.PickaxeItemMixin",
+    "rule.xp_no_cooldown.ExperienceOrbMixin",
+    "rule.xp_no_cooldown.PlayerMixin"
   ],
   "client": [
   ],
