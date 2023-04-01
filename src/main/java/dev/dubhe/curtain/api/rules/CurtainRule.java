@@ -16,7 +16,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -24,7 +23,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-import static dev.dubhe.curtain.utils.TranslationKeys.*;
+import static dev.dubhe.curtain.utils.TranslationKeys.RULE_DESC;
+import static dev.dubhe.curtain.utils.TranslationKeys.RULE_NAME;
 
 public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
     private final String[] categories;
@@ -72,8 +72,9 @@ public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
         List<Validator<T>> validators1 = new ArrayList<>();
         for (Class<? extends Validator<?>> validator : validators) {
             try {
-                validators1.add((Validator<T>)validator.getDeclaredConstructor().newInstance());
-            }catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e){
+                validators1.add((Validator<T>) validator.getDeclaredConstructor().newInstance());
+            } catch (NoSuchMethodException | InstantiationException | IllegalAccessException |
+                     InvocationTargetException e) {
                 e.printStackTrace();
             }
         }

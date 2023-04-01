@@ -80,6 +80,8 @@ minecraft {
 
             property 'forge.enabledGameTestNamespaces', 'curtain'
 
+            args += ['nogui']
+
             mods {
                 curtain {
                     source sourceSets.main
