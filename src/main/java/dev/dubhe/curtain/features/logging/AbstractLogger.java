@@ -2,26 +2,28 @@ package dev.dubhe.curtain.features.logging;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.function.Supplier;
 
 public abstract class AbstractLogger {
-    protected final String name;
-    protected final String defaultValue;
-    protected final List<String> options = new ArrayList<>();
-
-    public AbstractLogger(String name, String defaultValue, String... options) {
+    private final String name;
+    private final DisplayType type;
+    public AbstractLogger(String name, DisplayType type) {
         this.name = name;
-        this.defaultValue = defaultValue;
-        Collections.addAll(this.options, options);
+        this.type = type;
     }
 
+    public AbstractLogger(String name) {
+        this.name = name;
+        this.type = DisplayType.CHAT;
+    }
     public String getName() {
-        return this.name;
+        return name;
     }
 
-    public abstract Component get(@NotNull ServerPlayer player);
+    public DisplayType getType() {
+        return type;
+    }
+
+    public abstract Component display(ServerPlayer player);
 }
