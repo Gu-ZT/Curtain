@@ -25,5 +25,5 @@ public abstract class AbstractLogger {
         return type;
     }
 
-    public abstract Supplier<Component> display(ServerPlayer player);
+    public abstract Component display(ServerPlayer player);
 }

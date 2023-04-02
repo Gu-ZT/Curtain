@@ -35,7 +35,7 @@ public class LoggerManager {
             }
             ServerPlayer player = Curtain.minecraftServer.getPlayerList().getPlayerByName(entry.getKey());
             if (player != null) {
-                Component msg = logger.display(player).get();
+                Component msg = logger.display(player);
                 player.sendSystemMessage(msg);
             }
         }
@@ -50,7 +50,7 @@ public class LoggerManager {
             MutableComponent msg = Component.empty();
             for (String loggerName : entry.getValue()) {
                 if (registeredLogger.containsKey(loggerName) && registeredLogger.get(loggerName).getType() == DisplayType.HUD) {
-                    msg.append(registeredLogger.get(loggerName).display(player).get());
+                    msg.append(registeredLogger.get(loggerName).display(player));
                     msg.append(Component.literal("\n"));
                 }
             }

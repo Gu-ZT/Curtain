@@ -7,8 +7,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 
-import java.util.function.Supplier;
-
 public class MobcapsLogger extends AbstractHudLogger {
 
     public MobcapsLogger() {
@@ -16,9 +14,9 @@ public class MobcapsLogger extends AbstractHudLogger {
     }
 
     @Override
-    public Supplier<Component> display(ServerPlayer player) {
+    public Component display(ServerPlayer player) {
         ResourceKey<Level> dim = player.level.dimension();
         Component msg = SpawnReporter.printMobcapsForDimension(player.getServer().getLevel(dim), false).get(0);
-        return () -> msg;
+        return msg;
     }
 }
