@@ -33,13 +33,22 @@ public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
     private final Field field;
     private final T defaultValue;
 
+    private final String nameTranslationKey;
+    private final String descTranslationKey;
+
+    private CurtainRule(String[] categories, List<IValidator<T>> validators, String[] suggestions, Field field) {
+
+        this(categories, validators, suggestions, field, CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, field.getName()));
+    }
 
     @SuppressWarnings("unchecked")
-    private CurtainRule(String[] categories, List<IValidator<T>> validators, String[] suggestions, Field field) {
+    private CurtainRule(String[] categories, List<IValidator<T>> validators, String[] suggestions, Field field, String serializedName) {
         this.categories = categories;
         this.validators = validators;
         this.suggestions = suggestions;
         this.field = field;
+        nameTranslationKey = RULE_NAME.formatted(Curtain.MODID, serializedName);
+        descTranslationKey = RULE_DESC.formatted(Curtain.MODID, serializedName);
         try {
             this.defaultValue = (T) field.get(null);
         } catch (IllegalAccessException e) {
@@ -65,6 +74,20 @@ public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
             if (!validator.validate(source, this, newValue)) return false;
         }
         return true;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> CurtainRule<T> newRule(String[] categories, Class<? extends IValidator<?>> @NotNull [] validators, String[] suggestions, Field field, String serializedName) {
+        List<IValidator<T>> validators1 = new ArrayList<>();
+        for (Class<? extends IValidator<?>> validator : validators) {
+            try {
+                validators1.add((IValidator<T>) validator.getDeclaredConstructor().newInstance());
+            } catch (NoSuchMethodException | InstantiationException | IllegalAccessException |
+                     InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+        return new CurtainRule<>(categories, validators1, suggestions, field, serializedName);
     }
 
     @SuppressWarnings("unchecked")
@@ -156,11 +179,11 @@ public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
     }
 
     public String getNameTranslationKey() {
-        return RULE_NAME.formatted(Curtain.MODID, this.getName());
+        return nameTranslationKey;
     }
 
     public String getDescTranslationKey() {
-        return RULE_DESC.formatted(Curtain.MODID, this.getName());
+        return descTranslationKey;
     }
 
     public Class<?> getType() {

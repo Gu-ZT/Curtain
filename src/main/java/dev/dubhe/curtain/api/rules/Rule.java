@@ -9,4 +9,6 @@ public @interface Rule {
     String[] categories();
     Class<? extends IValidator<?>>[] validators() default {};
     String[] suggestions();
+
+    String serializedName() default "";
 }
