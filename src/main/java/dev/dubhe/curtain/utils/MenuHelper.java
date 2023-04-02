@@ -88,8 +88,11 @@ public class MenuHelper {
                         .withUnderlined(true)
                         .withClickEvent(new ClickEvent(
                                 ClickEvent.Action.SUGGEST_COMMAND,
-                                "/curtain setValue %s %s".formatted(rule.getNormalName(), value)
-                        )));
+                                rule.getType() == String.class
+                                        ? "/curtain setValue %s \"%s\"".formatted(rule.getNormalName(), value)
+                                        : "/curtain setValue %s %s".formatted(rule.getNormalName(), value)
+                        ))
+                        .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("单击来快速填充"))));
         main.append(v);
         for (String s : suggestion) {
             if (s.equals(value)) continue;
@@ -98,8 +101,10 @@ public class MenuHelper {
                     .withStyle(rule.isDefault(s) ? ChatFormatting.DARK_GREEN : ChatFormatting.YELLOW);
             x.withStyle(Style.EMPTY.withClickEvent(new ClickEvent(
                     ClickEvent.Action.SUGGEST_COMMAND,
-                    "/curtain setValue %s %s".formatted(rule.getNormalName(), s)
-            )));
+                    rule.getType() == String.class
+                            ? "/curtain setValue %s \"%s\"".formatted(rule.getNormalName(), s)
+                            : "/curtain setValue %s %s".formatted(rule.getNormalName(), s)
+            )).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("单击来快速填充"))));
             main.append(x);
         }
         return main;
