@@ -21,8 +21,10 @@ public class ServerEventHandler {
 
     @SubscribeEvent void onEntityJoin(EntityJoinLevelEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
-            System.out.println("Player join world");
             String playerName = player.getName().getString();
+            if (CurtainRules.defaultLoggers.contentEquals("none")) {
+                return;
+            }
             if (!LoggerManager.hasSubscribedLogger(playerName)) {
                 String[] logs = CurtainRules.defaultLoggers.replace(" ", "").split(",");
                 LoggerManager.subscribeLogger(playerName, logs);
