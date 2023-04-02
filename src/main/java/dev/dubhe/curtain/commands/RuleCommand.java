@@ -22,7 +22,8 @@ import static dev.dubhe.curtain.utils.TranslationKeys.*;
 
 public class RuleCommand {
     public static void register(@NotNull CommandDispatcher<CommandSourceStack> dispatcher, @NotNull RuleManager manager) {
-        dispatcher.register(Commands.literal(manager.getId()).executes(RuleCommand::showMenu)
+        dispatcher.register(Commands.literal(manager.getId()).requires(stack -> stack.hasPermission(Commands.LEVEL_GAMEMASTERS))
+                .executes(RuleCommand::showMenu)
                 .then(Commands.literal("category")
                         .then(Commands.argument("name", StringArgumentType.word()).executes(RuleCommand::showCategory))
                 )
