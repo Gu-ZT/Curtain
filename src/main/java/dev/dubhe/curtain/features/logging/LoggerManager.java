@@ -9,6 +9,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -84,6 +85,17 @@ public class LoggerManager {
         }
     }
 
+    public static void subscribeLogger(String playerName, String[] loggers) {
+        Set<String> loggerSet;
+        if (!subscribedPlayer.containsKey(playerName)) {
+            loggerSet = new HashSet<>();
+        } else {
+            loggerSet = subscribedPlayer.get(playerName);
+        }
+        loggerSet.addAll(Arrays.asList(loggers));
+        subscribedPlayer.put(playerName, loggerSet);
+    }
+
     public static void unsubscribeLogger(String playerName, String loggerName) {
         if (!registeredLogger.containsKey(loggerName)) {
             Curtain.LOGGER.error("Can' t find logger named: {}", loggerName);
@@ -117,6 +129,10 @@ public class LoggerManager {
             loggerSet = subscribedPlayer.get(playerName);
         }
         return loggerSet.contains(loggerName);
+    }
+
+    public static boolean hasSubscribedLogger(String playerName) {
+        return subscribedPlayer.containsKey(playerName);
     }
 
     public static void registryBuiltinLogger() {
