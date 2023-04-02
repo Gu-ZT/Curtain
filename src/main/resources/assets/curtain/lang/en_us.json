@@ -7,22 +7,52 @@
   "curtain.menu.change.default": "The default value of %s has been changed to %s",
   "curtain.menu.as_default": "[Set as default]",
 
+  "curtain.categories.feature": "FEATURE",
+  "curtain.categories.creative": "CREATIVE",
+  "curtain.categories.command": "COMMAND",
+  "curtain.categories.survival": "SURVIVAL",
+  "curtain.categories.dispenser": "DISPENSER",
+  "curtain.categories.bugfix": "BUGFIX",
+
   "curtain.rules.language.name": "Language",
-  "curtain.rules.language.desc": "The Language of Curtain",
+  "curtain.rules.language.desc": "The Language of Curtain.",
 
   "curtain.rules.xp_no_cooldown.name": "XpNoCoolDown",
   "curtain.rules.xp_no_cooldown.desc": "Players absorb XP instantly, without delay.",
 
-  "curtain.rules.allow_spawning_offline_players.name": "allowSpawningOfflinePlayers",
+  "curtain.rules.allow_spawning_offline_players.name": "AllowSpawningOfflinePlayers",
   "curtain.rules.allow_spawning_offline_players.desc": "Weather allow spawn offline players using /player command.",
 
-  "curtain.rules.command_player.name": "commandPlayer",
-  "curtain.rules.command_player.desc": "Enable /player command to control/summon players",
+  "curtain.rules.command_player.name": "CommandPlayer",
+  "curtain.rules.command_player.desc": "Enable /player command to control/summon players.",
 
-  "curtain.rules.view_distance.name": "viewDistance",
-  "curtain.rules.view_distance.desc": "Change the server sight distance, set to 0 to use the default value",
+  "curtain.rules.view_distance.name": "ViewDistance",
+  "curtain.rules.view_distance.desc": "Change the server sight distance, set to 0 to use the default value.",
 
-  "curtain.categories.feature": "FEATURE",
-  "curtain.categories.creative": "CREATIVE",
-  "curtain.categories.command": "COMMAND"
+  "curtain.rules.command_log.name": "CommandLog",
+  "curtain.rules.command_log.desc": "Enables /log command to monitor events via chat and overlays.",
+
+  "curtain.rules.missing_tools.name": "MissingTools",
+  "curtain.rules.missing_tools.desc": "Glass can be broken faster with pickaxes.",
+
+  "curtain.rules.flipping_cactus.name": "FlippingCactus",
+  "curtain.rules.flipping_cactus.desc": "Players can flip and rotate blocks when holding cactus.",
+
+  "curtain.rules.rotator_block.name": "RotatorBlock",
+  "curtain.rules.rotator_block.desc": "Cactus in dispensers rotates blocks.",
+
+  "curtain.rules.placement_rotation_fix.name": "PlacementRotationFix",
+  "curtain.rules.placement_rotation_fix.desc": "fixes block placement rotation issue when player rotates quickly while placing blocks.",
+
+  "curtain.rules.fill_updates.name": "FillUpdates",
+  "curtain.rules.fill_updates.desc": "fill/clone/setblock and structure blocks cause block updates",
+
+  "curtain.rules.interaction_updates.name": "InteractionUpdates",
+  "curtain.rules.interaction_updates.desc": "placing blocks cause block updates",
+
+  "curtain.rules.default_loggers.name": "DefaultLoggers",
+  "curtain.rules.default_loggers.desc": "sets these loggers in their default configurations for all new players",
+
+  "curtain.rules.hud_logger_update_interval.name": "HUDLoggerUpdateInterval",
+  "curtain.rules.hud_logger_update_interval.desc": "Overwrite HUD loggers update interval (gametick)."
 }

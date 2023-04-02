@@ -37,7 +37,7 @@ import net.minecraft.world.phys.Vec3;
 
 public class BlockRotator {
     public static boolean flipBlockWithCactus(BlockState state, Level world, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (!player.getAbilities().mayBuild || !CurtainRules.flippinCactus || !playerHoldsCactusMainhand(player)) {
+        if (!player.getAbilities().mayBuild || !CurtainRules.flippingCactus || !playerHoldsCactusMainhand(player)) {
             return false;
         }
         CurtainRules.impendingFillSkipUpdates.set(true);
@@ -150,7 +150,7 @@ public class BlockRotator {
     }
 
     public static boolean flippinEligibility(Entity entity) {
-        return CurtainRules.flippinCactus && entity instanceof Player p && p.getOffhandItem().getItem() == Items.CACTUS;
+        return CurtainRules.flippingCactus && entity instanceof Player p && p.getOffhandItem().getItem() == Items.CACTUS;
     }
 
     public static class CactusDispenserBehaviour extends OptionalDispenseItemBehavior implements DispenseItemBehavior {

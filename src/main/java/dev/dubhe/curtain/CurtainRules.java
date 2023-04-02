@@ -105,7 +105,7 @@ public class CurtainRules {
             categories = {CREATIVE, SURVIVAL, FEATURE},
             suggestions = {"true", "false"}
     )
-    public static boolean flippinCactus = false;
+    public static boolean flippingCactus = false;
 
     @Rule(
             categories = {FEATURE, DISPENSER},

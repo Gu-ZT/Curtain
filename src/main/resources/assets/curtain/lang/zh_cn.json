@@ -7,8 +7,18 @@
   "curtain.menu.change.default": "%s 的默认值已更改为 %s",
   "curtain.menu.as_default": "[设为默认]",
 
+  "curtain.categories.feature": "特性",
+  "curtain.categories.creative": "创造",
+  "curtain.categories.command": "命令",
+  "curtain.categories.survival": "生存",
+  "curtain.categories.dispenser": "自动",
+  "curtain.categories.bugfix": "修复",
+
   "curtain.rules.language.name": "语言",
-  "curtain.rules.language.desc": "窗帘的语言",
+  "curtain.rules.language.desc": "窗帘输出文本的本地化语言",
+
+  "curtain.rules.view_distance.name": "自定义视距",
+  "curtain.rules.view_distance.desc": "改变服务器视距，设为0以使用默认值",
 
   "curtain.rules.xp_no_cooldown.name": "经验吸收无冷却",
   "curtain.rules.xp_no_cooldown.desc": "玩家将会立刻吸收经验球",
@@ -19,10 +29,30 @@
   "curtain.rules.command_player.name": "玩家控制",
   "curtain.rules.command_player.desc": "启用/player命令以控制/召唤玩家",
 
-  "curtain.rules.view_distance.name": "自定义视距",
-  "curtain.rules.view_distance.desc": "改变服务器视距，设为0以使用默认值",
+  "curtain.rules.command_log.name": "游戏数据监视器",
+  "curtain.rules.command_log.desc": "启用/log命令以在聊天栏或Tab栏监视游戏部分数据",
 
-  "curtain.categories.feature": "特性",
-  "curtain.categories.creative": "创造",
-  "curtain.categories.command": "命令"
+  "curtain.rules.missing_tools.name": "工具缺失修复",
+  "curtain.rules.missing_tools.desc": "活塞，玻璃和海绵可以用合适的工具更快地破坏",
+
+  "curtain.rules.flipping_cactus.name": "仙人掌扳手",
+  "curtain.rules.flipping_cactus.desc": "允许使用仙人掌调整方块朝向，并且不会产生更新",
+
+  "curtain.rules.rotator_block.name": "仙人掌扳手发射器版",
+  "curtain.rules.rotator_block.desc": "发射器中的仙人掌可以旋转方块（尽可能以逆时针）",
+
+  "curtain.rules.placement_rotation_fix.name": "放置旋转修复",
+  "curtain.rules.placement_rotation_fix.desc": "修复了玩家放置方块时快速转身造成的问题",
+
+  "curtain.rules.fill_updates.name": "fill更新开关",
+  "curtain.rules.fill_updates.desc": "fill/clone/setblock命令以及结构方块执行时是否产生更新",
+
+  "curtain.rules.interaction_updates.name": "放置方块产生更新",
+  "curtain.rules.interaction_updates.desc": "放置方块是否产生更新的开关，设为false以避免产生更新",
+
+  "curtain.rules.default_loggers.name": "默认游戏监视器",
+  "curtain.rules.default_loggers.desc": "为所有新进入玩家设置部分监视器默认开启",
+
+  "curtain.rules.hud_logger_update_interval.name": "HUD记录器更新间隔",
+  "curtain.rules.hud_logger_update_interval.desc": "覆写HUD记录器的更新间隔，单位为gametick"
 }
