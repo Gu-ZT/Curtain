@@ -41,8 +41,8 @@ public class TPSLogger extends AbstractHudLogger {
         }
         ChatFormatting finalColor = color;
         return Component.literal("TPS: ").withStyle(style -> style.withColor(ChatFormatting.GRAY))
-                .append(Component.literal("%.2f".formatted(TPS)).withStyle(style -> style.withColor(finalColor)))
+                .append(Component.literal("%.1f".formatted(TPS)).withStyle(style -> style.withColor(finalColor)))
                 .append(Component.literal(" MSPT: ").withStyle(style -> style.withColor(ChatFormatting.GRAY)))
-                .append(Component.literal("%.2f".formatted(MSPT)).withStyle(style -> style.withColor(finalColor)));
+                .append(Component.literal("%.1f".formatted(MSPT)).withStyle(style -> style.withColor(finalColor)));
     }
 }
