@@ -12,6 +12,7 @@ public abstract class ExperienceOrbMixin {
             slice = @Slice(
                     from = @At(
                             value = "INVOKE",
+                            remap = false,
                             target = "Lnet/minecraftforge/eventbus/api/IEventBus;post(Lnet/minecraftforge/eventbus/api/Event;)Z"
                     ),
                     to = @At(
@@ -19,8 +20,7 @@ public abstract class ExperienceOrbMixin {
                             target = "Lnet/minecraft/world/entity/ExperienceOrb;repairPlayerItems(Lnet/minecraft/world/entity/player/Player;I)I"
                     )
             ),
-            constant = @Constant(intValue = 2),
-            remap = false
+            constant = @Constant(intValue = 2)
     )
     private int ModifyPlayerTakeXpDelay(int delay) {
         if (CurtainRules.xpNoCooldown)
