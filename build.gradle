@@ -16,9 +16,10 @@ plugins {
 apply plugin: 'org.spongepowered.mixin'
 
 group = maven_group
-version = "mc" + minecraft_version + "-" + version
+version = version
+archives_base_name += "-mc${minecraft_version}"
 if (build_number != "undefined") {
-    version += "+build.${build_number}"
+    version = "+build.${build_number}"
 }
 
 java {
