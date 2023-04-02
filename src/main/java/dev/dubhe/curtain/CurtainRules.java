@@ -133,11 +133,11 @@ public class CurtainRules {
 //        }
 //    }
 //
-//    @Rule(
-//            categories = {CREATIVE, SURVIVAL},
-//            suggestions = {"none", "tps", "mobcaps", "mobcaps,tps"}
-//    )
-//    public static String defaultLoggers = "none";
+    @Rule(
+            categories = {CREATIVE, SURVIVAL},
+            suggestions = {"none", "tps", "mobcaps", "mobcaps,tps"}
+    )
+    public static String defaultLoggers = "none";
 
     @Rule(
             categories = {SURVIVAL},
