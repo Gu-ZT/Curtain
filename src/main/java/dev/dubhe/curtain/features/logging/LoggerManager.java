@@ -1,6 +1,7 @@
 package dev.dubhe.curtain.features.logging;
 
 import dev.dubhe.curtain.Curtain;
+import dev.dubhe.curtain.features.logging.builtin.MemoryLogger;
 import dev.dubhe.curtain.features.logging.builtin.MobcapsLogger;
 import dev.dubhe.curtain.features.logging.builtin.TPSLogger;
 import net.minecraft.ChatFormatting;
@@ -121,6 +122,7 @@ public class LoggerManager {
     public static void registryBuiltinLogger() {
         registerLogger(new TPSLogger());
         registerLogger(new MobcapsLogger());
+        registerLogger(new MemoryLogger());
     }
 
     public static Set<String> getLoggerSet() {
