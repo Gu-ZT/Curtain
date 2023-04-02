@@ -163,7 +163,15 @@ public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
 
     @Override
     public Collection<String> getExamples() {
-        return List.of(this.suggestions);
+        if (this.getType() == String.class) {
+            ArrayList<String> rt = new ArrayList<>();
+            for (String s : this.suggestions) {
+                rt.add("\"%s\"".formatted(s));
+            }
+            return rt;
+        } else {
+            return List.of(this.suggestions);
+        }
     }
 
     public String[] getCategories() {
