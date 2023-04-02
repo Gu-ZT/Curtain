@@ -89,6 +89,13 @@ public class CurtainRules {
     public static String commandPlayer = "ops";
 
     @Rule(
+            categories = COMMAND,
+            validators = {Validators.CommandLevel.class},
+            suggestions = {"ops", "true", "false"}
+    )
+    public static String commandLog = "true";
+
+    @Rule(
             categories = SURVIVAL,
             suggestions = {"true", "false"}
     )
@@ -118,18 +125,23 @@ public class CurtainRules {
     @Rule(categories = CREATIVE, suggestions = {"true", "false"})
     public static boolean interactionUpdates = true;
 
-    public static class DefaultLoggersValidator implements IValidator<String> {
-        @Override
-        public boolean validate(CommandSourceStack source, CurtainRule<String> rule, String newValue) {
-            Curtain.loggers.change(newValue);
-            return true;
-        }
-    }
+//    public static class DefaultLoggersValidator implements IValidator<String> {
+//        @Override
+//        public boolean validate(CommandSourceStack source, CurtainRule<String> rule, String newValue) {
+//            Curtain.loggers.change(newValue);
+//            return true;
+//        }
+//    }
+//
+//    @Rule(
+//            categories = {CREATIVE, SURVIVAL},
+//            suggestions = {"none", "tps", "mobcaps", "mobcaps,tps"}
+//    )
+//    public static String defaultLoggers = "none";
 
     @Rule(
-            categories = {CREATIVE, SURVIVAL},
-            validators = DefaultLoggersValidator.class,
-            suggestions = {"none", "tps", "mobcaps", "mobcaps,tps"}
+            categories = {SURVIVAL},
+            suggestions = {"1", "5", "20", "100"}
     )
-    public static String defaultLoggers = "none";
+    public static int HUDLoggerUpdateInterval = 20;
 }
