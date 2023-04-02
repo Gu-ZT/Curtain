@@ -141,7 +141,8 @@ public class CurtainRules {
 
     @Rule(
             categories = {SURVIVAL},
-            suggestions = {"1", "5", "20", "100"}
+            suggestions = {"1", "5", "20", "100"},
+            serializedName = "hud_logger_update_interval"
     )
     public static int HUDLoggerUpdateInterval = 20;
 }

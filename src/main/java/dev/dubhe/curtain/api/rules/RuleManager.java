@@ -60,7 +60,12 @@ public class RuleManager {
             String[] categories = annotation.categories();
             Class<? extends IValidator<?>>[] validators = annotation.validators();
             String[] suggestions = annotation.suggestions();
-            CurtainRule<?> rule = CurtainRule.newRule(categories, validators, suggestions, field);
+            CurtainRule<?> rule;
+            if (annotation.serializedName().contentEquals("")) {
+                rule = CurtainRule.newRule(categories, validators, suggestions, field);
+            } else {
+                rule = CurtainRule.newRule(categories, validators, suggestions, field, annotation.serializedName());
+            }
             String name = rule.getNormalName();
             for (String category : categories) {
                 if (!CATEGORIES_RULES.containsKey(category)) CATEGORIES_RULES.put(category, new ArrayList<>());
