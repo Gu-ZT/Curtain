@@ -9,11 +9,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class LoggerManager {
     private static final Map<String, AbstractLogger> registeredLogger = new HashMap<>();
@@ -50,10 +46,11 @@ public class LoggerManager {
                 continue;
             }
             MutableComponent msg = Component.empty();
-            for (String loggerName : entry.getValue()) {
+            for (Iterator<String> iterator = entry.getValue().iterator(); iterator.hasNext(); ) {
+                String loggerName = iterator.next();
                 if (registeredLogger.containsKey(loggerName) && registeredLogger.get(loggerName).getType() == DisplayType.HUD) {
                     msg.append(registeredLogger.get(loggerName).display(player));
-                    msg.append(Component.literal("\n"));
+                    if (iterator.hasNext()) msg.append("\n");
                 }
             }
             player.setTabListFooter(msg);
