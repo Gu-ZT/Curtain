@@ -5,22 +5,25 @@ import dev.dubhe.curtain.features.logging.AbstractHudLogger;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerPlayer;
 
 import java.util.Arrays;
 import java.util.OptionalDouble;
+import java.util.function.Supplier;
 
 public class TPSLogger extends AbstractHudLogger {
     private static final double MAX_TPS = 20d;
+
     public TPSLogger() {
         super("tps");
     }
 
     @Override
-    public Component display() {
+    public Supplier<Component> display(ServerPlayer player) {
         MinecraftServer server = Curtain.minecraftServer;
         final OptionalDouble averageTPS = Arrays.stream(server.tickTimes).average();
         if (averageTPS.isEmpty()) {
-            return Component.literal("No TPS data available").withStyle(style -> style.withColor(ChatFormatting.RED));
+            return () -> Component.literal("No TPS data available").withStyle(style -> style.withColor(ChatFormatting.RED));
         }
         double MSPT = Arrays.stream(server.tickTimes).average().getAsDouble() * 1.0E-6D;
         double TPS = Math.min(1000.0D / MSPT, MAX_TPS);
@@ -38,7 +41,7 @@ public class TPSLogger extends AbstractHudLogger {
             color = ChatFormatting.RED;
         }
         ChatFormatting finalColor = color;
-        return Component.literal("TPS: ").withStyle(style -> style.withColor(ChatFormatting.GRAY))
+        return () -> Component.literal("TPS: ").withStyle(style -> style.withColor(ChatFormatting.GRAY))
                 .append(Component.literal("%.2f".formatted(TPS)).withStyle(style -> style.withColor(finalColor)))
                 .append(Component.literal(" MSPT: ").withStyle(style -> style.withColor(ChatFormatting.GRAY)))
                 .append(Component.literal("%.2f".formatted(MSPT)).withStyle(style -> style.withColor(finalColor)));

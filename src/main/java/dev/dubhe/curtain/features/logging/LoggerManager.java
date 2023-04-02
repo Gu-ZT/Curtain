@@ -1,12 +1,12 @@
 package dev.dubhe.curtain.features.logging;
 
 import dev.dubhe.curtain.Curtain;
+import dev.dubhe.curtain.features.logging.builtin.MobcapsLogger;
 import dev.dubhe.curtain.features.logging.builtin.TPSLogger;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -28,14 +28,14 @@ public class LoggerManager {
             Curtain.LOGGER.error("Logger {} not a chat logger", loggerName);
             return;
         }
-        Component msg = logger.display();
 
         for (Map.Entry<String, Set<String>> entry : subscribedPlayer.entrySet()) {
             if (!entry.getValue().contains(loggerName)) {
                 continue;
             }
-            Player player = Curtain.minecraftServer.getPlayerList().getPlayerByName(entry.getKey());
+            ServerPlayer player = Curtain.minecraftServer.getPlayerList().getPlayerByName(entry.getKey());
             if (player != null) {
+                Component msg = logger.display(player).get();
                 player.sendSystemMessage(msg);
             }
         }
@@ -43,17 +43,18 @@ public class LoggerManager {
 
     public static void updateHUD() {
         for (Map.Entry<String, Set<String>> entry : subscribedPlayer.entrySet()) {
+            ServerPlayer player = Curtain.minecraftServer.getPlayerList().getPlayerByName(entry.getKey());
+            if (player == null) {
+                continue;
+            }
             MutableComponent msg = Component.empty();
             for (String loggerName : entry.getValue()) {
                 if (registeredLogger.containsKey(loggerName) && registeredLogger.get(loggerName).getType() == DisplayType.HUD) {
-                    msg.append(registeredLogger.get(loggerName).display());
+                    msg.append(registeredLogger.get(loggerName).display(player).get());
                     msg.append(Component.literal("\n"));
                 }
             }
-            ServerPlayer player = Curtain.minecraftServer.getPlayerList().getPlayerByName(entry.getKey());
-            if (player != null) {
-                player.setTabListFooter(msg);
-            }
+            player.setTabListFooter(msg);
         }
     }
 
@@ -119,6 +120,7 @@ public class LoggerManager {
 
     public static void registryBuiltinLogger() {
         registerLogger(new TPSLogger());
+        registerLogger(new MobcapsLogger());
     }
 
     public static Set<String> getLoggerSet() {

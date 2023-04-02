@@ -1,6 +1,9 @@
 package dev.dubhe.curtain.features.logging;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+
+import java.util.function.Supplier;
 
 public abstract class AbstractLogger {
     private final String name;
@@ -22,5 +25,5 @@ public abstract class AbstractLogger {
         return type;
     }
 
-    public abstract Component display();
+    public abstract Supplier<Component> display(ServerPlayer player);
 }
