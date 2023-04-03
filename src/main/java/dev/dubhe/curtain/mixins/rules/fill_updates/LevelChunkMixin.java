@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(LevelChunk.class)
-public class LevelChunkMixin {
+public abstract class LevelChunkMixin {
     @Redirect(
             method = "setBlockState",
             at = @At(

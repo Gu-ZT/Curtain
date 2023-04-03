@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(ServerPlayerGameMode.class)
-public class ServerPlayerGameModeMixin {
+public abstract class ServerPlayerGameModeMixin {
     @Redirect(
             method = "useItemOn",
             at = @At(

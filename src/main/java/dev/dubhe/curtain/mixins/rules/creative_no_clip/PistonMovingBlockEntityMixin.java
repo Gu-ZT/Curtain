@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PistonMovingBlockEntity.class)
-public class PistonMovingBlockEntityMixin {
+public abstract class PistonMovingBlockEntityMixin {
     @Inject(method = "moveEntityByPiston", at = @At("HEAD"), cancellable = true)
     private static void dontPushSpectators(Direction direction, Entity entity, double d, Direction direction2, CallbackInfo ci) {
         if (CurtainRules.creativeNoClip && entity instanceof Player player && player.isCreative() && player.getAbilities().flying) {

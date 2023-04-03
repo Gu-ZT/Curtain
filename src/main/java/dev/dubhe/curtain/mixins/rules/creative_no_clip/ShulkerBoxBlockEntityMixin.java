@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(ShulkerBoxBlockEntity.class)
-public class ShulkerBoxBlockEntityMixin {
+public abstract class ShulkerBoxBlockEntityMixin {
     @Redirect(
             method = "moveCollidedEntities",
             at = @At(

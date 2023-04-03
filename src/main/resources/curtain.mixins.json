@@ -37,6 +37,8 @@
     "rules.missing_tools.PickaxeItemMixin",
     "rules.quick_leaf_decay.LeavesBlockMixin",
     "rules.stackable_shulker_boxes.ItemEntityMixin",
+    "rules.super_lead.AbstractVillagerMixin",
+    "rules.super_lead.MobMixin",
     "rules.xp_no_cooldown.ExperienceOrbMixin",
     "rules.xp_no_cooldown.PlayerMixin"
   ],

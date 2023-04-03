@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(StructureTemplate.class)
-public class StructureTemplateMixin {
+public abstract class StructureTemplateMixin {
     @Redirect(
             method = "placeInWorld",
             at = @At(

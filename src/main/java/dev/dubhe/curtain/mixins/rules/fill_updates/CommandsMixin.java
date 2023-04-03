@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Commands.class)
-public class CommandsMixin {
+public abstract class CommandsMixin {
     @Inject(method = "performCommand", at = @At("HEAD"))
     private void onExecuteBegin(ParseResults<CommandSourceStack> parseResults, String string, CallbackInfoReturnable<Integer> cir) {
         if (!CurtainRules.fillUpdates) {

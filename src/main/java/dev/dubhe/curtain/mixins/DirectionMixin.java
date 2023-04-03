@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(Direction.class)
-public class DirectionMixin {
+public abstract class DirectionMixin {
     @Redirect(method = "orderedByNearest", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;getViewYRot(F)F"))
     private static float getYaw(Entity entity, float f) {
         float yaw;

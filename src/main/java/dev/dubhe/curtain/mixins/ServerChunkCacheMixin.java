@@ -21,10 +21,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 @Mixin(ServerChunkCache.class)
-public class ServerChunkCacheMixin {
+public abstract class ServerChunkCacheMixin {
     @Shadow
     @Final
-    private ServerLevel level;
+    public ServerLevel level;
 
     @Shadow
     @Final
