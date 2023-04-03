@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(HopperBlock.class)
-public class HopperBlockMixin {
+public abstract class HopperBlockMixin {
     @Redirect(
             method = "getStateForPlacement",
             at = @At(

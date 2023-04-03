@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(StandingAndWallBlockItem.class)
-public class StandingAndWallBlockItemMixin {
+public abstract class StandingAndWallBlockItemMixin {
     @Redirect(
             method = "getPlacementState",
             at = @At(
