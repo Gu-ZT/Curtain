@@ -203,4 +203,11 @@ public class CurtainRules {
             validators = FakePlayerNameValidator.class
     )
     public static String fakePlayerNamePrefix = "none";
+
+    @Rule(
+            categories = COMMAND,
+            suggestions = {"none", "_fake"},
+            validators = FakePlayerNameValidator.class
+    )
+    public static String fakePlayerNameSuffix = "none";
 }
