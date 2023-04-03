@@ -216,4 +216,10 @@ public class CurtainRules {
             suggestions = {"true", "false"}
     )
     public static boolean quickLeafDecay = false;
+
+    @Rule(
+            categories = {FEATURE, CLIENT},
+            suggestions = {"true", "false"}
+    )
+    public static boolean superLead = false;
 }
