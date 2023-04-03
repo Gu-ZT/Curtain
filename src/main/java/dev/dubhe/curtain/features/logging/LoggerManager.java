@@ -5,6 +5,7 @@ import dev.dubhe.curtain.features.logging.builtin.MemoryLogger;
 import dev.dubhe.curtain.features.logging.builtin.MobcapsLogger;
 import dev.dubhe.curtain.features.logging.builtin.TPSLogger;
 import dev.dubhe.curtain.features.logging.helper.ExplosionLogHelper;
+import dev.dubhe.curtain.features.logging.helper.TNTLogHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -142,6 +143,7 @@ public class LoggerManager {
         registerLogger(new MobcapsLogger());
         registerLogger(new MemoryLogger());
         registerLogger(new ExplosionLogHelper.ExplosionLogger());
+        registerLogger(new TNTLogHelper.TNTLogger());
     }
 
     public static Set<String> getLoggerSet() {

@@ -243,4 +243,29 @@ public class CurtainRules {
             suggestions = {"true", "false"}
     )
     public static boolean tntPrimerMomentumRemoved = false;
+
+    public static class TNTAngleValidator implements IValidator<Double> {
+
+        @Override
+        public boolean validate(CommandSourceStack source, CurtainRule<Double> rule, String newValue) {
+            double value = Double.parseDouble(newValue);
+            boolean b = ((value >= 0 && value < Math.PI * 2) || rule.isDefault(newValue));
+            if (!b) {
+                source.sendFailure(Component.literal("Must be between 0 and 2pi, or -1"));
+            }
+            return b;
+        }
+    }
+    @Rule(
+            categories = TNT,
+            suggestions = {"0"},
+            validators = TNTAngleValidator.class
+    )
+    public static double hardcodeTNTangle = -1.0D;
+    @Rule(
+            categories = TNT,
+            suggestions = {"true", "false"}
+    )
+    public static boolean mergeTNT = false;
+
 }
