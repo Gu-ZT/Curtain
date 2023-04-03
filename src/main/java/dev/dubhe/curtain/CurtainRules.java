@@ -145,4 +145,35 @@ public class CurtainRules {
             serializedName = "hud_logger_update_interval"
     )
     public static int HUDLoggerUpdateInterval = 20;
+
+    public static class StackableShulkerBoxValidator implements IValidator<String> {
+
+        @Override
+        public boolean validate(CommandSourceStack source, CurtainRule<String> rule, String newValue) {
+            if (newValue.matches("^[0-9]+$")) {
+                int value = Integer.parseInt(newValue);
+                if (value <= 64 && value >= 2) {
+                    shulkerBoxStackSize = value;
+                    return true;
+                }
+            }
+            if (newValue.equalsIgnoreCase("false")) {
+                shulkerBoxStackSize = 1;
+                return true;
+            }
+            if (newValue.equalsIgnoreCase("true")) {
+                shulkerBoxStackSize = 64;
+                return true;
+            }
+            return false;
+        }
+    }
+
+    @Rule(
+            categories = {SURVIVAL, FEATURE},
+            suggestions = {"false", "true", "16"},
+            validators = StackableShulkerBoxValidator.class
+    )
+    public static String stackableShulkerBoxes = "false";
+    public static int shulkerBoxStackSize = 1;
 }

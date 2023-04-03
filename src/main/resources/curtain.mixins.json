@@ -28,6 +28,7 @@
     "rules.fill_updates.StructureTemplateMixin",
     "rules.interaction_updates.ServerGamePacketListenerImplMixin",
     "rules.missing_tools.PickaxeItemMixin",
+    "rules.stackable_shulker_boxes.ItemEntityMixin",
     "rules.xp_no_cooldown.ExperienceOrbMixin",
     "rules.xp_no_cooldown.PlayerMixin"
   ],
