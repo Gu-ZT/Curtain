@@ -210,4 +210,10 @@ public class CurtainRules {
             validators = FakePlayerNameValidator.class
     )
     public static String fakePlayerNameSuffix = "none";
+
+    @Rule(
+            categories = SURVIVAL,
+            suggestions = {"true", "false"}
+    )
+    public static boolean quickLeafDecay = false;
 }
