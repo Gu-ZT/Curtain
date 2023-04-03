@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(TheEndGatewayBlockEntity.class)
-public class TheEndGatewayBlockEntityMixin {
+public abstract class TheEndGatewayBlockEntityMixin {
     @Inject(method = "canEntityTeleport", cancellable = true, at = @At("HEAD"))
     private static void checkFlyingCreative(Entity entity, CallbackInfoReturnable<Boolean> cir) {
         if (CurtainRules.isCreativeFlying(entity)) {

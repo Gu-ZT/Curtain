@@ -191,6 +191,57 @@ public class CurtainRules {
         return creativeNoClip && entity instanceof Player && (((Player) entity).isCreative()) && ((Player) entity).getAbilities().flying;
     }
 
+    public static class FakePlayerNameValidator implements IValidator<String> {
+        @Override
+        public boolean validate(CommandSourceStack source, CurtainRule<String> rule, String newValue) {
+            return newValue.matches("^\\w*$");
+        }
+    }
+
+    @Rule(
+            categories = COMMAND,
+            suggestions = {"none", "bot_"},
+            validators = FakePlayerNameValidator.class
+    )
+    public static String fakePlayerNamePrefix = "none";
+
+    @Rule(
+            categories = COMMAND,
+            suggestions = {"none", "_fake"},
+            validators = FakePlayerNameValidator.class
+    )
+    public static String fakePlayerNameSuffix = "none";
+
+    @Rule(
+            categories = SURVIVAL,
+            suggestions = {"true", "false"}
+    )
+    public static boolean quickLeafDecay = false;
+
+    @Rule(
+            categories = {FEATURE, CLIENT},
+            suggestions = {"true", "false"}
+    )
+    public static boolean superLead = false;
+
+    @Rule(
+            categories = FEATURE,
+            suggestions = {"true", "false"}
+    )
+    public static boolean desertShrubs = false;
+
+    @Rule(
+            categories = CREATIVE,
+            suggestions = {"true", "false"}
+    )
+    public static boolean turtleEggTrampledDisabled = false;
+
+    @Rule(
+            categories = CREATIVE,
+            suggestions = {"true", "false"}
+    )
+    public static boolean farmlandTrampledDisabled = false;
+
 
     @Rule(
             categories = {CREATIVE, TNT},

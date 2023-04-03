@@ -92,11 +92,6 @@ public class RuleCommand {
         CurtainRule<?> rule = RuleManager.RULES.get(name);
         if (null == rule) throw RuleException.nu11();
         Object obj = context.getArgument("value", rule.getType());
-        try {
-            boolean flag = rule.validate(context.getSource(), String.valueOf(obj));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         if (!rule.validate(context.getSource(), String.valueOf(obj))) throw RuleException.legal();
         rule.setValue(obj, rule.getType());
         String ruleName = rule.getNameComponent().getString();

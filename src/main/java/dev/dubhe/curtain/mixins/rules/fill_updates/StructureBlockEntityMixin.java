@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(StructureBlockEntity.class)
-public class StructureBlockEntityMixin {
+public abstract class StructureBlockEntityMixin {
     @Redirect(
             method = "loadStructure(Lnet/minecraft/server/level/ServerLevel;ZLnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate;)Z",
             at = @At(

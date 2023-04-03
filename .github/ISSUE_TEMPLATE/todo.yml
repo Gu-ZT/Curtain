@@ -21,4 +21,4 @@ body:
     attributes:
       label: Describe what this TODO will do - 描述这个TODO要做的事情
     validations:
-      required: true
+      required: false

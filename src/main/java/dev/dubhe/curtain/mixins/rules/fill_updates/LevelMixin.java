@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(Level.class)
-public class LevelMixin {
+public abstract class LevelMixin {
     @ModifyConstant(
             method = "markAndNotifyBlock", //setBlockState main
             remap = false,

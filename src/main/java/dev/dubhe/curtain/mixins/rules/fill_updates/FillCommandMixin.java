@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(FillCommand.class)
-public class FillCommandMixin {
+public abstract class FillCommandMixin {
     @Redirect(
             method = "fillBlocks",
             at = @At(
