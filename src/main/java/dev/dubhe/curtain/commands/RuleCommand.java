@@ -22,7 +22,8 @@ import static dev.dubhe.curtain.utils.TranslationKeys.*;
 
 public class RuleCommand {
     public static void register(@NotNull CommandDispatcher<CommandSourceStack> dispatcher, @NotNull RuleManager manager) {
-        dispatcher.register(Commands.literal(manager.getId()).executes(RuleCommand::showMenu)
+        dispatcher.register(Commands.literal(manager.getId()).requires(stack -> stack.hasPermission(Commands.LEVEL_GAMEMASTERS))
+                .executes(RuleCommand::showMenu)
                 .then(Commands.literal("category")
                         .then(Commands.argument("name", StringArgumentType.word()).executes(RuleCommand::showCategory))
                 )
@@ -48,6 +49,14 @@ public class RuleCommand {
             builder.then(Commands.literal(rule.getNormalName()).executes(context -> RuleCommand.getValue(context, rule))
                     .then(
                             Commands.argument("value", RuleCommand.getValue(rule.getType()))
+                                    .suggests((context, builder1) -> {
+                                        for (String example : rule.getExamples()) {
+                                            if (example.startsWith(builder1.getRemainingLowerCase())) {
+                                                builder1.suggest(example);
+                                            }
+                                        }
+                                        return builder1.buildFuture();
+                                    })
                                     .executes(context -> setValue(rule.getNormalName(), context, setDefault))
                     ));
         }
@@ -59,7 +68,7 @@ public class RuleCommand {
             return StringArgumentType.string();
         } else if (type == Boolean.class || type == boolean.class) {
             return BoolArgumentType.bool();
-        } else if (type == Byte.class || type ==byte.class) {
+        } else if (type == Byte.class || type == byte.class) {
             return IntegerArgumentType.integer();
         } else if (type == Short.class || type == short.class) {
             return IntegerArgumentType.integer();

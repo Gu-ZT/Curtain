@@ -17,6 +17,10 @@ apply plugin: 'org.spongepowered.mixin'
 
 group = maven_group
 version = version
+archives_base_name += "-mc${minecraft_version}"
+if (build_number != "undefined") {
+    version += "+build.${build_number}"
+}
 
 java {
     archivesBaseName = archives_base_name
@@ -38,6 +42,8 @@ minecraft {
     // Use non-default mappings at your own risk. They may not always work.
     // Simply re-run your setup task after changing the mappings to update your workspace.
     mappings channel: "${minecraft_mappings}", version: minecraft_version
+
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
 
     // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')

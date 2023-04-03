@@ -7,15 +7,23 @@ import org.spongepowered.asm.mixin.injection.*;
 
 @Mixin(ExperienceOrb.class)
 public abstract class ExperienceOrbMixin {
-    @ModifyConstant(method = "playerTouch",
+    @ModifyConstant(
+            method = "playerTouch",
             slice = @Slice(
-                    from = @At(value = "INVOKE",target = "Lnet/minecraftforge/eventbus/api/IEventBus;post(Lnet/minecraftforge/eventbus/api/Event;)Z"),
-                    to = @At(value = "INVOKE",target = "Lnet/minecraft/world/entity/ExperienceOrb;repairPlayerItems(Lnet/minecraft/world/entity/player/Player;I)I")
+                    from = @At(
+                            value = "INVOKE",
+                            remap = false,
+                            target = "Lnet/minecraftforge/eventbus/api/IEventBus;post(Lnet/minecraftforge/eventbus/api/Event;)Z"
+                    ),
+                    to = @At(
+                            value = "INVOKE",
+                            target = "Lnet/minecraft/world/entity/ExperienceOrb;repairPlayerItems(Lnet/minecraft/world/entity/player/Player;I)I"
+                    )
             ),
-            constant = @Constant(intValue = 2),
-            remap = false)
-    private int ModifyPlayerTakeXpDelay(int delay){
-        if(CurtainRules.xpNoCooldown)
+            constant = @Constant(intValue = 2)
+    )
+    private int ModifyPlayerTakeXpDelay(int delay) {
+        if (CurtainRules.xpNoCooldown)
             return 0;
         else
             return delay;

@@ -1,6 +1,16 @@
 on:
-  - push
-  - pull_request
+  push:
+    paths:
+      - src/**
+      - build.gradle
+      - gradle.properties
+      - settings.gradle
+  pull_request:
+    paths:
+      - src/**
+      - build.gradle
+      - gradle.properties
+      - settings.gradle
 
 jobs:
   build:
@@ -31,6 +41,8 @@ jobs:
       - name: make gradle wrapper executable
         if: ${{ runner.os != 'Windows' }}
         run: chmod +x ./gradlew
+      - name: Set build number
+        run: sed -i "s/undefined/$GITHUB_RUN_NUMBER/g" gradle.properties
       - name: build
         run: ./gradlew build
       - name: Find correct JAR
