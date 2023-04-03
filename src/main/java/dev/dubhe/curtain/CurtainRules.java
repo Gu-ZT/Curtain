@@ -23,6 +23,7 @@ import static dev.dubhe.curtain.api.rules.Categories.SURVIVAL;
 
 public class CurtainRules {
     public static final ThreadLocal<Boolean> impendingFillSkipUpdates = ThreadLocal.withInitial(() -> false);
+
     public static class LanguageValidator implements IValidator<String> {
         @Override
         public boolean validate(CommandSourceStack source, CurtainRule<String> rule, String newValue) {
@@ -184,7 +185,22 @@ public class CurtainRules {
             suggestions = {"true", "flase"}
     )
     public static boolean creativeNoClip = false;
+
     public static boolean isCreativeFlying(Entity entity) {
         return creativeNoClip && entity instanceof Player && (((Player) entity).isCreative()) && ((Player) entity).getAbilities().flying;
     }
+
+    public static class FakePlayerNameValidator implements IValidator<String> {
+        @Override
+        public boolean validate(CommandSourceStack source, CurtainRule<String> rule, String newValue) {
+            return newValue.matches("^\\w*$");
+        }
+    }
+
+    @Rule(
+            categories = COMMAND,
+            suggestions = {"none", "bot_"},
+            validators = FakePlayerNameValidator.class
+    )
+    public static String fakePlayerNamePrefix = "none";
 }

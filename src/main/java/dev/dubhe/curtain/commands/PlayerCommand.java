@@ -175,6 +175,8 @@ public class PlayerCommand {
 
     private static boolean cantSpawn(CommandContext<CommandSourceStack> context) {
         String playerName = StringArgumentType.getString(context, "player");
+        String prefix = "none".equals(CurtainRules.fakePlayerNamePrefix) || playerName.startsWith(CurtainRules.fakePlayerNamePrefix) ? "" : CurtainRules.fakePlayerNamePrefix;
+        playerName = prefix + playerName;
         MinecraftServer server = context.getSource().getServer();
         PlayerList manager = server.getPlayerList();
         Player player = manager.getPlayerByName(playerName);
@@ -270,6 +272,8 @@ public class PlayerCommand {
             flying = false;
         }
         String playerName = StringArgumentType.getString(context, "player");
+        String prefix = "none".equals(CurtainRules.fakePlayerNamePrefix) || playerName.startsWith(CurtainRules.fakePlayerNamePrefix) ? "" : CurtainRules.fakePlayerNamePrefix;
+        playerName = prefix + playerName;
         if (playerName.length() > maxPlayerLength(source.getServer())) {
             Messenger.m(context.getSource(), "rb Player name: " + playerName + " is too long");
             return 0;
