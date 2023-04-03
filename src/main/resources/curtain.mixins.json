@@ -17,6 +17,7 @@
     "rules.cactus.HopperBlockMixin",
     "rules.cactus.ServerPlayerGameModeMixin",
     "rules.cactus.UseOnContextMixin",
+    "rules.custom_motd.ServerStatusMixin",
     "rules.creative_no_clip.BlockItemMixin",
     "rules.creative_no_clip.PistonMovingBlockEntityMixin",
     "rules.creative_no_clip.PlayerMixin",

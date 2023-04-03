@@ -128,14 +128,6 @@ public class CurtainRules {
     @Rule(categories = CREATIVE, suggestions = {"true", "false"})
     public static boolean interactionUpdates = true;
 
-//    public static class DefaultLoggersValidator implements IValidator<String> {
-//        @Override
-//        public boolean validate(CommandSourceStack source, CurtainRule<String> rule, String newValue) {
-//            Curtain.loggers.change(newValue);
-//            return true;
-//        }
-//    }
-//
     @Rule(
             categories = {CREATIVE, SURVIVAL},
             suggestions = {"none", "tps", "mobcaps", "mobcaps,tps"}
@@ -148,6 +140,13 @@ public class CurtainRules {
             serializedName = "hud_logger_update_interval"
     )
     public static int HUDLoggerUpdateInterval = 20;
+
+    @Rule(
+            categories = CREATIVE,
+            suggestions = {"none"},
+            serializedName = "custom_motd"
+    )
+    public static String customMOTD = "none";
 
     public static class StackableShulkerBoxValidator implements IValidator<String> {
 
@@ -188,5 +187,4 @@ public class CurtainRules {
     public static boolean isCreativeFlying(Entity entity) {
         return creativeNoClip && entity instanceof Player && (((Player) entity).isCreative()) && ((Player) entity).getAbilities().flying;
     }
-
 }
