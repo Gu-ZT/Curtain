@@ -17,6 +17,12 @@
     "rules.cactus.HopperBlockMixin",
     "rules.cactus.ServerPlayerGameModeMixin",
     "rules.cactus.UseOnContextMixin",
+    "rules.creative_no_clip.BlockItemMixin",
+    "rules.creative_no_clip.PistonMovingBlockEntityMixin",
+    "rules.creative_no_clip.PlayerMixin",
+    "rules.creative_no_clip.ShulkerBoxBlockEntityMixin",
+    "rules.creative_no_clip.StandingAndWallBlockItemMixin",
+    "rules.creative_no_clip.TheEndGatewayBlockEntityMixin",
     "rules.fill_updates.BlockInputMixin",
     "rules.fill_updates.CloneCommandsMixin",
     "rules.fill_updates.CommandsMixin",
@@ -33,6 +39,7 @@
     "rules.xp_no_cooldown.PlayerMixin"
   ],
   "client": [
+    "rules.creative_no_clip.client.LevelRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
