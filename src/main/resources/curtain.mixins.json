@@ -40,6 +40,8 @@
     "rules.stackable_shulker_boxes.ItemEntityMixin",
     "rules.super_lead.AbstractVillagerMixin",
     "rules.super_lead.MobMixin",
+    "rules.turtle_egg_trampled_disabled.RemoveBlockGoalMixin",
+    "rules.turtle_egg_trampled_disabled.TurtleEggBlockMixin",
     "rules.xp_no_cooldown.ExperienceOrbMixin",
     "rules.xp_no_cooldown.PlayerMixin"
   ],

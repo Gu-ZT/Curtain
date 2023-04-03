@@ -228,4 +228,10 @@ public class CurtainRules {
             suggestions = {"true", "false"}
     )
     public static boolean desertShrubs = false;
+
+    @Rule(
+            categories = CREATIVE,
+            suggestions = {"true", "false"}
+    )
+    public static boolean turtleEggTrampledDisabled = false;
 }
