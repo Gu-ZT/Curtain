@@ -18,7 +18,7 @@ public final class CommandHelper {
      */
     public static void notifyPlayersCommandsChanged(MinecraftServer server)
     {
-        if (server == null || server.getPlayerList() == null)
+        if (server == null || server.getPlayerList().getPlayers().isEmpty())
         {
             return;
         }

@@ -1,5 +1,8 @@
 package dev.dubhe.curtain.events;
 
+import dev.dubhe.curtain.events.rules.open_fake_player_inventory.PlayerLoggedEventHandler;
+import dev.dubhe.curtain.events.rules.open_fake_player_inventory.PlayerTickEventHandler;
+import dev.dubhe.curtain.events.rules.open_fake_player_inventory.entityInteractHandler;
 import dev.dubhe.curtain.events.utils.LevelEventHandler;
 import dev.dubhe.curtain.events.utils.ServerLifecycleEventHandler;
 import net.minecraftforge.common.MinecraftForge;
@@ -10,5 +13,9 @@ public class MyEventHandlers {
         MinecraftForge.EVENT_BUS.register(new LevelEventHandler());
         MinecraftForge.EVENT_BUS.register(new dev.dubhe.curtain.events.rules.default_loggers.PlayerEventHandler());
         MinecraftForge.EVENT_BUS.register(new dev.dubhe.curtain.events.rules.default_loggers.ServerLifecycleEventHandler());
+
+        MinecraftForge.EVENT_BUS.register(new entityInteractHandler());
+        MinecraftForge.EVENT_BUS.register(new PlayerLoggedEventHandler());
+        MinecraftForge.EVENT_BUS.register(new PlayerTickEventHandler());
     }
 }

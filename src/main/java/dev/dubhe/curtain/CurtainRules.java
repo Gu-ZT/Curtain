@@ -132,4 +132,16 @@ public class CurtainRules {
             suggestions = {"none", "tps", "mobcaps", "mobcaps,tps"}
     )
     public static String defaultLoggers = "none";
+
+    @Rule(
+            categories = {CREATIVE,SURVIVAL},
+            suggestions = {"true","false"}
+    )
+    public static boolean openFakePlayerInventory = false;
+
+    @Rule(
+            categories = {CREATIVE,SURVIVAL},
+            suggestions = {"true","false"}
+    )
+    public static boolean openFakePlayerEnderChest = false;
 }
