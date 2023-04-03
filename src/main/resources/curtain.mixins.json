@@ -25,6 +25,7 @@
     "rules.creative_no_clip.TheEndGatewayBlockEntityMixin",
     "rules.custom_motd.ServerStatusMixin",
     "rules.desert_shrubs.SaplingBlockMixin",
+    "rules.farmland_trampled_disabled.FarmBlockMixin",
     "rules.fill_updates.BlockInputMixin",
     "rules.fill_updates.CloneCommandsMixin",
     "rules.fill_updates.CommandsMixin",
