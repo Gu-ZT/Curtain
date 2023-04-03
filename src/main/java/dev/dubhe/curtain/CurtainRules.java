@@ -19,6 +19,7 @@ import static dev.dubhe.curtain.api.rules.Categories.CREATIVE;
 import static dev.dubhe.curtain.api.rules.Categories.DISPENSER;
 import static dev.dubhe.curtain.api.rules.Categories.FEATURE;
 import static dev.dubhe.curtain.api.rules.Categories.SURVIVAL;
+import static dev.dubhe.curtain.api.rules.Categories.TNT;
 
 
 public class CurtainRules {
@@ -240,4 +241,82 @@ public class CurtainRules {
             suggestions = {"true", "false"}
     )
     public static boolean farmlandTrampledDisabled = false;
+
+
+    @Rule(
+            categories = {CREATIVE, TNT},
+            suggestions = {"true", "false"}
+    )
+    public static boolean explosionNoBlockDamage = false;
+
+    @Rule(
+            categories = TNT,
+            suggestions = {"true", "false"}
+    )
+    public static boolean optimizedTNT = false;
+
+    @Rule(
+            categories = {SURVIVAL, FEATURE},
+            suggestions = {"true", "false"}
+    )
+    public static boolean xpFromExplosions = false;
+
+    public static class CheckOptimizedTntEnabledValidator implements IValidator<Integer> {
+
+        @Override
+        public boolean validate(CommandSourceStack source, CurtainRule<Integer> rule, String newValue) {
+            boolean b = optimizedTNT || rule.isDefault(newValue);
+            if (!b) {
+                source.sendFailure(Component.literal("optimizedTNT must be enabled"));
+            }
+            return b;
+        }
+    }
+
+    public static class TNTRandomRangeValidator implements IValidator<Integer> {
+
+        @Override
+        public boolean validate(CommandSourceStack source, CurtainRule<Integer> rule, String newValue) {
+            double value = Double.parseDouble(newValue);
+            return value == -1 || value >= 0;
+        }
+    }
+
+    @Rule(
+            categories = TNT,
+            suggestions = {"-1"},
+            validators = {CheckOptimizedTntEnabledValidator.class, TNTRandomRangeValidator.class}
+    )
+    public static double tntRandomRange = -1;
+
+    @Rule(
+            categories = {TNT, CREATIVE},
+            suggestions = {"true", "false"}
+    )
+    public static boolean tntPrimerMomentumRemoved = false;
+
+    public static class TNTAngleValidator implements IValidator<Double> {
+
+        @Override
+        public boolean validate(CommandSourceStack source, CurtainRule<Double> rule, String newValue) {
+            double value = Double.parseDouble(newValue);
+            boolean b = ((value >= 0 && value < Math.PI * 2) || rule.isDefault(newValue));
+            if (!b) {
+                source.sendFailure(Component.literal("Must be between 0 and 2pi, or -1"));
+            }
+            return b;
+        }
+    }
+    @Rule(
+            categories = TNT,
+            suggestions = {"0"},
+            validators = TNTAngleValidator.class
+    )
+    public static double hardcodeTNTangle = -1.0D;
+    @Rule(
+            categories = TNT,
+            suggestions = {"true", "false"}
+    )
+    public static boolean mergeTNT = false;
+
 }
