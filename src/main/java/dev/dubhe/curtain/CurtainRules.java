@@ -9,8 +9,11 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.ServerInterface;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 
 import static dev.dubhe.curtain.api.rules.Categories.BUGFIX;
+import static dev.dubhe.curtain.api.rules.Categories.CLIENT;
 import static dev.dubhe.curtain.api.rules.Categories.COMMAND;
 import static dev.dubhe.curtain.api.rules.Categories.CREATIVE;
 import static dev.dubhe.curtain.api.rules.Categories.DISPENSER;
@@ -125,14 +128,6 @@ public class CurtainRules {
     @Rule(categories = CREATIVE, suggestions = {"true", "false"})
     public static boolean interactionUpdates = true;
 
-//    public static class DefaultLoggersValidator implements IValidator<String> {
-//        @Override
-//        public boolean validate(CommandSourceStack source, CurtainRule<String> rule, String newValue) {
-//            Curtain.loggers.change(newValue);
-//            return true;
-//        }
-//    }
-//
     @Rule(
             categories = {CREATIVE, SURVIVAL},
             suggestions = {"none", "tps", "mobcaps", "mobcaps,tps"}
@@ -145,6 +140,53 @@ public class CurtainRules {
             serializedName = "hud_logger_update_interval"
     )
     public static int HUDLoggerUpdateInterval = 20;
+
+    @Rule(
+            categories = CREATIVE,
+            suggestions = {"none"},
+            serializedName = "custom_motd"
+    )
+    public static String customMOTD = "none";
+
+    public static class StackableShulkerBoxValidator implements IValidator<String> {
+
+        @Override
+        public boolean validate(CommandSourceStack source, CurtainRule<String> rule, String newValue) {
+            if (newValue.matches("^[0-9]+$")) {
+                int value = Integer.parseInt(newValue);
+                if (value <= 64 && value >= 2) {
+                    shulkerBoxStackSize = value;
+                    return true;
+                }
+            }
+            if (newValue.equalsIgnoreCase("false")) {
+                shulkerBoxStackSize = 1;
+                return true;
+            }
+            if (newValue.equalsIgnoreCase("true")) {
+                shulkerBoxStackSize = 64;
+                return true;
+            }
+            return false;
+        }
+    }
+
+    @Rule(
+            categories = {SURVIVAL, FEATURE},
+            suggestions = {"false", "true", "16"},
+            validators = StackableShulkerBoxValidator.class
+    )
+    public static String stackableShulkerBoxes = "false";
+    public static int shulkerBoxStackSize = 1;
+
+    @Rule(
+            categories = {CREATIVE, CLIENT},
+            suggestions = {"true", "flase"}
+    )
+    public static boolean creativeNoClip = false;
+    public static boolean isCreativeFlying(Entity entity) {
+        return creativeNoClip && entity instanceof Player && (((Player) entity).isCreative()) && ((Player) entity).getAbilities().flying;
+    }
 
     @Rule(
             categories = {CREATIVE,SURVIVAL},
