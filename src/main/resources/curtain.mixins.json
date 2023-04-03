@@ -17,6 +17,7 @@
     "rules.cactus.HopperBlockMixin",
     "rules.cactus.ServerPlayerGameModeMixin",
     "rules.cactus.UseOnContextMixin",
+    "rules.custom_motd.ServerStatusMixin",
     "rules.fill_updates.BlockInputMixin",
     "rules.fill_updates.CloneCommandsMixin",
     "rules.fill_updates.CommandsMixin",
