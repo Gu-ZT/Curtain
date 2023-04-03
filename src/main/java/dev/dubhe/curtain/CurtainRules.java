@@ -19,10 +19,12 @@ import static dev.dubhe.curtain.api.rules.Categories.CREATIVE;
 import static dev.dubhe.curtain.api.rules.Categories.DISPENSER;
 import static dev.dubhe.curtain.api.rules.Categories.FEATURE;
 import static dev.dubhe.curtain.api.rules.Categories.SURVIVAL;
+import static dev.dubhe.curtain.api.rules.Categories.TNT;
 
 
 public class CurtainRules {
     public static final ThreadLocal<Boolean> impendingFillSkipUpdates = ThreadLocal.withInitial(() -> false);
+
     public static class LanguageValidator implements IValidator<String> {
         @Override
         public boolean validate(CommandSourceStack source, CurtainRule<String> rule, String newValue) {
@@ -184,7 +186,61 @@ public class CurtainRules {
             suggestions = {"true", "flase"}
     )
     public static boolean creativeNoClip = false;
+
     public static boolean isCreativeFlying(Entity entity) {
         return creativeNoClip && entity instanceof Player && (((Player) entity).isCreative()) && ((Player) entity).getAbilities().flying;
     }
+
+
+    @Rule(
+            categories = {CREATIVE, TNT},
+            suggestions = {"true", "false"}
+    )
+    public static boolean explosionNoBlockDamage = false;
+
+    @Rule(
+            categories = TNT,
+            suggestions = {"true", "false"}
+    )
+    public static boolean optimizedTNT = false;
+
+    @Rule(
+            categories = {SURVIVAL, FEATURE},
+            suggestions = {"true", "false"}
+    )
+    public static boolean xpFromExplosions = false;
+
+    public static class CheckOptimizedTntEnabledValidator implements IValidator<Integer> {
+
+        @Override
+        public boolean validate(CommandSourceStack source, CurtainRule<Integer> rule, String newValue) {
+            boolean b = optimizedTNT || rule.isDefault(newValue);
+            if (!b) {
+                source.sendFailure(Component.literal("optimizedTNT must be enabled"));
+            }
+            return b;
+        }
+    }
+
+    public static class TNTRandomRangeValidator implements IValidator<Integer> {
+
+        @Override
+        public boolean validate(CommandSourceStack source, CurtainRule<Integer> rule, String newValue) {
+            double value = Double.parseDouble(newValue);
+            return value == -1 || value >= 0;
+        }
+    }
+
+    @Rule(
+            categories = TNT,
+            suggestions = {"-1"},
+            validators = {CheckOptimizedTntEnabledValidator.class, TNTRandomRangeValidator.class}
+    )
+    public static double tntRandomRange = -1;
+
+    @Rule(
+            categories = {TNT, CREATIVE},
+            suggestions = {"true", "false"}
+    )
+    public static boolean tntPrimerMomentumRemoved = false;
 }

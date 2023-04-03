@@ -4,7 +4,7 @@ import dev.dubhe.curtain.CurtainRules;
 import dev.dubhe.curtain.features.logging.LoggerManager;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ServerEventHandler {
@@ -19,7 +19,8 @@ public class ServerEventHandler {
         timer -= 1;
     }
 
-    @SubscribeEvent void onEntityJoin(EntityJoinLevelEvent event) {
+    @SubscribeEvent
+    public void onPlayLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
             String playerName = player.getName().getString();
             if (CurtainRules.defaultLoggers.contentEquals("none")) {
@@ -29,6 +30,14 @@ public class ServerEventHandler {
                 String[] logs = CurtainRules.defaultLoggers.replace(" ", "").split(",");
                 LoggerManager.subscribeLogger(playerName, logs);
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void onPlayLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) {
+            String playerName = player.getName().getString();
+            LoggerManager.unsubscribeAllLogger(playerName);
         }
     }
 }
