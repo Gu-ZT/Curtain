@@ -9,7 +9,7 @@ body:
     attributes:
       value: |
         Before filling in this `issue`, please make sure that there are no similar or duplicate `issues` that have been opened.
-        填写此 `issue` 前，请先确实已经开启的 `issue` 没有类似或重复的 `issue`。
+        填写此 `issue` 前，请先确认已经开启的 `issue` 没有类似或重复的 `issue`。
 
   - type: dropdown
     id: OSver
