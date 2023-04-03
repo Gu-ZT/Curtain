@@ -1,5 +1,3 @@
-
-
 # **Curtain MOD** | [窗帘](/docs/README.CN.md)
 
 [![Development Builds](https://github.com/Gu-ZT/Curtain/actions/workflows/build.yml/badge.svg)](https://github.com/Gu-ZT/Curtain/actions/workflows/build.yml)
