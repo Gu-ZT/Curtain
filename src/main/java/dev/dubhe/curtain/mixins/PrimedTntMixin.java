@@ -32,8 +32,8 @@ public abstract class PrimedTntMixin extends Entity implements TntEntityInterfac
 
     @Inject(method = "<init>(Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/entity/LivingEntity;)V", at = @At("RETURN"))
     private void modifyTNTAngle(Level world, double x, double y, double z, LivingEntity entity, CallbackInfo ci) {
-        if (CurtainRules.hardcodeTNTangle != -1.0D) {
-            setDeltaMovement(-Math.sin(CurtainRules.hardcodeTNTangle) * 0.02, 0.2, -Math.cos(CurtainRules.hardcodeTNTangle) * 0.02);
+        if (CurtainRules.hardcodeTNTAngle != -1.0D) {
+            setDeltaMovement(-Math.sin(CurtainRules.hardcodeTNTAngle) * 0.02, 0.2, -Math.cos(CurtainRules.hardcodeTNTAngle) * 0.02);
         }
     }
 
