@@ -308,6 +308,7 @@ public class CurtainRules {
             return b;
         }
     }
+
     @Rule(
             categories = TNT,
             suggestions = {"0"},
@@ -321,5 +322,11 @@ public class CurtainRules {
             serializedName = "merge_tnt"
     )
     public static boolean mergeTNT = false;
+
+    @Rule(
+            categories = {BUGFIX, SURVIVAL},
+            suggestions = {"true", "false"}
+    )
+    public static boolean ctrlQCraftingFix = false;
 
 }
