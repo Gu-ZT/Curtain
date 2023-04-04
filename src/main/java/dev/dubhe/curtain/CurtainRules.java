@@ -315,7 +315,7 @@ public class CurtainRules {
             validators = TNTAngleValidator.class,
             serializedName = "hardcode_tnt_angle"
     )
-    public static double hardcodeTNTangle = -1.0D;
+    public static double hardcodeTNTAngle = -1.0D;
     @Rule(
             categories = TNT,
             suggestions = {"true", "false"},

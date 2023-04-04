@@ -98,3 +98,143 @@
     * 默认：`100`
     * 建议：`1`, `5`, `20`, `100`
     * 分类：`生存`
+* openFakePlayerInventory
+    * 名称：`假人背包`
+    * 描述：`允许玩家打开假人背包`
+    * 类型：`Boolen`
+    * 默认：`false`
+    * 建议：`true`, `false`
+    * 分类：`创造`, `生存`
+* openFakePlayerEnderChest
+    * 名称：`假人末影箱`
+    * 描述：`允许玩家打开假人末影箱`
+    * 类型：`Boolen`
+    * 默认：`false`
+    * 建议：`true`, `false`
+    * 分类：`创造`, `生存`
+* stackableShulkerBoxes
+    * 名称：`潜影盒堆叠`
+    * 描述：`空潜影盒可在地上堆叠到 64`
+    * 类型：`String`
+    * 默认：`false`
+    * 建议：`false`, `true`, `16`
+    * 分类：`生存`, `特性`
+* superLead
+    * 名称：`超级拴绳`
+    * 描述：`村民和怪物可以被拴绳拴住（拴怪物需要客户端也安装窗帘）`
+    * 类型：`Boolen`
+    * 默认：`false`
+    * 建议：`true`, `false`
+    * 分类：`特性`, `客户端`
+* desertShrubs
+    * 名称：`树苗在沙漠干枯`
+    * 描述：`炎热无水的气候下树苗变成枯萎的灌木`
+    * 类型：`Boolen`
+    * 默认：`false`
+    * 建议：`true`, `false`
+    * 分类：`特性`
+* xpFromExplosions
+    * 名称：`爆炸掉落经验`
+    * 描述：`任何类型的爆炸都能使能掉落经验的方块掉落经验`
+    * 类型：`Boolen`
+    * 默认：`false`
+    * 建议：`true`, `false`
+    * 分类：`生存`, `特性`
+* explosionNoBlockDamage
+    * 名称：`爆炸不摧毁方块`
+    * 描述：`爆炸不摧毁方块`
+    * 类型：`Boolen`
+    * 默认：`false`
+    * 建议：`true`, `false`
+    * 分类：`创造`, `TNT`
+* creativeNoClip
+    * 名称：`创造玩家无碰撞检测`
+    * 描述：`创造玩家可以穿过方块`
+    * 类型：`Boolen`
+    * 默认：`false`
+    * 建议：`true`, `false`
+    * 分类：`创造`, `客户端`
+* optimizedTNT
+    * 名称：`TNT优化`
+    * 描述：`TNT在相同的地点或在流体里，爆炸造成更小的延迟`
+    * 类型：`Boolen`
+    * 默认：`false`
+    * 建议：`true`, `false`
+    * 分类：`TNT`
+* TNTRandomRange
+    * 名称：`TNT爆炸范围设置`
+    * 描述：`设置TNT随机爆炸范围为一个固定的值，设为-1以禁用`
+    * 类型：`Double`
+    * 默认：`-1`
+    * 建议：`-1`
+    * 分类：`TNT`
+* TNTPrimerMomentumRemoved
+    * 名称：`移除TNT点燃时随机动量`
+    * 描述：`TNT点燃时的随机动量将被移除`
+    * 类型：`Boolen`
+    * 默认：`false`
+    * 建议：`true`, `false`
+    * 分类：`TNT`, `创造`
+* hardCodeTNTAngle
+    * 名称：`硬编码TNT角度`
+    * 描述：`把TNT水平随机角度设为固定值，可用于测试机器`
+    * 类型：`Double`
+    * 默认：`-1`
+    * 建议：`0`
+    * 分类：`TNT`
+* mergeTNT
+    * 名称：`合并TNT`
+    * 描述：`合并静止的点燃的TNT实体`
+    * 类型：`Boolen`
+    * 默认：`false`
+    * 建议：`true`, `false`
+    * 分类：`TNT`
+* ctrlQCraftingFix
+    * 名称：`Ctrl+Q合成修复`
+    * 描述：`在合成时允许使用Ctrl+Q快捷键扔出结果格内所有物品`
+    * 类型：`Boolen`
+    * 默认：`false`
+    * 建议：`true`, `false`
+    * 分类：`修复`, `生存`
+* quickLeafDecay
+    * 名称：`快速叶子腐烂`
+    * 描述：`在砍树后树叶会快速掉落`
+    * 类型：`Boolen`
+    * 默认：`false`
+    * 建议：`true`, `false`
+    * 分类：`生存`
+* customMOTD
+    * 名称：`自定义MOTD`
+    * 描述：`在试图连接到服务器的客户端上设置一个不同的MOTD信息`
+    * 类型：`String`
+    * 默认：`none`
+    * 建议：`none`
+    * 分类：`创造`
+* turtleEggTrampledDisabled
+    * 名称：`禁用海龟蛋被践踏`
+    * 描述：`阻止海龟蛋因实体踩踏而破坏`
+    * 类型：`Boolen`
+    * 默认：`false`
+    * 建议：`true`, `false`
+    * 分类：`创造`
+* farmlandTrampledDisabled
+    * 名称：`禁用耕地被踩踏`
+    * 描述：`阻止耕地被生物踩成泥土`
+    * 类型：`Boolen`
+    * 默认：`false`
+    * 建议：`true`, `false`
+    * 分类：`创造`
+* fakePlayerNamePrefix
+    * 名称：`假人名称前缀`
+    * 描述：`为/player指令召唤出来的假人名称添加指定前缀`
+    * 类型：`String`
+    * 默认：`none`
+    * 建议：`none`, `bot_`
+    * 分类：`命令`
+* fakePlayerNameSuffix
+    * 名称：`假人名称后缀`
+    * 描述：`为/player指令召唤出来的假人名称添加指定后缀`
+    * 类型：`String`
+    * 默认：`none`
+    * 建议：`none`, `_fake`
+    * 分类：`命令`
