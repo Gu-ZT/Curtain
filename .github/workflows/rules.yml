@@ -5,6 +5,8 @@ on:
 
 jobs:
   generate:
+    permissions:
+      contents: write
     strategy:
       matrix:
         java: [ 17 ]
