@@ -5,6 +5,7 @@ import com.mojang.brigadier.arguments.*;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import dev.dubhe.curtain.Curtain;
+import dev.dubhe.curtain.api.rules.Categories;
 import dev.dubhe.curtain.api.rules.CurtainRule;
 import dev.dubhe.curtain.api.rules.RuleException;
 import dev.dubhe.curtain.api.rules.RuleManager;
@@ -19,13 +20,16 @@ import net.minecraft.network.chat.Style;
 import org.jetbrains.annotations.NotNull;
 
 import static dev.dubhe.curtain.utils.TranslationKeys.*;
+import static net.minecraft.commands.SharedSuggestionProvider.suggest;
 
 public class RuleCommand {
     public static void register(@NotNull CommandDispatcher<CommandSourceStack> dispatcher, @NotNull RuleManager manager) {
         dispatcher.register(Commands.literal(manager.getId()).requires(stack -> stack.hasPermission(Commands.LEVEL_GAMEMASTERS))
                 .executes(RuleCommand::showMenu)
                 .then(Commands.literal("category")
-                        .then(Commands.argument("name", StringArgumentType.word()).executes(RuleCommand::showCategory))
+                        .then(Commands.argument("name", StringArgumentType.word())
+                                .suggests((context, builder) -> suggest(Categories.getCategories(), builder))
+                                .executes(RuleCommand::showCategory))
                 )
                 .then(RuleCommand.valueNode(false, Commands.literal("setValue")))
                 .then(RuleCommand.valueNode(true, Commands.literal("setDefault")))
