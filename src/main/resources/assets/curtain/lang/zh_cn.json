@@ -104,5 +104,23 @@
   "curtain.rules.merge_tnt.desc": "合并静止的点燃的TNT实体",
 
   "curtain.rules.ctrl_q_crafting_fix.name": "Ctrl+Q合成修复",
-  "curtain.rules.ctrl_q_crafting_fix.desc": "在合成时允许使用Ctrl+Q快捷键扔出结果格内所有物品"
+  "curtain.rules.ctrl_q_crafting_fix.desc": "在合成时允许使用Ctrl+Q快捷键扔出结果格内所有物品",
+
+  "curtain.rules.quick_leaf_decay.name": "快速叶子腐烂",
+  "curtain.rules.quick_leaf_decay.desc": "在砍树后树叶会快速掉落",
+
+  "curtain.rules.custom_motd.name": "自定义MOTD",
+  "curtain.rules.custom_motd.desc": "在试图连接到服务器的客户端上设置一个不同的MOTD信息\n使用'_'来使用server.properties中的启动设置",
+
+  "curtain.rules.turtle_egg_trampled_disabled.name": "禁用海龟蛋被践踏",
+  "curtain.rules.turtle_egg_trampled_disabled.desc": "阻止海龟蛋因实体踩踏而破坏",
+
+  "curtain.rules.farmland_trampled_disabled.name": "禁用耕地被踩踏",
+  "curtain.rules.farmland_trampled_disabled.desc": "阻止耕地被生物踩成泥土",
+
+  "curtain.rules.fake_player_name_prefix.name": "假人名称前缀",
+  "curtain.rules.fake_player_name_prefix.desc": "为/player指令召唤出来的假人名称添加指定前缀",
+
+  "curtain.rules.fake_player_name_suffix.name": "假人名称后缀",
+  "curtain.rules.fake_player_name_suffix.desc": "为/player指令召唤出来的假人名称添加指定后缀"
 }

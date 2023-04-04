@@ -104,5 +104,23 @@
   "curtain.rules.merge_tnt.desc": "Merges stationary primed TNT entities",
 
   "curtain.rules.ctrl_q_crafting_fix.name": "ctrlQCraftingFix",
-  "curtain.rules.ctrl_q_crafting_fix.desc": "Dropping entire stacks works also from on the crafting UI result slot"
+  "curtain.rules.ctrl_q_crafting_fix.desc": "Dropping entire stacks works also from on the crafting UI result slot",
+
+  "curtain.rules.quick_leaf_decay.name": "quickLeafDecay",
+  "curtain.rules.quick_leaf_decay.desc": "Leaves fall off quickly after cutting down a tree",
+
+  "curtain.rules.custom_motd.name": "customMOTD",
+  "curtain.rules.custom_motd.desc": "Sets a different motd message on client trying to connect to the server\nuse '_' to use the startup setting from server.properties",
+
+  "curtain.rules.turtle_egg_trampled_disabled.name": "turtleEggTrampledDisabled",
+  "curtain.rules.turtle_egg_trampled_disabled.desc": "Stopping turtle eggs from being destroyed by physical trampling",
+
+  "curtain.rules.farmland_trampled_disabled.name": "FarmlandTrampledDisabled",
+  "curtain.rules.farmland_trampled_disabled.desc": "Stopping farmlands from being destroyed by physical trampling",
+
+  "curtain.rules.fake_player_name_prefix.name": "fakePlayerNamePrefix",
+  "curtain.rules.fake_player_name_prefix.desc": "Add the specified prefix to the name of the fake player summoned by the /player command",
+
+  "curtain.rules.fake_player_name_suffix.name": "fakePlayerNameSuffix",
+  "curtain.rules.fake_player_name_suffix.desc": "Add the specified prefix to the name of the fake player summoned by the /player command"
 }
