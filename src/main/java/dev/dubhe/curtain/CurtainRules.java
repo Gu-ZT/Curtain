@@ -183,7 +183,7 @@ public class CurtainRules {
 
     @Rule(
             categories = {CREATIVE, CLIENT},
-            suggestions = {"true", "flase"}
+            suggestions = {"true", "false"}
     )
     public static boolean creativeNoClip = false;
 
@@ -329,4 +329,16 @@ public class CurtainRules {
     )
     public static boolean ctrlQCraftingFix = false;
 
+
+    @Rule(
+            categories = {CREATIVE,SURVIVAL},
+            suggestions = {"true","false"}
+    )
+    public static boolean openFakePlayerInventory = false;
+
+    @Rule(
+            categories = {CREATIVE,SURVIVAL},
+            suggestions = {"true","false"}
+    )
+    public static boolean openFakePlayerEnderChest = false;
 }
