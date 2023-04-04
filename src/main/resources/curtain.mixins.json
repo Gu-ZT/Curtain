@@ -25,7 +25,7 @@
     "rules.creative_no_clip.ShulkerBoxBlockEntityMixin",
     "rules.creative_no_clip.StandingAndWallBlockItemMixin",
     "rules.creative_no_clip.TheEndGatewayBlockEntityMixin",
-    "rules.custom_motd.ServerStatusMixin",
+    "rules.ctrl_q_crafting_fix.AbstractContainerMenuMixin",
     "rules.custom_motd.ServerStatusMixin",
     "rules.desert_shrubs.SaplingBlockMixin",
     "rules.farmland_trampled_disabled.FarmBlockMixin",
