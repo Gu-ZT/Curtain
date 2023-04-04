@@ -14,6 +14,7 @@
   "curtain.categories.dispenser": "自动",
   "curtain.categories.bugfix": "修复",
   "curtain.categories.client": "客户端",
+  "curtain.categories.tnt": "TNT",
 
   "curtain.rules.language.name": "语言",
   "curtain.rules.language.desc": "窗帘输出文本的本地化语言",
@@ -67,5 +68,59 @@
   "curtain.rules.open_fake_player_inventory.menu.use_continuous": "一直使用 %s",
 
   "curtain.rules.open_fake_player_ender_chest.name": "假人末影箱",
-  "curtain.rules.open_fake_player_ender_chest.desc": "允许玩家打开假人末影箱"
+  "curtain.rules.open_fake_player_ender_chest.desc": "允许玩家打开假人末影箱",
+
+  "curtain.rules.stackable_shulker_boxes.name": "潜影盒堆叠",
+  "curtain.rules.stackable_shulker_boxes.desc": "空潜影盒可在地上堆叠到 64\n在物品栏中转移时，按住 shift 点击整组移动",
+
+  "curtain.rules.super_lead.name": "超级拴绳",
+  "curtain.rules.super_lead.desc": "村民和怪物可以被拴绳拴住（拴怪物需要客户端也安装窗帘）",
+
+  "curtain.rules.desert_shrubs.name": "树苗在沙漠干枯",
+  "curtain.rules.desert_shrubs.desc": "炎热无水的气候下树苗变成枯萎的灌木",
+
+  "curtain.rules.xp_from_explosions.name": "爆炸掉落经验",
+  "curtain.rules.xp_from_explosions.desc": "任何类型的爆炸都能使能掉落经验的方块掉落经验",
+
+  "curtain.rules.explosion_no_block_damage.name": "爆炸不摧毁方块",
+  "curtain.rules.explosion_no_block_damage.desc": "爆炸不摧毁方块",
+
+  "curtain.rules.creative_no_clip.name": "创造玩家无碰撞检测",
+  "curtain.rules.creative_no_clip.desc": "创造玩家可以穿过方块\n这个选项需要服务端和客户端同时支持才生效。\n仅在服务端设置是无效的，而仅在客户端设置的情况下\n你可以利用一些和活板门有关的技巧来穿墙",
+
+  "curtain.rules.optimized_tnt.name": "TNT优化",
+  "curtain.rules.optimized_tnt.desc": "TNT在相同的地点或在流体里，爆炸造成更小的延迟",
+
+  "curtain.rules.tnt_random_range.name": "TNT爆炸范围设置",
+  "curtain.rules.tnt_random_range.desc": "设置TNT随机爆炸范围为一个固定的值，设为-1以禁用\n设为-1以使用默认值",
+
+  "curtain.rules.tnt_primer_momentum_removed.name": "移除TNT点燃时随机动量",
+  "curtain.rules.tnt_primer_momentum_removed.desc": "TNT点燃时的随机动量将被移除",
+
+  "curtain.rules.hard_code_tnt_angle.name": "硬编码TNT角度",
+  "curtain.rules.hard_code_tnt_angle.desc": "把TNT水平随机角度设为固定值，可用于测试机器\n设为-1以使用默认值",
+
+  "curtain.rules.merge_tnt.name": "合并TNT",
+  "curtain.rules.merge_tnt.desc": "合并静止的点燃的TNT实体",
+
+  "curtain.rules.ctrl_q_crafting_fix.name": "Ctrl+Q合成修复",
+  "curtain.rules.ctrl_q_crafting_fix.desc": "在合成时允许使用Ctrl+Q快捷键扔出结果格内所有物品",
+
+  "curtain.rules.quick_leaf_decay.name": "快速叶子腐烂",
+  "curtain.rules.quick_leaf_decay.desc": "在砍树后树叶会快速掉落",
+
+  "curtain.rules.custom_motd.name": "自定义MOTD",
+  "curtain.rules.custom_motd.desc": "在试图连接到服务器的客户端上设置一个不同的MOTD信息\n使用'_'来使用server.properties中的启动设置",
+
+  "curtain.rules.turtle_egg_trampled_disabled.name": "禁用海龟蛋被践踏",
+  "curtain.rules.turtle_egg_trampled_disabled.desc": "阻止海龟蛋因实体踩踏而破坏",
+
+  "curtain.rules.farmland_trampled_disabled.name": "禁用耕地被踩踏",
+  "curtain.rules.farmland_trampled_disabled.desc": "阻止耕地被生物踩成泥土",
+
+  "curtain.rules.fake_player_name_prefix.name": "假人名称前缀",
+  "curtain.rules.fake_player_name_prefix.desc": "为/player指令召唤出来的假人名称添加指定前缀",
+
+  "curtain.rules.fake_player_name_suffix.name": "假人名称后缀",
+  "curtain.rules.fake_player_name_suffix.desc": "为/player指令召唤出来的假人名称添加指定后缀"
 }
