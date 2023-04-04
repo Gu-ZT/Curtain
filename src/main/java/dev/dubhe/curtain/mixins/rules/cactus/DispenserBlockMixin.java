@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(DispenserBlock.class)
-public class DispenserBlockMixin {
+public abstract class DispenserBlockMixin {
     @Inject(method = "getDispenseMethod", at = @At("HEAD"), cancellable = true)
     private void registerCurtainBehaviors(ItemStack stack, CallbackInfoReturnable<DispenseItemBehavior> cir) {
         Item item = stack.getItem();

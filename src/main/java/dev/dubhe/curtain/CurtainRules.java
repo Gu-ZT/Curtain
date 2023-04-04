@@ -19,10 +19,12 @@ import static dev.dubhe.curtain.api.rules.Categories.CREATIVE;
 import static dev.dubhe.curtain.api.rules.Categories.DISPENSER;
 import static dev.dubhe.curtain.api.rules.Categories.FEATURE;
 import static dev.dubhe.curtain.api.rules.Categories.SURVIVAL;
+import static dev.dubhe.curtain.api.rules.Categories.TNT;
 
 
 public class CurtainRules {
     public static final ThreadLocal<Boolean> impendingFillSkipUpdates = ThreadLocal.withInitial(() -> false);
+
     public static class LanguageValidator implements IValidator<String> {
         @Override
         public boolean validate(CommandSourceStack source, CurtainRule<String> rule, String newValue) {
@@ -184,9 +186,149 @@ public class CurtainRules {
             suggestions = {"true", "false"}
     )
     public static boolean creativeNoClip = false;
+
     public static boolean isCreativeFlying(Entity entity) {
         return creativeNoClip && entity instanceof Player && (((Player) entity).isCreative()) && ((Player) entity).getAbilities().flying;
     }
+
+    public static class FakePlayerNameValidator implements IValidator<String> {
+        @Override
+        public boolean validate(CommandSourceStack source, CurtainRule<String> rule, String newValue) {
+            return newValue.matches("^\\w*$");
+        }
+    }
+
+    @Rule(
+            categories = COMMAND,
+            suggestions = {"none", "bot_"},
+            validators = FakePlayerNameValidator.class
+    )
+    public static String fakePlayerNamePrefix = "none";
+
+    @Rule(
+            categories = COMMAND,
+            suggestions = {"none", "_fake"},
+            validators = FakePlayerNameValidator.class
+    )
+    public static String fakePlayerNameSuffix = "none";
+
+    @Rule(
+            categories = SURVIVAL,
+            suggestions = {"true", "false"}
+    )
+    public static boolean quickLeafDecay = false;
+
+    @Rule(
+            categories = {FEATURE, CLIENT},
+            suggestions = {"true", "false"}
+    )
+    public static boolean superLead = false;
+
+    @Rule(
+            categories = FEATURE,
+            suggestions = {"true", "false"}
+    )
+    public static boolean desertShrubs = false;
+
+    @Rule(
+            categories = CREATIVE,
+            suggestions = {"true", "false"}
+    )
+    public static boolean turtleEggTrampledDisabled = false;
+
+    @Rule(
+            categories = CREATIVE,
+            suggestions = {"true", "false"}
+    )
+    public static boolean farmlandTrampledDisabled = false;
+
+
+    @Rule(
+            categories = {CREATIVE, TNT},
+            suggestions = {"true", "false"}
+    )
+    public static boolean explosionNoBlockDamage = false;
+
+    @Rule(
+            categories = TNT,
+            suggestions = {"true", "false"},
+            serializedName = "optimized_tnt"
+    )
+    public static boolean optimizedTNT = false;
+
+    @Rule(
+            categories = {SURVIVAL, FEATURE},
+            suggestions = {"true", "false"}
+    )
+    public static boolean xpFromExplosions = false;
+
+    public static class CheckOptimizedTntEnabledValidator implements IValidator<Integer> {
+
+        @Override
+        public boolean validate(CommandSourceStack source, CurtainRule<Integer> rule, String newValue) {
+            boolean b = optimizedTNT || rule.isDefault(newValue);
+            if (!b) {
+                source.sendFailure(Component.literal("optimizedTNT must be enabled"));
+            }
+            return b;
+        }
+    }
+
+    public static class TNTRandomRangeValidator implements IValidator<Integer> {
+
+        @Override
+        public boolean validate(CommandSourceStack source, CurtainRule<Integer> rule, String newValue) {
+            double value = Double.parseDouble(newValue);
+            return value == -1 || value >= 0;
+        }
+    }
+
+    @Rule(
+            categories = TNT,
+            suggestions = {"-1"},
+            validators = {CheckOptimizedTntEnabledValidator.class, TNTRandomRangeValidator.class}
+    )
+    public static double tntRandomRange = -1;
+
+    @Rule(
+            categories = {TNT, CREATIVE},
+            suggestions = {"true", "false"}
+    )
+    public static boolean tntPrimerMomentumRemoved = false;
+
+    public static class TNTAngleValidator implements IValidator<Double> {
+
+        @Override
+        public boolean validate(CommandSourceStack source, CurtainRule<Double> rule, String newValue) {
+            double value = Double.parseDouble(newValue);
+            boolean b = ((value >= 0 && value < Math.PI * 2) || rule.isDefault(newValue));
+            if (!b) {
+                source.sendFailure(Component.literal("Must be between 0 and 2pi, or -1"));
+            }
+            return b;
+        }
+    }
+
+    @Rule(
+            categories = TNT,
+            suggestions = {"0"},
+            validators = TNTAngleValidator.class,
+            serializedName = "hardcode_tnt_angle"
+    )
+    public static double hardcodeTNTangle = -1.0D;
+    @Rule(
+            categories = TNT,
+            suggestions = {"true", "false"},
+            serializedName = "merge_tnt"
+    )
+    public static boolean mergeTNT = false;
+
+    @Rule(
+            categories = {BUGFIX, SURVIVAL},
+            suggestions = {"true", "false"}
+    )
+    public static boolean ctrlQCraftingFix = false;
+
 
     @Rule(
             categories = {CREATIVE,SURVIVAL},

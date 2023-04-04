@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(BlockInput.class)
-public class BlockInputMixin {
+public abstract class BlockInputMixin {
     @Redirect(
             method = "place",
             at = @At(

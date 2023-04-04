@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(UseOnContext.class)
-public class UseOnContextMixin {
+public abstract class UseOnContextMixin {
     @Redirect(
             method = "getHorizontalDirection",
             at = @At(

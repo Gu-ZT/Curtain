@@ -13,6 +13,7 @@
   "curtain.categories.survival": "生存",
   "curtain.categories.dispenser": "自动",
   "curtain.categories.bugfix": "修复",
+  "curtain.categories.client": "客户端",
 
   "curtain.rules.language.name": "语言",
   "curtain.rules.language.desc": "窗帘输出文本的本地化语言",

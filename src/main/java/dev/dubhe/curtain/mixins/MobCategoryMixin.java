@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(MobCategory.class)
-public class MobCategoryMixin implements SpawnGroupInterface {
+public abstract class MobCategoryMixin implements SpawnGroupInterface {
     @Shadow
     @Final
     private int max;

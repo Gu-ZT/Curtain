@@ -4,6 +4,8 @@ import dev.dubhe.curtain.Curtain;
 import dev.dubhe.curtain.features.logging.builtin.MemoryLogger;
 import dev.dubhe.curtain.features.logging.builtin.MobcapsLogger;
 import dev.dubhe.curtain.features.logging.builtin.TPSLogger;
+import dev.dubhe.curtain.features.logging.helper.ExplosionLogHelper;
+import dev.dubhe.curtain.features.logging.helper.TNTLogHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -114,6 +116,10 @@ public class LoggerManager {
         }
     }
 
+    public static void unsubscribeAllLogger(String playerName) {
+        subscribedPlayer.remove(playerName);
+    }
+
     public static boolean isSubscribedLogger(String playerName, String loggerName) {
         if (!registeredLogger.containsKey(loggerName)) {
             Curtain.LOGGER.error("Can' t find logger named: {}", loggerName);
@@ -136,6 +142,8 @@ public class LoggerManager {
         registerLogger(new TPSLogger());
         registerLogger(new MobcapsLogger());
         registerLogger(new MemoryLogger());
+        registerLogger(new ExplosionLogHelper.ExplosionLogger());
+        registerLogger(new TNTLogHelper.TNTLogger());
     }
 
     public static Set<String> getLoggerSet() {

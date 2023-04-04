@@ -13,6 +13,7 @@
   "curtain.categories.survival": "SURVIVAL",
   "curtain.categories.dispenser": "DISPENSER",
   "curtain.categories.bugfix": "BUGFIX",
+  "curtain.categories.client": "CLIENT",
 
   "curtain.rules.language.name": "Language",
   "curtain.rules.language.desc": "The Language of Curtain.",

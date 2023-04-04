@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(CloneCommands.class)
-public class CloneCommandsMixin {
+public abstract class CloneCommandsMixin {
     @Redirect(
             method = "clone",
             at = @At(

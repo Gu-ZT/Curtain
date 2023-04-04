@@ -8,4 +8,5 @@ public class Categories {
     public static final String DISPENSER = "dispenser";
     public static final String BUGFIX = "bugfix";
     public static final String CLIENT = "client";
+    public static final String TNT = "tnt";
 }
