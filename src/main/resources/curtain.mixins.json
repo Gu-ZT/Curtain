@@ -40,6 +40,7 @@
     "rules.fill_updates.StructureTemplateMixin",
     "rules.interaction_updates.ServerGamePacketListenerImplMixin",
     "rules.missing_tools.PickaxeItemMixin",
+    "rules.open_fake_player_inventory.AbstractContainerMenuMixin",
     "rules.optimized_tnt.ExplosionMixin",
     "rules.quick_leaf_decay.LeavesBlockMixin",
     "rules.stackable_shulker_boxes.ItemEntityMixin",
@@ -47,7 +48,7 @@
     "rules.super_lead.MobMixin",
     "rules.turtle_egg_trampled_disabled.RemoveBlockGoalMixin",
     "rules.turtle_egg_trampled_disabled.TurtleEggBlockMixin",
-    "rules.open_fake_player_inventory.AbstractContainerMenuMixin",
+    "rules.xp_from_explosions.ExplosionMixin",
     "rules.xp_no_cooldown.ExperienceOrbMixin",
     "rules.xp_no_cooldown.PlayerMixin"
   ],
