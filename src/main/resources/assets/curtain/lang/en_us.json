@@ -14,6 +14,7 @@
   "curtain.categories.dispenser": "DISPENSER",
   "curtain.categories.bugfix": "BUGFIX",
   "curtain.categories.client": "CLIENT",
+  "curtain.categories.tnt": "TNT",
 
   "curtain.rules.language.name": "Language",
   "curtain.rules.language.desc": "The Language of Curtain.",
@@ -67,5 +68,41 @@
   "curtain.rules.open_fake_player_inventory.menu.use_continuous": "Use continuous: %s",
 
   "curtain.rules.open_fake_player_ender_chest.name": "Fake Player Ender Chest",
-  "curtain.rules.open_fake_player_ender_chest.desc": "Allow player to open the fake player's ender chest"
+  "curtain.rules.open_fake_player_ender_chest.desc": "Allow player to open the fake player's ender chest",
+
+  "curtain.rules.stackable_shulker_boxes.name": "Stackable Shulker Boxes",
+  "curtain.rules.stackable_shulker_boxes.desc": "Empty shulker boxes can stack when thrown on the ground.",
+
+  "curtain.rules.super_lead.name": "Super Lead",
+  "curtain.rules.super_lead.desc": "Villagers and monsters can be tethered (tethering monsters requires the client to install Curtain as well)",
+
+  "curtain.rules.desert_shrubs.name": "Desert Shrubs",
+  "curtain.rules.desert_shrubs.desc": "Saplings turn into dead shrubs in hot climates and no water access",
+
+  "curtain.rules.xp_from_explosions.name": "XP From Explosions",
+  "curtain.rules.xp_from_explosions.desc": "Experience will drop from all experience barring blocks with any explosion type",
+
+  "curtain.rules.explosion_no_block_damage.name": "Explosion No Block Damage",
+  "curtain.rules.explosion_no_block_damage.desc": "Explosions won't destroy blocks",
+
+  "curtain.rules.creative_no_clip.name": "Creative No Clip",
+  "curtain.rules.creative_no_clip.desc": "On servers it needs to be set on both\nclient and server to function properly.\nHas no effect when set on the server only\nCan allow to phase through walls\nif only set on the carpet client side\nbut requires some trapdoor magic to\nallow the player to enter blocks",
+
+  "curtain.rules.optimized_tnt.name": "optimizedTNT",
+  "curtain.rules.optimized_tnt.desc": "TNT causes less lag when exploding in the same spot and in liquids",
+
+  "curtain.rules.tnt_random_range.name": "TNT Random Range",
+  "curtain.rules.tnt_random_range.desc": "Sets the tnt random explosion range to a fixed value\nSet to -1 for default behavior",
+
+  "curtain.rules.tnt_primer_momentum_removed.name": "tntPrimerMomentumRemoved",
+  "curtain.rules.tnt_primer_momentum_removed.desc": "Removes random TNT momentum when primed",
+
+  "curtain.rules.hard_code_tnt_angle.name": "hardcodeTNTangle",
+  "curtain.rules.hard_code_tnt_angle.desc": "Sets the horizontal random angle on TNT for debugging of TNT contraptions\nSet to -1 for default behavior",
+
+  "curtain.rules.merge_tnt.name": "mergeTNT",
+  "curtain.rules.merge_tnt.desc": "Merges stationary primed TNT entities",
+
+  "curtain.rules.ctrl_q_crafting_fix.name": "ctrlQCraftingFix",
+  "curtain.rules.ctrl_q_crafting_fix.desc": "Dropping entire stacks works also from on the crafting UI result slot"
 }
