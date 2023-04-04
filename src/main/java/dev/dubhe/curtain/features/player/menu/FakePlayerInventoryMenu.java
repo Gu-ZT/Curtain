@@ -8,19 +8,16 @@ import dev.dubhe.curtain.features.player.menu.component.Button;
 import dev.dubhe.curtain.features.player.menu.component.Function;
 import dev.dubhe.curtain.features.player.menu.component.RadioButtonPanel;
 import dev.dubhe.curtain.features.player.menu.component.ToggledButton;
-import dev.dubhe.curtain.utils.Messenger;
 import dev.dubhe.curtain.utils.TranslationHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextColor;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.client.event.RenderTooltipEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -283,26 +280,14 @@ public class FakePlayerInventoryMenu implements Container {
             actionPack.stopAll();
         });
 
-        attackInterval14.addClickEvent(()->{
-            actionPack.start(EntityPlayerActionPack.ActionType.ATTACK, EntityPlayerActionPack.Action.interval(14));
-        });
-        attackInterval14.addToggledOffEvent(()->{
-            actionPack.start(EntityPlayerActionPack.ActionType.ATTACK, EntityPlayerActionPack.Action.once());
-        });
+        attackInterval14.addClickEvent(()-> actionPack.start(EntityPlayerActionPack.ActionType.ATTACK, EntityPlayerActionPack.Action.interval(14)));
+        attackInterval14.addToggledOffEvent(()-> actionPack.start(EntityPlayerActionPack.ActionType.ATTACK, EntityPlayerActionPack.Action.once()));
 
-        attackContinuous.addClickEvent(()->{
-            actionPack.start(EntityPlayerActionPack.ActionType.ATTACK, EntityPlayerActionPack.Action.continuous());
-        });
-        attackContinuous.addToggledOffEvent(()->{
-            actionPack.start(EntityPlayerActionPack.ActionType.ATTACK, EntityPlayerActionPack.Action.once());
-        });
+        attackContinuous.addClickEvent(()-> actionPack.start(EntityPlayerActionPack.ActionType.ATTACK, EntityPlayerActionPack.Action.continuous()));
+        attackContinuous.addToggledOffEvent(()-> actionPack.start(EntityPlayerActionPack.ActionType.ATTACK, EntityPlayerActionPack.Action.once()));
 
-        useContinuous.addClickEvent(()->{
-            actionPack.start(EntityPlayerActionPack.ActionType.USE, EntityPlayerActionPack.Action.continuous());
-        });
-        useContinuous.addToggledOffEvent(()->{
-            actionPack.start(EntityPlayerActionPack.ActionType.USE, EntityPlayerActionPack.Action.once());
-        });
+        useContinuous.addClickEvent(()-> actionPack.start(EntityPlayerActionPack.ActionType.USE, EntityPlayerActionPack.Action.continuous()));
+        useContinuous.addToggledOffEvent(()-> actionPack.start(EntityPlayerActionPack.ActionType.USE, EntityPlayerActionPack.Action.once()));
 
 
         ButtonList.add(stop_all_button);

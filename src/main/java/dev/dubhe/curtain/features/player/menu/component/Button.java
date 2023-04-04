@@ -76,9 +76,6 @@ public class Button {
         }
     }
 
-    public int getSlot(){
-        return this.Slot;
-    }
 
     public void onCheck(){
         if(!Init){
