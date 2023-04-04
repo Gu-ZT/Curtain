@@ -7,30 +7,31 @@ import net.minecraft.world.inventory.ChestMenu;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import static dev.dubhe.curtain.features.player.menu.FakePlayerInventoryMenuMap.FAKE_PLAYER_INVENTORY_MENU_MAP;
+import static dev.dubhe.curtain.features.player.menu.MenuHashMap.FAKE_PLAYER_INVENTORY_MENU_MAP;
 
 public class entityInteractHandler {
     @SubscribeEvent
     public void onInteractWithFakePlayer(PlayerInteractEvent.EntityInteract entityInteract){
         if(entityInteract.getTarget() instanceof EntityPlayerMPFake fakeplayer){
             SimpleMenuProvider provider = null;
-            if(CurtainRules.openFakePlayerInventory){
-                provider = new SimpleMenuProvider(
-                        (i,inventory,p)->
-                                ChestMenu.sixRows(
-                                        i,
-                                        inventory,
-                                        FAKE_PLAYER_INVENTORY_MENU_MAP.get(fakeplayer)
-                                ),
-                        fakeplayer.getDisplayName()
-                );
-            } else if (CurtainRules.openFakePlayerEnderChest) {
+            if (CurtainRules.openFakePlayerEnderChest && entityInteract.getEntity().isShiftKeyDown()) {
                 provider = new SimpleMenuProvider(
                         (i,inventory,p)->
                                 ChestMenu.threeRows(
                                         i,
                                         inventory,
                                         fakeplayer.getEnderChestInventory()
+                                ),
+                        fakeplayer.getDisplayName()
+                );
+            }
+            else if(CurtainRules.openFakePlayerInventory){
+                provider = new SimpleMenuProvider(
+                        (i,inventory,p)->
+                                ChestMenu.sixRows(
+                                        i,
+                                        inventory,
+                                        FAKE_PLAYER_INVENTORY_MENU_MAP.get(fakeplayer)
                                 ),
                         fakeplayer.getDisplayName()
                 );

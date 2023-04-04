@@ -4,7 +4,7 @@ import dev.dubhe.curtain.features.player.menu.FakePlayerInventoryMenu;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import static dev.dubhe.curtain.features.player.menu.FakePlayerInventoryMenuMap.FAKE_PLAYER_INVENTORY_MENU_MAP;
+import static dev.dubhe.curtain.features.player.menu.MenuHashMap.FAKE_PLAYER_INVENTORY_MENU_MAP;
 
 public class PlayerLoggedEventHandler {
     @SubscribeEvent

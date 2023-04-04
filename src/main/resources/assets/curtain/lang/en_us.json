@@ -54,5 +54,17 @@
   "curtain.rules.default_loggers.desc": "sets these loggers in their default configurations for all new players",
 
   "curtain.rules.hud_logger_update_interval.name": "HUDLoggerUpdateInterval",
-  "curtain.rules.hud_logger_update_interval.desc": "Overwrite HUD loggers update interval (gametick)."
+  "curtain.rules.hud_logger_update_interval.desc": "Overwrite HUD loggers update interval (gametick).",
+
+  "curtain.rules.open_fake_player_inventory.name": "Fake Player Inventory",
+  "curtain.rules.open_fake_player_inventory.desc": "Allow player to open the fake player's inventory",
+
+  "curtain.rules.open_fake_player_inventory.menu.slot": "Slot %d",
+  "curtain.rules.open_fake_player_inventory.menu.stop_all": "STOP ALL ACTION",
+  "curtain.rules.open_fake_player_inventory.menu.attack_interval_14": "Attack every 14 gt: %s",
+  "curtain.rules.open_fake_player_inventory.menu.attack_continuous": "Attack continuous: %s",
+  "curtain.rules.open_fake_player_inventory.menu.use_continuous": "Use continuous: %s",
+
+  "curtain.rules.open_fake_player_ender_chest.name": "Fake Player Ender Chest",
+  "curtain.rules.open_fake_player_ender_chest.desc": "Allow player to open the fake player's ender chest"
 }

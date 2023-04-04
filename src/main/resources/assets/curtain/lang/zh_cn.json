@@ -17,9 +17,6 @@
   "curtain.rules.language.name": "语言",
   "curtain.rules.language.desc": "窗帘输出文本的本地化语言",
 
-  "curtain.rules.view_distance.name": "自定义视距",
-  "curtain.rules.view_distance.desc": "改变服务器视距，设为0以使用默认值",
-
   "curtain.rules.xp_no_cooldown.name": "经验吸收无冷却",
   "curtain.rules.xp_no_cooldown.desc": "玩家将会立刻吸收经验球",
 
@@ -28,6 +25,9 @@
 
   "curtain.rules.command_player.name": "玩家控制",
   "curtain.rules.command_player.desc": "启用/player命令以控制/召唤玩家",
+
+  "curtain.rules.view_distance.name": "自定义视距",
+  "curtain.rules.view_distance.desc": "改变服务器视距，设为0以使用默认值",
 
   "curtain.rules.command_log.name": "游戏数据监视器",
   "curtain.rules.command_log.desc": "启用/log命令以在聊天栏或Tab栏监视游戏部分数据",
@@ -54,5 +54,17 @@
   "curtain.rules.default_loggers.desc": "为所有新进入玩家设置部分监视器默认开启",
 
   "curtain.rules.hud_logger_update_interval.name": "HUD记录器更新间隔",
-  "curtain.rules.hud_logger_update_interval.desc": "覆写HUD记录器的更新间隔，单位为gametick"
+  "curtain.rules.hud_logger_update_interval.desc": "覆写HUD记录器的更新间隔，单位为gametick",
+
+  "curtain.rules.open_fake_player_inventory.name": "假人背包",
+  "curtain.rules.open_fake_player_inventory.desc": "允许玩家打开假人背包",
+
+  "curtain.rules.open_fake_player_inventory.menu.slot": "槽位 %d",
+  "curtain.rules.open_fake_player_inventory.menu.stop_all": "停止所有动作",
+  "curtain.rules.open_fake_player_inventory.menu.attack_interval_14": "间隔14gt攻击 %s",
+  "curtain.rules.open_fake_player_inventory.menu.attack_continuous": "一直攻击 %s",
+  "curtain.rules.open_fake_player_inventory.menu.use_continuous": "一直使用 %s",
+
+  "curtain.rules.open_fake_player_ender_chest.name": "假人末影箱",
+  "curtain.rules.open_fake_player_ender_chest.desc": "允许玩家打开假人末影箱"
 }

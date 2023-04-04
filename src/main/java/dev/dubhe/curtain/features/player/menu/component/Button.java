@@ -90,4 +90,9 @@ public class Button {
         }
     }
 
+    public void reset(){
+        Enabled = true;
+        setupOrUpdateButton();
+    }
+
 }

@@ -6,7 +6,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import static dev.dubhe.curtain.features.player.menu.FakePlayerInventoryMenuMap.FAKE_PLAYER_INVENTORY_MENU_MAP;
+import static dev.dubhe.curtain.features.player.menu.MenuHashMap.FAKE_PLAYER_INVENTORY_MENU_MAP;
 
 public class PlayerTickEventHandler {
     @SubscribeEvent

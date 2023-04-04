@@ -40,8 +40,8 @@ public class ToggledButton extends Button{
                     func.accept();
             }
             IsToggled = !IsToggled;
-            setupOrUpdateButton();
         }
+        setupOrUpdateButton();
     }
 
     @Override
@@ -70,5 +70,11 @@ public class ToggledButton extends Button{
 
     public void addToggledOffEvent(Function function){
         ToggledOff_Func.add(function);
+    }
+
+    @Override
+    public void reset() {
+        this.IsToggled = false;
+        super.reset();
     }
 }

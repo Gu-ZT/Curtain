@@ -181,7 +181,7 @@ public class CurtainRules {
 
     @Rule(
             categories = {CREATIVE, CLIENT},
-            suggestions = {"true", "flase"}
+            suggestions = {"true", "false"}
     )
     public static boolean creativeNoClip = false;
     public static boolean isCreativeFlying(Entity entity) {
