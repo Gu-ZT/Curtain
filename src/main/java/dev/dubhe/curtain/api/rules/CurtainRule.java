@@ -14,6 +14,7 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TextComponent;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
@@ -153,7 +154,7 @@ public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
             return (T) (Float) Float.parseFloat(str);
         else if (this.field.getType() == Double.class)
             return (T) (Double) Double.parseDouble(str);
-        else throw new CommandSyntaxException(this, Component.literal("%s is not a legal value".formatted(str)));
+        else throw new CommandSyntaxException(this, new TextComponent("%s is not a legal value".formatted(str)));
     }
 
     @Override

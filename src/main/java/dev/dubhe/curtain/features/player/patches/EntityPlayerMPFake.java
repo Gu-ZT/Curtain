@@ -5,8 +5,8 @@ import dev.dubhe.curtain.CurtainRules;
 import dev.dubhe.curtain.features.player.fakes.IServerPlayer;
 import dev.dubhe.curtain.utils.Messenger;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.UUIDUtil;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.PacketFlow;
 import net.minecraft.network.protocol.game.ClientboundPlayerInfoPacket;
 import net.minecraft.network.protocol.game.ClientboundRotateHeadPacket;
@@ -20,7 +20,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.GameProfileCache;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodData;
 import net.minecraft.world.item.ItemStack;
@@ -31,14 +30,17 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class EntityPlayerMPFake extends ServerPlayer {
-    public  boolean isAShadow;
-    public Runnable fixStartingPosition = () -> {};
+    public boolean isAShadow;
+    public Runnable fixStartingPosition = () -> {
+    };
 
 
-    public static EntityPlayerMPFake createFakePlayer(String username, MinecraftServer server, double x, double y, double z, double yaw, double pitch, ResourceKey<Level> dimensionId, GameType gamemode,boolean isflying) {
+    public static EntityPlayerMPFake createFakePlayer(String username, MinecraftServer server, double x, double y, double z, double yaw, double pitch, ResourceKey<Level> dimensionId, GameType gamemode, boolean isflying) {
         ServerLevel worldIn = server.getLevel(dimensionId);
         GameProfileCache.setUsesAuthentication(false);
         @Nullable
@@ -53,7 +55,7 @@ public class EntityPlayerMPFake extends ServerPlayer {
                 if (!CurtainRules.allowSpawningOfflinePlayers) {
                     return null;
                 } else {
-                    gameProfile = new GameProfile(UUIDUtil.createOfflinePlayerUUID(username), username);
+                    gameProfile = new GameProfile(UUID.nameUUIDFromBytes(("OfflinePlayer:" + username).getBytes(StandardCharsets.UTF_8)), username);
                 }
             }
             if (gameProfile.getProperties().containsKey("textures")) {
@@ -81,10 +83,9 @@ public class EntityPlayerMPFake extends ServerPlayer {
         }
     }
 
-    public static EntityPlayerMPFake createShadow(MinecraftServer server, ServerPlayer player)
-    {
+    public static EntityPlayerMPFake createShadow(MinecraftServer server, ServerPlayer player) {
         player.getServer().getPlayerList().remove(player);
-        player.connection.disconnect(Component.translatable("multiplayer.disconnect.duplicate_login"));
+        player.connection.disconnect(new TranslatableComponent("multiplayer.disconnect.duplicate_login"));
         ServerLevel worldIn = player.getLevel();//.getWorld(player.dimension);
         GameProfile gameprofile = player.getGameProfile();
         EntityPlayerMPFake playerShadow = new EntityPlayerMPFake(server, worldIn, gameprofile, true);
@@ -105,15 +106,17 @@ public class EntityPlayerMPFake extends ServerPlayer {
         playerShadow.getAbilities().flying = player.getAbilities().flying;
         return playerShadow;
     }
+
     private EntityPlayerMPFake(MinecraftServer minecraftServer, ServerLevel level, GameProfile gameProfile, boolean isShadow) {
-        super(minecraftServer, level, gameProfile,null);
-        isAShadow=isShadow;
+        super(minecraftServer, level, gameProfile);
+        isAShadow = isShadow;
     }
 
     @Override
-    public void onEquipItem(EquipmentSlot p_238393_, ItemStack p_238394_, ItemStack p_238395_) {
-        if(!isUsingItem())
-            super.onEquipItem(p_238393_, p_238394_, p_238395_);
+    protected void equipEventAndSound(@NotNull ItemStack stack) {
+        if (!this.isUsingItem()) {
+            super.equipEventAndSound(stack);
+        }
     }
 
     @Override
@@ -121,8 +124,7 @@ public class EntityPlayerMPFake extends ServerPlayer {
         kill(Messenger.s("Killed"));
     }
 
-    public void kill(Component reason)
-    {
+    public void kill(Component reason) {
         shakeOff();
         this.server.tell(new TickTask(this.server.getTickCount(), () -> {
             this.connection.onDisconnect(reason);
@@ -131,24 +133,22 @@ public class EntityPlayerMPFake extends ServerPlayer {
 
     @Override
     public void tick() {
-        if(this.getServer().getTickCount() %10==0){
+        if(this.getServer() == null) return;
+        if (this.getServer().getTickCount() % 10 == 0) {
             this.connection.resetPosition();
             this.getLevel().getChunkSource().move(this);
         }
-        try{
+        try {
             super.tick();
             this.doTick();
-        }catch (NullPointerException exception){
+        } catch (NullPointerException exception) {
             //
         }
-
     }
 
-    private void shakeOff()
-    {
+    private void shakeOff() {
         if (getVehicle() instanceof Player) stopRiding();
-        for (Entity passenger : getIndirectPassengers())
-        {
+        for (Entity passenger : getIndirectPassengers()) {
             if (passenger instanceof Player) passenger.stopRiding();
         }
     }
@@ -158,29 +158,29 @@ public class EntityPlayerMPFake extends ServerPlayer {
         shakeOff();
         super.die(damageSource);
         setHealth(20);
-        this.foodData=new FoodData();
+        this.foodData = new FoodData();
         kill(this.getCombatTracker().getDeathMessage());
     }
 
     @Override
-    public String getIpAddress() {
+    public @NotNull String getIpAddress() {
         return "127.0.0.1";
     }
 
     @Override
     protected void checkFallDamage(double y, boolean onGround, @NotNull BlockState state, @NotNull BlockPos pos) {
-        doCheckFallDamage(y,onGround);
+        doCheckFallDamage(y, onGround);
     }
 
     @Override
     public Entity changeDimension(@NotNull ServerLevel level) {
         super.changeDimension(level);
-        if(wonGame){
+        if (wonGame) {
             ServerboundClientCommandPacket packet = new ServerboundClientCommandPacket(ServerboundClientCommandPacket.Action.PERFORM_RESPAWN);
             connection.handleClientCommand(packet);
         }
 
-        if(connection.player.isChangingDimension()){
+        if (connection.player.isChangingDimension()) {
             connection.player.hasChangedDimension();
         }
         return connection.player;

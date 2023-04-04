@@ -8,6 +8,7 @@ import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -75,17 +76,17 @@ public class ExplosionLogHelper {
                 messages.add(c((k.pos.equals(pos)) ? "r   - TNT" : "w   - ",
                         Messenger.dblt((k.pos.equals(pos)) ? "r" : "y", k.pos.x, k.pos.y, k.pos.z), "w  dV",
                         Messenger.dblt("d", k.accel.x, k.accel.y, k.accel.z),
-                        "w  " + regs.registryOrThrow(ForgeRegistries.ENTITY_TYPES.getRegistryKey()).getKey(k.type).getPath(), (v > 1) ? "l (" + v + ")" : ""
+                        "w  " + regs.registryOrThrow(ForgeRegistries.ENTITIES.getRegistryKey()).getKey(k.type).getPath(), (v > 1) ? "l (" + v + ")" : ""
                 ));
             });
         }
 
         Iterator<Component> iterator = messages.iterator();
-        MutableComponent rt = Component.empty();
+        MutableComponent rt = new TextComponent("");
         for (Component component = iterator.next(); iterator.hasNext(); component = iterator.next()) {
             rt.append(component);
             if (iterator.hasNext()) {
-                rt.append(Component.literal("\n"));
+                rt.append(new TextComponent("\n"));
             }
         }
         log = rt;

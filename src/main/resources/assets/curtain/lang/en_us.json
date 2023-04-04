@@ -79,9 +79,6 @@
   "curtain.rules.desert_shrubs.name": "Desert Shrubs",
   "curtain.rules.desert_shrubs.desc": "Saplings turn into dead shrubs in hot climates and no water access",
 
-  "curtain.rules.xp_from_explosions.name": "XP From Explosions",
-  "curtain.rules.xp_from_explosions.desc": "Experience will drop from all experience barring blocks with any explosion type",
-
   "curtain.rules.explosion_no_block_damage.name": "Explosion No Block Damage",
   "curtain.rules.explosion_no_block_damage.desc": "Explosions won't destroy blocks",
 

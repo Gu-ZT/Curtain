@@ -37,7 +37,7 @@ public class entityInteractHandler {
                 );
             }
             if(provider != null)
-                entityInteract.getEntity().openMenu(provider);
+                entityInteract.getPlayer().openMenu(provider);
         }
 
     }

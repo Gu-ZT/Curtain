@@ -133,13 +133,6 @@
     * 默认：`false`
     * 建议：`true`, `false`
     * 分类：`特性`
-* xpFromExplosions
-    * 名称：`爆炸掉落经验`
-    * 描述：`任何类型的爆炸都能使能掉落经验的方块掉落经验`
-    * 类型：`Boolen`
-    * 默认：`false`
-    * 建议：`true`, `false`
-    * 分类：`生存`, `特性`
 * explosionNoBlockDamage
     * 名称：`爆炸不摧毁方块`
     * 描述：`爆炸不摧毁方块`

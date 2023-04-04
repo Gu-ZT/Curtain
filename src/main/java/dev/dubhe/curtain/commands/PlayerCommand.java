@@ -22,7 +22,6 @@ import net.minecraft.commands.arguments.coordinates.RotationArgument;
 import net.minecraft.commands.arguments.coordinates.Vec3Argument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.UUIDUtil;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
@@ -33,6 +32,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.function.Consumer;
 
@@ -192,7 +192,7 @@ public class PlayerCommand {
                         "Banned players can only be summoned in Singleplayer and in servers in off-line mode.");
                 return true;
             } else {
-                profile = new GameProfile(UUIDUtil.createOfflinePlayerUUID(playerName), playerName);
+                profile = new GameProfile(UUID.nameUUIDFromBytes(("OfflinePlayer:" + playerName).getBytes(StandardCharsets.UTF_8)), playerName);
             }
         }
         if (manager.getBans().isBanned(profile)) {

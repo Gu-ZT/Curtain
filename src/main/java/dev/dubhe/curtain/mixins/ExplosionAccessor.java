@@ -1,11 +1,12 @@
 package dev.dubhe.curtain.mixins;
 
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
+
+import java.util.Random;
 
 @Mixin(Explosion.class)
 public interface ExplosionAccessor {
@@ -19,7 +20,7 @@ public interface ExplosionAccessor {
     Level getLevel();
 
     @Accessor
-    RandomSource getRandom();
+    Random getRandom();
 
     @Accessor("x")
     double getX();

@@ -41,6 +41,7 @@ import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @SuppressWarnings("DuplicatedCode")
 public class OptimizedExplosion {
@@ -178,6 +179,16 @@ public class OptimizedExplosion {
         densityCache.clear();
     }
 
+    public static <T> void shuffle(ObjectArrayList<T> objectArrayList, Random randomSource) {
+        int i = objectArrayList.size();
+
+        for(int j = i; j > 1; --j) {
+            int k = randomSource.nextInt(j);
+            objectArrayList.set(j - 1, objectArrayList.set(k, objectArrayList.get(j - 1)));
+        }
+
+    }
+
     public static void doExplosionB(Explosion e, boolean spawnParticles) {
         ExplosionAccessor eAccess = (ExplosionAccessor) e;
         Level world = eAccess.getLevel();
@@ -203,9 +214,7 @@ public class OptimizedExplosion {
 
         if (damagesTerrain) {
             ObjectArrayList<Pair<ItemStack, BlockPos>> objectArrayList = new ObjectArrayList<>();
-            Util.shuffle((ObjectArrayList<BlockPos>) e.getToBlow(), world.random);
-
-            boolean dropFromExplosions = CurtainRules.xpFromExplosions || e.getSourceMob() instanceof Player;
+            shuffle((ObjectArrayList<BlockPos>) e.getToBlow(), world.random);
 
             for (BlockPos blockpos : e.getToBlow()) {
                 BlockState state = world.getBlockState(blockpos);
@@ -225,7 +234,7 @@ public class OptimizedExplosion {
                         if (eAccess.getBlockInteraction() == Explosion.BlockInteraction.DESTROY)
                             lootBuilder.withParameter(LootContextParams.EXPLOSION_RADIUS, eAccess.getRadius());
 
-                        state.spawnAfterBreak(serverLevel, blockpos, ItemStack.EMPTY, dropFromExplosions);
+                        state.spawnAfterBreak(serverLevel, blockpos, ItemStack.EMPTY);
 
                         state.getDrops(lootBuilder).forEach((itemStackx) -> {
                             method_24023(objectArrayList, itemStackx, blockpos.immutable());

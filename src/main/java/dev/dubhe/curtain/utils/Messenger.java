@@ -1,15 +1,12 @@
 package dev.dubhe.curtain.utils;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.ClickEvent;
-import net.minecraft.network.chat.HoverEvent;
-import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextColor;
+import net.minecraft.network.chat.*;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -117,7 +114,7 @@ public class Messenger
     {
         if (message.equalsIgnoreCase(""))
         {
-            return Component.literal("");
+            return new TextComponent("");
         }
         if (Character.isWhitespace(message.charAt(0)))
         {
@@ -132,7 +129,7 @@ public class Messenger
             str = message.substring(limit+1);
         }
         if (previousMessage == null) {
-            MutableComponent text = Component.literal(str);
+            MutableComponent text = new TextComponent(str);
             text.setStyle(parseStyle(desc));
             return text;
         }
@@ -145,7 +142,7 @@ public class Messenger
             case '@' -> previousStyle.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, message.substring(1)));
             case '&' -> previousStyle.withClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, message.substring(1)));
             default  -> { // Create a new component
-                ret = Component.literal(str);
+                ret = new TextComponent(str);
                 ret.setStyle(parseStyle(desc));
                 yield previousStyle; // no op for the previous style
             }
@@ -236,7 +233,7 @@ public class Messenger
     }
     public static void m(Player player, Object ... fields)
     {
-        player.sendSystemMessage(Messenger.c(fields));
+        player.sendMessage(Messenger.c(fields), Util.NIL_UUID);
     }
 
     /*
@@ -244,7 +241,7 @@ public class Messenger
      */
     public static Component c(Object ... fields)
     {
-        MutableComponent message = Component.literal("");
+        MutableComponent message = new TextComponent("");
         MutableComponent previousComponent = null;
         for (Object o: fields)
         {
@@ -270,7 +267,7 @@ public class Messenger
     }
     public static Component s(String text, String style)
     {
-        MutableComponent message = Component.literal(text);
+        MutableComponent message = new TextComponent(text);
         message.setStyle(parseStyle(style));
         return message;
     }
@@ -280,7 +277,7 @@ public class Messenger
 
     public static void send(Player player, Collection<Component> lines)
     {
-        lines.forEach(message -> player.sendSystemMessage(message));
+        lines.forEach(message -> player.sendMessage(message,Util.NIL_UUID));
     }
     public static void send(CommandSourceStack source, Collection<Component> lines)
     {
@@ -292,21 +289,21 @@ public class Messenger
     {
         if (server == null)
             LOG.error("Message not delivered: "+message);
-        server.sendSystemMessage(Component.literal(message));
+        server.sendMessage(new TextComponent(message),Util.NIL_UUID);
         Component txt = c("gi "+message);
-        for (Player entityplayer : server.getPlayerList().getPlayers())
+        for (ServerPlayer entityplayer : server.getPlayerList().getPlayers())
         {
-            entityplayer.sendSystemMessage(txt);
+            entityplayer.sendMessage(txt,ChatType.SYSTEM,Util.NIL_UUID);
         }
     }
     public static void print_server_message(MinecraftServer server, Component message)
     {
         if (server == null)
             LOG.error("Message not delivered: "+message.getString());
-        server.sendSystemMessage(message);
-        for (Player entityplayer : server.getPlayerList().getPlayers())
+        server.sendMessage(message,Util.NIL_UUID);
+        for (ServerPlayer entityplayer : server.getPlayerList().getPlayers())
         {
-            entityplayer.sendSystemMessage(message);
+            entityplayer.sendMessage(message, ChatType.SYSTEM, Util.NIL_UUID);
         }
     }
 }

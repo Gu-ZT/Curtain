@@ -12,14 +12,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Commands.class)
 public abstract class CommandsMixin {
     @Inject(method = "performCommand", at = @At("HEAD"))
-    private void onExecuteBegin(ParseResults<CommandSourceStack> parseResults, String string, CallbackInfoReturnable<Integer> cir) {
+    private void onExecuteBegin(CommandSourceStack p_82118_, String p_82119_, CallbackInfoReturnable<Integer> cir) {
         if (!CurtainRules.fillUpdates) {
             CurtainRules.impendingFillSkipUpdates.set(true);
         }
     }
 
     @Inject(method = "performCommand", at = @At("RETURN"))
-    private void onExecuteEnd(ParseResults<CommandSourceStack> parseResults, String string, CallbackInfoReturnable<Integer> cir) {
+    private void onExecuteEnd(CommandSourceStack p_82118_, String p_82119_, CallbackInfoReturnable<Integer> cir) {
         if (!CurtainRules.fillUpdates) {
             CurtainRules.impendingFillSkipUpdates.set(false);
         }
