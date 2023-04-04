@@ -41,7 +41,7 @@ jobs:
       - name: Commit
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: update Changelog
+          commit_message: update RULES.MD
           file_pattern: "RULES.MD"
           branch: main
           repository: .
