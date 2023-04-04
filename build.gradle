@@ -193,3 +193,10 @@ jar.finalizedBy('reobfJar')
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
 }
+
+tasks.register('generateRulesReadme', JavaExec) {
+    group = "documentation"
+    description = "Generates a RULES.MD file for the rules directory"
+    classpath sourceSets.main.runtimeClasspath
+    main = "dev.dubhe.curtain.utils.CurtainRulesGenerator"
+}

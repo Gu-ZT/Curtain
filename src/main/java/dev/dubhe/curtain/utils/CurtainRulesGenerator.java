@@ -3,7 +3,6 @@ package dev.dubhe.curtain.utils;
 import dev.dubhe.curtain.CurtainRules;
 import dev.dubhe.curtain.api.rules.CurtainRule;
 import dev.dubhe.curtain.api.rules.RuleManager;
-import dev.dubhe.curtain.utils.TranslationHelper;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;
 
@@ -43,29 +42,13 @@ public class CurtainRulesGenerator {
             str = category.toString();
             sb.append("        * 分类：").append(str, 0, str.length() - 2).append("\n");
         }
-
-        try {
-            FileWriter fileWriter = new FileWriter("V.MD");
-
-            try {
-                fileWriter.write("");
-                fileWriter.write(sb.toString());
-                fileWriter.flush();
-            } catch (Throwable var15) {
-                try {
-                    fileWriter.close();
-                } catch (Throwable var14) {
-                    var15.addSuppressed(var14);
-                }
-
-                throw var15;
-            }
-
-            fileWriter.close();
-        } catch (IOException var16) {
-            var16.printStackTrace();
+        try (FileWriter fileWriter = new FileWriter("RULES.MD")) {
+            fileWriter.write("");
+            fileWriter.write(sb.toString());
+            fileWriter.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
     }
 
     private static void setTrans() {
