@@ -13,7 +13,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class RuleManager {
     public static final List<Class<?>> LIMIT = new ArrayList<>();
@@ -111,6 +115,9 @@ public class RuleManager {
     }
 
     public void loadFromFile() {
+        if (!this.getFile().exists()) {
+            return;
+        }
         try (FileReader reader = new FileReader(this.getFile())) {
             JsonObject object = GSON.fromJson(reader, JsonObject.class);
             for (String name : RULES.keySet()) {
