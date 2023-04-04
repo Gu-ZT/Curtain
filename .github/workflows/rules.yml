@@ -43,5 +43,5 @@ jobs:
         with:
           commit_message: update RULES.MD
           file_pattern: "RULES.MD"
-          branch: main
+          branch: 1.19.2-dev
           repository: .
