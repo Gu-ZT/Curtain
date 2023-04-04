@@ -251,7 +251,8 @@ public class CurtainRules {
 
     @Rule(
             categories = TNT,
-            suggestions = {"true", "false"}
+            suggestions = {"true", "false"},
+            serializedName = "optimized_tnt"
     )
     public static boolean optimizedTNT = false;
 
@@ -310,12 +311,14 @@ public class CurtainRules {
     @Rule(
             categories = TNT,
             suggestions = {"0"},
-            validators = TNTAngleValidator.class
+            validators = TNTAngleValidator.class,
+            serializedName = "hardcode_tnt_angle"
     )
     public static double hardcodeTNTangle = -1.0D;
     @Rule(
             categories = TNT,
-            suggestions = {"true", "false"}
+            suggestions = {"true", "false"},
+            serializedName = "merge_tnt"
     )
     public static boolean mergeTNT = false;
 
