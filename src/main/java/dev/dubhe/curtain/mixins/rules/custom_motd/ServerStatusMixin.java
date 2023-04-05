@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ServerStatus.class)
 public abstract class ServerStatusMixin {
-    @Inject(method = "getDescription", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "description", at = @At("HEAD"), cancellable = true)
     private void getDescriptionAlternative(CallbackInfoReturnable<Component> cir) {
         if (!CurtainRules.customMOTD.contentEquals("none")) {
             cir.setReturnValue(Component.literal(CurtainRules.customMOTD));

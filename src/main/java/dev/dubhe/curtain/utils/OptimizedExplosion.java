@@ -185,7 +185,7 @@ public class OptimizedExplosion {
         double posY = eAccess.getY();
         double posZ = eAccess.getZ();
 
-        boolean damagesTerrain = eAccess.getBlockInteraction() != Explosion.BlockInteraction.NONE;
+        boolean damagesTerrain = eAccess.getBlockInteraction() != Explosion.BlockInteraction.KEEP;
 
         // explosionSound incremented till disabling the explosion particles and sound
         if (explosionSound < 100 || explosionSound % 100 == 0) {
@@ -205,7 +205,7 @@ public class OptimizedExplosion {
             ObjectArrayList<Pair<ItemStack, BlockPos>> objectArrayList = new ObjectArrayList<>();
             Util.shuffle((ObjectArrayList<BlockPos>) e.getToBlow(), world.random);
 
-            boolean dropFromExplosions = CurtainRules.xpFromExplosions || e.getSourceMob() instanceof Player;
+            boolean dropFromExplosions = CurtainRules.xpFromExplosions || e.getIndirectSourceEntity() instanceof Player;
 
             for (BlockPos blockpos : e.getToBlow()) {
                 BlockState state = world.getBlockState(blockpos);

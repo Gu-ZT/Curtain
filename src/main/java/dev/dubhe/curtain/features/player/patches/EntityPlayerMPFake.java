@@ -8,7 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.PacketFlow;
-import net.minecraft.network.protocol.game.ClientboundPlayerInfoPacket;
+import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket;
 import net.minecraft.network.protocol.game.ClientboundRotateHeadPacket;
 import net.minecraft.network.protocol.game.ClientboundTeleportEntityPacket;
 import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
@@ -34,11 +34,12 @@ import org.jetbrains.annotations.Nullable;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class EntityPlayerMPFake extends ServerPlayer {
-    public  boolean isAShadow;
-    public Runnable fixStartingPosition = () -> {};
+    public boolean isAShadow;
+    public Runnable fixStartingPosition = () -> {
+    };
 
 
-    public static EntityPlayerMPFake createFakePlayer(String username, MinecraftServer server, double x, double y, double z, double yaw, double pitch, ResourceKey<Level> dimensionId, GameType gamemode,boolean isflying) {
+    public static EntityPlayerMPFake createFakePlayer(String username, MinecraftServer server, double x, double y, double z, double yaw, double pitch, ResourceKey<Level> dimensionId, GameType gamemode, boolean isflying) {
         ServerLevel worldIn = server.getLevel(dimensionId);
         GameProfileCache.setUsesAuthentication(false);
         @Nullable
@@ -81,8 +82,7 @@ public class EntityPlayerMPFake extends ServerPlayer {
         }
     }
 
-    public static EntityPlayerMPFake createShadow(MinecraftServer server, ServerPlayer player)
-    {
+    public static EntityPlayerMPFake createShadow(MinecraftServer server, ServerPlayer player) {
         player.getServer().getPlayerList().remove(player);
         player.connection.disconnect(Component.translatable("multiplayer.disconnect.duplicate_login"));
         ServerLevel worldIn = player.getLevel();//.getWorld(player.dimension);
@@ -100,19 +100,20 @@ public class EntityPlayerMPFake extends ServerPlayer {
 
 
         server.getPlayerList().broadcastAll(new ClientboundRotateHeadPacket(playerShadow, (byte) (player.yHeadRot * 256 / 360)), playerShadow.level.dimension());
-        server.getPlayerList().broadcastAll(new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.ADD_PLAYER, playerShadow));
+        server.getPlayerList().broadcastAll(new ClientboundPlayerInfoUpdatePacket(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, playerShadow));
         //player.world.getChunkManager().updatePosition(playerShadow);
         playerShadow.getAbilities().flying = player.getAbilities().flying;
         return playerShadow;
     }
+
     private EntityPlayerMPFake(MinecraftServer minecraftServer, ServerLevel level, GameProfile gameProfile, boolean isShadow) {
-        super(minecraftServer, level, gameProfile,null);
-        isAShadow=isShadow;
+        super(minecraftServer, level, gameProfile);
+        isAShadow = isShadow;
     }
 
     @Override
     public void onEquipItem(EquipmentSlot p_238393_, ItemStack p_238394_, ItemStack p_238395_) {
-        if(!isUsingItem())
+        if (!isUsingItem())
             super.onEquipItem(p_238393_, p_238394_, p_238395_);
     }
 
@@ -121,8 +122,7 @@ public class EntityPlayerMPFake extends ServerPlayer {
         kill(Messenger.s("Killed"));
     }
 
-    public void kill(Component reason)
-    {
+    public void kill(Component reason) {
         shakeOff();
         this.server.tell(new TickTask(this.server.getTickCount(), () -> {
             this.connection.onDisconnect(reason);
@@ -131,24 +131,22 @@ public class EntityPlayerMPFake extends ServerPlayer {
 
     @Override
     public void tick() {
-        if(this.getServer().getTickCount() %10==0){
+        if (this.getServer().getTickCount() % 10 == 0) {
             this.connection.resetPosition();
             this.getLevel().getChunkSource().move(this);
         }
-        try{
+        try {
             super.tick();
             this.doTick();
-        }catch (NullPointerException exception){
+        } catch (NullPointerException exception) {
             //
         }
 
     }
 
-    private void shakeOff()
-    {
+    private void shakeOff() {
         if (getVehicle() instanceof Player) stopRiding();
-        for (Entity passenger : getIndirectPassengers())
-        {
+        for (Entity passenger : getIndirectPassengers()) {
             if (passenger instanceof Player) passenger.stopRiding();
         }
     }
@@ -158,7 +156,7 @@ public class EntityPlayerMPFake extends ServerPlayer {
         shakeOff();
         super.die(damageSource);
         setHealth(20);
-        this.foodData=new FoodData();
+        this.foodData = new FoodData();
         kill(this.getCombatTracker().getDeathMessage());
     }
 
@@ -169,18 +167,18 @@ public class EntityPlayerMPFake extends ServerPlayer {
 
     @Override
     protected void checkFallDamage(double y, boolean onGround, @NotNull BlockState state, @NotNull BlockPos pos) {
-        doCheckFallDamage(y,onGround);
+        doCheckFallDamage(y, onGround);
     }
 
     @Override
     public Entity changeDimension(@NotNull ServerLevel level) {
         super.changeDimension(level);
-        if(wonGame){
+        if (wonGame) {
             ServerboundClientCommandPacket packet = new ServerboundClientCommandPacket(ServerboundClientCommandPacket.Action.PERFORM_RESPAWN);
             connection.handleClientCommand(packet);
         }
 
-        if(connection.player.isChangingDimension()){
+        if (connection.player.isChangingDimension()) {
             connection.player.hasChangedDimension();
         }
         return connection.player;

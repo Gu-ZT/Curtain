@@ -25,7 +25,7 @@ public abstract class ServerPlayerMixin implements IServerPlayer
     }
 
     @Inject(method = "<init>", at = @At(value = "RETURN"))
-    private void onServerPlayerEntityContructor(MinecraftServer p_215088_, ServerLevel p_215089_, GameProfile p_215090_, ProfilePublicKey p_215091_, CallbackInfo ci)
+    private void onServerPlayerEntityContructor(MinecraftServer p_254143_, ServerLevel p_254435_, GameProfile p_253651_, CallbackInfo ci)
     {
         this.actionPack = new EntityPlayerActionPack((ServerPlayer) (Object) this);
     }
