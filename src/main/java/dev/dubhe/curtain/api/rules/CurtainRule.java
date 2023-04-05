@@ -12,7 +12,6 @@ import dev.dubhe.curtain.Curtain;
 import dev.dubhe.curtain.utils.TranslationHelper;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.SharedSuggestionProvider;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TextComponent;
 import org.jetbrains.annotations.NotNull;

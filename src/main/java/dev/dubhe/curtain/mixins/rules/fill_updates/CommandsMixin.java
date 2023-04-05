@@ -1,6 +1,5 @@
 package dev.dubhe.curtain.mixins.rules.fill_updates;
 
-import com.mojang.brigadier.ParseResults;
 import dev.dubhe.curtain.CurtainRules;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
