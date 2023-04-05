@@ -223,8 +223,9 @@
         * 建议：`true`, `false`
         * 分类：`TNT`
     * hardcodeTNTAngle
-        * 名称：`curtain.rules.hardcode_tnt_angle.name`
-        * 描述：`curtain.rules.hardcode_tnt_angle.desc`
+        * 名称：`硬编码TNT角度`
+        * 描述：`把TNT水平随机角度设为固定值，可用于测试机器
+设为-1以使用默认值`
         * 类型：`Double`
         * 默认：`-1.0`
         * 建议：`0`
