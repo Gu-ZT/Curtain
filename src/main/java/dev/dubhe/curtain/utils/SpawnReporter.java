@@ -6,6 +6,7 @@ import it.unimi.dsi.fastutil.objects.Object2LongMap;
 import it.unimi.dsi.fastutil.objects.Object2LongOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.entity.EntityClassification;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
@@ -115,7 +116,7 @@ public class SpawnReporter {
         }
 
         List<String> shortCodes = new ArrayList<>();
-        for (MobCategory enumcreaturetype : MobCategory.values()) {
+        for (EntityClassification enumcreaturetype : EntityClassification.values()) {
             int cur = dimCounts.getOrDefault(enumcreaturetype, -1);
             int max = (int) (chunkcount * ((double) enumcreaturetype.getMaxInstancesPerChunk() / MAGIC_NUMBER)); // from ServerChunkManager.CHUNKS_ELIGIBLE_FOR_SPAWNING
             String color = Messenger.heatmap_color(cur, max);

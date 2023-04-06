@@ -2,7 +2,7 @@ package dev.dubhe.curtain.events.rules.open_fake_player_inventory;
 
 import dev.dubhe.curtain.CurtainRules;
 import dev.dubhe.curtain.features.player.patches.EntityPlayerMPFake;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -12,7 +12,7 @@ public class PlayerTickEventHandler {
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent playerTickEvent){
         if(CurtainRules.openFakePlayerInventory &&
-                playerTickEvent.player instanceof ServerPlayer serverPlayer &&
+                playerTickEvent.player instanceof ServerPlayerEntity serverPlayer &&
                 serverPlayer instanceof EntityPlayerMPFake &&
                 serverPlayer.isAlive()
         ){

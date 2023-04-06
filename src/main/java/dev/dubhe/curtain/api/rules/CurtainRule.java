@@ -10,11 +10,10 @@ import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import dev.dubhe.curtain.Curtain;
 import dev.dubhe.curtain.utils.TranslationHelper;
-import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.commands.SharedSuggestionProvider;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.command.CommandSource;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextComponent;
+
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -69,7 +68,7 @@ public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
         }
     }
 
-    public boolean validate(CommandSourceStack source, String newValue) {
+    public boolean validate(CommandSource source, String newValue) {
         for (IValidator<T> validator : validators) {
             if (!validator.validate(source, this, newValue)) return false;
         }
@@ -178,11 +177,11 @@ public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
         return categories;
     }
 
-    public MutableComponent getNameComponent() {
+    public TextComponent getNameComponent() {
         return TranslationHelper.translate(this.getNameTranslationKey());
     }
 
-    public MutableComponent getDescComponent() {
+    public TextComponent getDescComponent() {
         return TranslationHelper.translate(this.getDescTranslationKey());
     }
 

@@ -6,22 +6,22 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import dev.dubhe.curtain.CurtainRules;
 import dev.dubhe.curtain.features.logging.LoggerManager;
 import dev.dubhe.curtain.utils.CommandHelper;
-import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.command.CommandSource;
+import net.minecraft.entity.player.ServerPlayerEntity;
 
-import static net.minecraft.commands.Commands.argument;
-import static net.minecraft.commands.Commands.literal;
-import static net.minecraft.commands.SharedSuggestionProvider.suggest;
+import static net.minecraft.command.Commands.argument;
+import static net.minecraft.command.Commands.literal;
+import static net.minecraft.command.ISuggestionProvider.suggest;
 
 public class LogCommand {
-    public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
-        LiteralArgumentBuilder<CommandSourceStack> literalargumentbuilder = literal("log")
+    public static void register(CommandDispatcher<CommandSource> dispatcher) {
+        LiteralArgumentBuilder<CommandSource> literalargumentbuilder = literal("log")
                 .requires((player) -> CommandHelper.canUseCommand(player, CurtainRules.commandLog))
                 .then(argument("loggerName", StringArgumentType.word())
                         .suggests((context, builder) -> suggest(LoggerManager.getLoggerSet(), builder))
                         .executes(context -> {
                             String loggerName = StringArgumentType.getString(context, "loggerName");
-                            ServerPlayer player = context.getSource().getPlayerOrException();
+                            ServerPlayerEntity player = context.getSource().getPlayerOrException();
                             if (LoggerManager.isSubscribedLogger(player.getName().getString(), loggerName)) {
                                 LoggerManager.unsubscribeLogger(player.getName().getString(), loggerName);
                             } else {

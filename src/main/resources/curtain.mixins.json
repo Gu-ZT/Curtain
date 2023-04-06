@@ -13,6 +13,7 @@
     "PistonBaseBlockMixin",
     "PrimedTntMixin",
     "ServerChunkCacheMixin",
+    "SPlayerListHeaderFooterPacketMixin",
     "rules.cactus.DispenserBlockMixin",
     "rules.cactus.HopperBlockMixin",
     "rules.cactus.ServerPlayerGameModeMixin",

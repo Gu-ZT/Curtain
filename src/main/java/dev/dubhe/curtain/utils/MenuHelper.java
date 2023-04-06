@@ -3,15 +3,22 @@ package dev.dubhe.curtain.utils;
 import dev.dubhe.curtain.Curtain;
 import dev.dubhe.curtain.api.rules.CurtainRule;
 import dev.dubhe.curtain.api.rules.RuleManager;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.*;
+import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.event.ClickEvent;
+import net.minecraft.util.text.event.HoverEvent;
 import net.minecraftforge.fml.ModList;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import static dev.dubhe.curtain.utils.TranslationKeys.*;
+import static dev.dubhe.curtain.utils.TranslationKeys.CATEGORIES;
+import static dev.dubhe.curtain.utils.TranslationKeys.MENU_CATEGORIES;
+import static dev.dubhe.curtain.utils.TranslationKeys.MENU_CATEGORY;
+import static dev.dubhe.curtain.utils.TranslationKeys.MENU_TITLE;
+import static dev.dubhe.curtain.utils.TranslationKeys.MENU_VERSION;
 
 public class MenuHelper {
     /**
@@ -19,25 +26,25 @@ public class MenuHelper {
      *
      * @return 主菜单聊天组件
      */
-    public static @NotNull Component main() {
-        MutableComponent main = new TextComponent("");
-        MutableComponent title = TranslationHelper.translate(MENU_TITLE).withStyle(Style.EMPTY.withBold(true));
+    public static TextComponent main() {
+        TextComponent main = new StringTextComponent("");
+        IFormattableTextComponent title = TranslationHelper.translate(MENU_TITLE).withStyle(s -> s.withBold(true));
         main.append(title).append("\n");
         for (CurtainRule<?> rule : Curtain.rules.ruleMap.values()) {
             main.append(rule(rule)).append("\n");
         }
-        String v = ModList.get().getModFileById(Curtain.MODID).versionString();
-        MutableComponent version = TranslationHelper.translate(MENU_VERSION, v).withStyle(ChatFormatting.GRAY);
+        String v = ModList.get().getModContainerById(Curtain.MODID).get().getModInfo().getVersion().toString();
+        IFormattableTextComponent version = TranslationHelper.translate(MENU_VERSION, v).withStyle(s -> s.withColor(TextFormatting.GRAY));
         main.append(version).append("\n");
-        MutableComponent categories = TranslationHelper.translate(MENU_CATEGORIES).withStyle(Style.EMPTY.withBold(true));
+        IFormattableTextComponent categories = TranslationHelper.translate(MENU_CATEGORIES).withStyle(s -> s.withBold(true));
         main.append(categories);
         for (String s : RuleManager.CATEGORIES_RULES.keySet()) {
-            MutableComponent category = new TextComponent("").withStyle(ChatFormatting.AQUA);
+            IFormattableTextComponent category = new StringTextComponent("").withStyle(style -> style.withColor(TextFormatting.AQUA));
             category.append("[");
             category.append(TranslationHelper.translate(CATEGORIES.formatted(Curtain.MODID, s)));
             category.append("]");
             category.append(" ");
-            category.withStyle(Style.EMPTY.withClickEvent(
+            category.withStyle(style -> style.withClickEvent(
                     new ClickEvent(
                             ClickEvent.Action.RUN_COMMAND,
                             "/curtain category %s".formatted(s)
@@ -54,13 +61,13 @@ public class MenuHelper {
      * @param name 分类名
      * @return 分类聊天组件
      */
-    public static @NotNull Component category(String name) {
-        MutableComponent main = new TextComponent("");
-        MutableComponent display = new TextComponent(name);
+    public static TextComponent category(String name) {
+        TextComponent main = new StringTextComponent("");
+        TextComponent display = new StringTextComponent(name);
         if (RuleManager.CATEGORIES_RULES.containsKey(name)) {
             display = TranslationHelper.translate(CATEGORIES.formatted(Curtain.MODID, name));
         }
-        main.append(TranslationHelper.translate(MENU_CATEGORY, display.getString()).withStyle(Style.EMPTY.withBold(true)));
+        main.append(TranslationHelper.translate(MENU_CATEGORY, display.getString()).withStyle(style -> style.withBold(true)));
         for (String rule : RuleManager.CATEGORIES_RULES.getOrDefault(name, new ArrayList<>())) {
             main.append("\n").append(rule(RuleManager.RULES.get(rule)));
         }
@@ -73,34 +80,38 @@ public class MenuHelper {
      * @param rule 规则
      * @return 规则聊天组件
      */
-    public static @NotNull Component rule(@NotNull CurtainRule<?> rule) {
-        MutableComponent main = new TextComponent("");
-        MutableComponent name = new TextComponent("");
+    public static TextComponent rule(CurtainRule<?> rule) {
+        TextComponent main = new StringTextComponent("");
+        TextComponent name = new StringTextComponent("");
         name.append(rule.getNameComponent());
-        name.append(new TextComponent("(%s): ".formatted(rule.getNormalName())));
-        name.withStyle(Style.EMPTY.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, rule.getDescComponent())));
+        name.append(new StringTextComponent("(%s): ".formatted(rule.getNormalName())));
+        name.withStyle(
+                style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, rule.getDescComponent()))
+        );
         String value = String.valueOf(rule.getValue());
         Collection<String> suggestion = rule.getExamples();
         main.append(name);
-        MutableComponent v = new TextComponent("[%s]".formatted(value))
-                .withStyle(rule.isDefault(value) ? ChatFormatting.DARK_GREEN : ChatFormatting.YELLOW)
-                .withStyle(Style.EMPTY
+        IFormattableTextComponent v = new StringTextComponent("[%s]".formatted(value))
+                .withStyle(style -> style
+                        .withColor(rule.isDefault(value) ? TextFormatting.DARK_GREEN : TextFormatting.YELLOW)
                         .withUnderlined(true)
                         .withClickEvent(new ClickEvent(
                                 ClickEvent.Action.SUGGEST_COMMAND,
                                 "/curtain setValue %s %s".formatted(rule.getNormalName(), value)
                         ))
-                        .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent("单击来快速填充"))));
+                        .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new StringTextComponent("单击来快速填充"))));
         main.append(v);
         for (String s : suggestion) {
             if (s.equals(value)) continue;
             main.append(" ");
-            MutableComponent x = new TextComponent("[%s]".formatted(s))
-                    .withStyle(rule.isDefault(s) ? ChatFormatting.DARK_GREEN : ChatFormatting.YELLOW);
-            x.withStyle(Style.EMPTY.withClickEvent(new ClickEvent(
-                    ClickEvent.Action.SUGGEST_COMMAND,
-                    "/curtain setValue %s %s".formatted(rule.getNormalName(), s)
-            )).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent("单击来快速填充"))));
+            IFormattableTextComponent x = new StringTextComponent("[%s]".formatted(s))
+                    .withStyle(style -> style
+                            .withColor(rule.isDefault(s) ? TextFormatting.DARK_GREEN : TextFormatting.YELLOW)
+                            .withClickEvent(new ClickEvent(
+                                    ClickEvent.Action.SUGGEST_COMMAND,
+                                    "/curtain setValue %s %s".formatted(rule.getNormalName(), s)
+                            ))
+                            .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new StringTextComponent("单击来快速填充"))));
             main.append(x);
         }
         return main;
