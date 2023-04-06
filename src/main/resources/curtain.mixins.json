@@ -14,6 +14,7 @@
     "PrimedTntMixin",
     "ServerChunkCacheMixin",
     "SPlayerListHeaderFooterPacketMixin",
+    "WeightedRandomItemMixin",
     "rules.cactus.DispenserBlockMixin",
     "rules.cactus.HopperBlockMixin",
     "rules.cactus.ServerPlayerGameModeMixin",

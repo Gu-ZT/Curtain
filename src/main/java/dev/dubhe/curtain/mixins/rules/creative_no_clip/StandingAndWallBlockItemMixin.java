@@ -1,30 +1,30 @@
 package dev.dubhe.curtain.mixins.rules.creative_no_clip;
 
 import dev.dubhe.curtain.CurtainRules;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.StandingAndWallBlockItem;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.WallOrFloorItem;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.IWorldReader;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(StandingAndWallBlockItem.class)
+@Mixin(WallOrFloorItem.class)
 public abstract class StandingAndWallBlockItemMixin {
     @Redirect(
             method = "getPlacementState",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/world/level/LevelReader;isUnobstructed(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Z"
+                    target = "Lnet/minecraft/world/IWorldReader;isUnobstructed(Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/shapes/ISelectionContext;)Z"
             )
     )
-    private boolean canCreativePlayerPlace(LevelReader worldView, BlockState state, BlockPos pos, CollisionContext context, BlockPlaceContext itemContext) {
-        Player player = itemContext.getPlayer();
-        if (CurtainRules.creativeNoClip && player != null && player.isCreative() && player.getAbilities().flying) {
+    private boolean canCreativePlayerPlace(IWorldReader worldView, BlockState state, BlockPos pos, ISelectionContext context, BlockItemUseContext itemContext) {
+        PlayerEntity player = itemContext.getPlayer();
+        if (CurtainRules.creativeNoClip && player != null && player.isCreative() && player.abilities.flying) {
             VoxelShape voxelShape = state.getCollisionShape(worldView, pos, context);
             return voxelShape.isEmpty() || worldView.isUnobstructed(player, voxelShape.move(pos.getX(), pos.getY(), pos.getZ()));
         }

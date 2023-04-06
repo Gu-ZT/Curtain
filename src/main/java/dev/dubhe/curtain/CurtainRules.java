@@ -5,12 +5,12 @@ import dev.dubhe.curtain.api.rules.IValidator;
 import dev.dubhe.curtain.api.rules.Rule;
 import dev.dubhe.curtain.api.rules.Validators;
 import dev.dubhe.curtain.utils.TranslationHelper;
-import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.network.chat.TextComponent;
+
+import net.minecraft.command.CommandSource;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.ServerInterface;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
+
 
 import static dev.dubhe.curtain.api.rules.Categories.*;
 
@@ -181,12 +181,12 @@ public class CurtainRules {
     public static boolean creativeNoClip = false;
 
     public static boolean isCreativeFlying(Entity entity) {
-        return creativeNoClip && entity instanceof Player && (((Player) entity).isCreative()) && ((Player) entity).getAbilities().flying;
+        return creativeNoClip && entity instanceof PlayerEntity && (((PlayerEntity) entity).isCreative()) && ((PlayerEntity) entity).abilities.flying;
     }
 
     public static class FakePlayerNameValidator implements IValidator<String> {
         @Override
-        public boolean validate(CommandSourceStack source, CurtainRule<String> rule, String newValue) {
+        public boolean validate(CommandSource source, CurtainRule<String> rule, String newValue) {
             return newValue.matches("^\\w*$");
         }
     }

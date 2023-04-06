@@ -1,26 +1,26 @@
 package dev.dubhe.curtain.mixins.rules.command_player;
 
 import dev.dubhe.curtain.features.player.patches.EntityPlayerMPFake;
-import net.minecraft.network.Connection;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
-import net.minecraft.world.entity.projectile.ThrownEnderpearl;
-import net.minecraft.world.level.Level;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.item.EnderPearlEntity;
+import net.minecraft.entity.projectile.ProjectileItemEntity;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(ThrownEnderpearl.class)
-public abstract class ThrownEnderpearlMixin extends ThrowableItemProjectile {
-    public ThrownEnderpearlMixin(EntityType<? extends ThrowableItemProjectile> entityType_1, Level world_1) {
+@Mixin(EnderPearlEntity.class)
+public abstract class ThrownEnderpearlMixin extends ProjectileItemEntity {
+    public ThrownEnderpearlMixin(EntityType<? extends ProjectileItemEntity> entityType_1, World world_1) {
         super(entityType_1, world_1);
     }
 
     @Redirect(method = "onHit", at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/network/Connection;isConnected()Z"
+            target = "Lnet/minecraft/network/NetworkManager;isConnected()Z"
     ))
-    private boolean isConnectionGood(Connection instance) {
+    private boolean isConnectionGood(NetworkManager instance) {
         return instance.isConnected() || getOwner() instanceof EntityPlayerMPFake;
     }
 }

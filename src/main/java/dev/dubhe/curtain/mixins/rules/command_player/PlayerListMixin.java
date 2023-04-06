@@ -3,13 +3,15 @@ package dev.dubhe.curtain.mixins.rules.command_player;
 import com.mojang.authlib.GameProfile;
 import dev.dubhe.curtain.features.player.patches.EntityPlayerMPFake;
 import dev.dubhe.curtain.features.player.patches.NetHandlerPlayServerFake;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.Connection;
-import net.minecraft.network.chat.TranslatableComponent;
+
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.ServerPlayNetHandler;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.network.ServerGamePacketListenerImpl;
-import net.minecraft.server.players.PlayerList;
+
+import net.minecraft.server.management.PlayerList;
+import net.minecraft.util.text.TranslationTextComponent;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -28,7 +30,7 @@ public class PlayerListMixin {
     @Shadow @Final private MinecraftServer server;
 
     @Inject(method = "load", at = @At(value = "RETURN", shift = At.Shift.BEFORE))
-    private void fixStartingPos(ServerPlayer serverPlayerEntity_1, CallbackInfoReturnable<CompoundTag> cir)
+    private void fixStartingPos(ServerPlayerEntity serverPlayerEntity_1, CallbackInfoReturnable<CompoundNBT> cir)
     {
         if (serverPlayerEntity_1 instanceof EntityPlayerMPFake)
         {
@@ -36,8 +38,8 @@ public class PlayerListMixin {
         }
     }
 
-    @Redirect(method = "placeNewPlayer", at = @At(value = "NEW", target = "net/minecraft/server/network/ServerGamePacketListenerImpl"))
-    private ServerGamePacketListenerImpl replaceNetworkHandler(MinecraftServer server, Connection networkManager, ServerPlayer playerIn)
+    @Redirect(method = "placeNewPlayer", at = @At(value = "NEW", target = "Lnet/minecraft/network/play/ServerPlayNetHandler;<init>(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/network/NetworkManager;Lnet/minecraft/entity/player/ServerPlayerEntity;)V"))
+    private ServerPlayNetHandler replaceNetworkHandler(MinecraftServer server, NetworkManager networkManager, ServerPlayerEntity playerIn)
     {
         boolean isServerPlayerEntity = playerIn instanceof EntityPlayerMPFake;
         if (isServerPlayerEntity)
@@ -46,30 +48,30 @@ public class PlayerListMixin {
         }
         else
         {
-            return new ServerGamePacketListenerImpl(this.server, networkManager, playerIn);
+            return new ServerPlayNetHandler(this.server, networkManager, playerIn);
         }
     }
 
     @Redirect(method = "getPlayerForLogin", at = @At(value = "INVOKE", target = "Ljava/util/Iterator;hasNext()Z"))
-    private boolean cancelWhileLoop(Iterator<ServerPlayer> iterator)
+    private boolean cancelWhileLoop(Iterator<ServerPlayerEntity> iterator)
     {
         return false;
     }
 
     @Inject(method = "getPlayerForLogin", at = @At(value = "INVOKE", shift = At.Shift.BEFORE,
             target = "Ljava/util/Iterator;hasNext()Z"), locals = LocalCapture.CAPTURE_FAILHARD)
-    private void newWhileLoop(GameProfile gameProfile_1, CallbackInfoReturnable<ServerPlayer> cir, UUID uUID_1,
-                              List<ServerPlayer> list_1, ServerPlayer serverPlayerEntity, Iterator<ServerPlayer> var5)
+    private void newWhileLoop(GameProfile gameProfile_1, CallbackInfoReturnable<ServerPlayerEntity> cir, UUID uUID_1,
+                              List<ServerPlayerEntity> list_1, ServerPlayerEntity serverPlayerEntity, Iterator<ServerPlayerEntity> var5)
     {
         while (var5.hasNext())
         {
-            ServerPlayer serverPlayerEntity_3 = var5.next();
+            ServerPlayerEntity serverPlayerEntity_3 = var5.next();
             if(serverPlayerEntity_3 instanceof EntityPlayerMPFake)
             {
-                ((EntityPlayerMPFake)serverPlayerEntity_3).kill(new TranslatableComponent("multiplayer.disconnect.duplicate_login"));
+                ((EntityPlayerMPFake)serverPlayerEntity_3).kill(new TranslationTextComponent("multiplayer.disconnect.duplicate_login"));
                 continue;
             }
-            serverPlayerEntity_3.connection.disconnect(new TranslatableComponent("multiplayer.disconnect.duplicate_login"));
+            serverPlayerEntity_3.connection.disconnect(new TranslationTextComponent("multiplayer.disconnect.duplicate_login"));
         }
     }
 }

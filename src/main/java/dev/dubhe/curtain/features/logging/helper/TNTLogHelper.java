@@ -3,22 +3,23 @@ package dev.dubhe.curtain.features.logging.helper;
 import dev.dubhe.curtain.features.logging.AbstractLogger;
 import dev.dubhe.curtain.features.logging.LoggerManager;
 import dev.dubhe.curtain.utils.Messenger;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.ITextComponent;
+
 
 public class TNTLogHelper {
     public boolean initialized;
     private double primedX, primedY, primedZ;
     private static long lastGametime = 0;
     private static int tntCount = 0;
-    private Vec3 primedAngle;
-    private static Component log;
+    private Vector3d primedAngle;
+    private static ITextComponent log;
 
     /**
      * Runs when the TNT is primed. Expects the position and motion angle of the TNT.
      */
-    public void onPrimed(double x, double y, double z, Vec3 motion) {
+    public void onPrimed(double x, double y, double z, Vector3d motion) {
         primedX = x;
         primedY = y;
         primedZ = z;
@@ -53,7 +54,7 @@ public class TNTLogHelper {
         }
 
         @Override
-        public Component display(ServerPlayer player) {
+        public ITextComponent display(ServerPlayerEntity player) {
             return log;
         }
     }

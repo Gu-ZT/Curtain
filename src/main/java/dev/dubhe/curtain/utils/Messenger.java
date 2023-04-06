@@ -12,6 +12,7 @@ import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
@@ -34,10 +35,10 @@ public class Messenger {
 
     public enum CarpetFormatting {
         ITALIC('i', (s, f) -> s.withItalic(true)),
-        STRIKE('s', (s, f) -> s.withColor(TextFormatting.STRIKETHROUGH)),
-        UNDERLINE('u', (s, f) -> s.withColor(TextFormatting.UNDERLINE)),
+        STRIKE('s', (s, f) -> s.applyFormat(TextFormatting.STRIKETHROUGH)),
+        UNDERLINE('u', (s, f) -> s.applyFormat(TextFormatting.UNDERLINE)),
         BOLD('b', (s, f) -> s.withBold(true)),
-        OBFUSCATE('o', (s, f) -> s.withColor(TextFormatting.OBFUSCATED)),
+        OBFUSCATE('o', (s, f) -> s.applyFormat(TextFormatting.OBFUSCATED)),
 
         WHITE('w', (s, f) -> s.withColor(TextFormatting.WHITE)),
         YELLOW('y', (s, f) -> s.withColor(TextFormatting.YELLOW)),
@@ -104,22 +105,17 @@ public class Messenger {
     }
 
     public static String creatureTypeColor(EntityClassification type) {
-        switch (type) {
-            case MONSTER:
-                return "n";
-            case CREATURE:
-                return "e";
-            case AMBIENT:
-                return "f";
-            case WATER_CREATURE:
-                return "v";
-            case WATER_AMBIENT:
-                return "q";
-        }
-        return "w";
+        return switch (type) {
+            case MONSTER -> "n";
+            case CREATURE -> "e";
+            case AMBIENT -> "f";
+            case WATER_CREATURE -> "v";
+            case WATER_AMBIENT -> "q";
+            default -> "w";
+        };
     }
 
-    private static IFormattableTextComponent _getChatComponentFromDesc(String message, IFormattableTextComponent previous_message) {
+    private static TextComponent _getChatComponentFromDesc(String message, TextComponent previous_message) {
         if (message.equalsIgnoreCase("")) {
             return new StringTextComponent("");
         }
@@ -162,37 +158,37 @@ public class Messenger {
                 );
             return previous_message;
         }
-        StringTextComponent txt = new StringTextComponent(str);
+        TextComponent txt = new StringTextComponent(str);
         txt.setStyle(parseStyle(desc));
         return txt;
     }
 
-    public static IFormattableTextComponent tp(String desc, Vector3d pos) {
+    public static TextComponent tp(String desc, Vector3d pos) {
         return tp(desc, pos.x, pos.y, pos.z);
     }
 
-    public static IFormattableTextComponent tp(String desc, BlockPos pos) {
+    public static TextComponent tp(String desc, BlockPos pos) {
         return tp(desc, pos.getX(), pos.getY(), pos.getZ());
     }
 
-    public static IFormattableTextComponent tp(String desc, double x, double y, double z) {
+    public static TextComponent tp(String desc, double x, double y, double z) {
         return tp(desc, (float) x, (float) y, (float) z);
     }
 
-    public static IFormattableTextComponent tp(String desc, float x, float y, float z) {
+    public static TextComponent tp(String desc, float x, float y, float z) {
         return _getCoordsTextComponent(desc, x, y, z, false);
     }
 
-    public static IFormattableTextComponent tp(String desc, int x, int y, int z) {
+    public static TextComponent tp(String desc, int x, int y, int z) {
         return _getCoordsTextComponent(desc, (float) x, (float) y, (float) z, true);
     }
 
     /// to be continued
-    public static IFormattableTextComponent dbl(String style, double double_value) {
+    public static TextComponent dbl(String style, double double_value) {
         return c(String.format("%s %.1f", style, double_value), String.format("^w %f", double_value));
     }
 
-    public static IFormattableTextComponent dbls(String style, double... doubles) {
+    public static TextComponent dbls(String style, double... doubles) {
         StringBuilder str = new StringBuilder(style + " [ ");
         String prefix = "";
         for (double dbl : doubles) {
@@ -203,7 +199,7 @@ public class Messenger {
         return c(str.toString());
     }
 
-    public static IFormattableTextComponent dblf(String style, double... doubles) {
+    public static TextComponent dblf(String style, double... doubles) {
         StringBuilder str = new StringBuilder(style + " [ ");
         String prefix = "";
         for (double dbl : doubles) {
@@ -214,7 +210,7 @@ public class Messenger {
         return c(str.toString());
     }
 
-    public static IFormattableTextComponent dblt(String style, double... doubles) {
+    public static TextComponent dblt(String style, double... doubles) {
         List<Object> components = new ArrayList<>();
         components.add(style + " [ ");
         String prefix = "";
@@ -230,7 +226,7 @@ public class Messenger {
         return c(components.toArray(new Object[0]));
     }
 
-    private static IFormattableTextComponent _getCoordsTextComponent(String style, float x, float y, float z, boolean isInt) {
+    private static TextComponent _getCoordsTextComponent(String style, float x, float y, float z, boolean isInt) {
         String text;
         String command;
         if (isInt) {
@@ -256,17 +252,17 @@ public class Messenger {
     /*
     composes single line, multicomponent message, and returns as one chat messagge
      */
-    public static IFormattableTextComponent c(Object... fields) {
-        IFormattableTextComponent message = new StringTextComponent("");
-        IFormattableTextComponent previous_component = null;
+    public static TextComponent c(Object... fields) {
+        TextComponent message = new StringTextComponent("");
+        TextComponent previous_component = null;
         for (Object o : fields) {
-            if (o instanceof IFormattableTextComponent) {
-                message.append((IFormattableTextComponent) o);
-                previous_component = (IFormattableTextComponent) o;
+            if (o instanceof TextComponent) {
+                message.append((TextComponent) o);
+                previous_component = (TextComponent) o;
                 continue;
             }
             String txt = o.toString();
-            IFormattableTextComponent comp = _getChatComponentFromDesc(txt, previous_component);
+            TextComponent comp = _getChatComponentFromDesc(txt, previous_component);
             if (comp != previous_component) message.append(comp);
             previous_component = comp;
         }
@@ -275,22 +271,22 @@ public class Messenger {
 
     //simple text
 
-    public static IFormattableTextComponent s(String text) {
+    public static TextComponent s(String text) {
         return s(text, "");
     }
 
-    public static IFormattableTextComponent s(String text, String style) {
-        IFormattableTextComponent message = new StringTextComponent(text);
+    public static TextComponent s(String text, String style) {
+        TextComponent message = new StringTextComponent(text);
         message.setStyle(parseStyle(style));
         return message;
     }
 
 
-    public static void send(PlayerEntity player, Collection<IFormattableTextComponent> lines) {
+    public static void send(PlayerEntity player, Collection<TextComponent> lines) {
         lines.forEach(message -> player.sendMessage(message, Util.NIL_UUID));
     }
 
-    public static void send(CommandSource source, Collection<IFormattableTextComponent> lines) {
+    public static void send(CommandSource source, Collection<TextComponent> lines) {
         lines.stream().forEachOrdered((s) -> source.sendSuccess(s, false));
     }
 
@@ -299,13 +295,13 @@ public class Messenger {
         if (server == null)
             LOG.error("Message not delivered: " + message);
         server.sendMessage(new StringTextComponent(message), Util.NIL_UUID);
-        IFormattableTextComponent txt = c("gi " + message);
+        TextComponent txt = c("gi " + message);
         for (PlayerEntity entityplayer : server.getPlayerList().getPlayers()) {
             entityplayer.sendMessage(txt, Util.NIL_UUID);
         }
     }
 
-    public static void print_server_message(MinecraftServer server, IFormattableTextComponent message) {
+    public static void print_server_message(MinecraftServer server, TextComponent message) {
         if (server == null)
             LOG.error("Message not delivered: " + message.getString());
         server.sendMessage(message, Util.NIL_UUID);

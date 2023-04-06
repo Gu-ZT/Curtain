@@ -1,9 +1,10 @@
 package dev.dubhe.curtain.mixins.rules.cactus;
 
 import dev.dubhe.curtain.utils.BlockRotator;
-import net.minecraft.core.Direction;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.block.HopperBlock;
+
+import net.minecraft.block.HopperBlock;
+import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.util.Direction;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -14,10 +15,10 @@ public abstract class HopperBlockMixin {
             method = "getStateForPlacement",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/world/item/context/BlockPlaceContext;getClickedFace()Lnet/minecraft/core/Direction;"
+                    target = "Lnet/minecraft/item/BlockItemUseContext;getClickedFace()Lnet/minecraft/util/Direction;"
             )
     )
-    private Direction getOppositeOpposite(BlockPlaceContext context) {
+    private Direction getOppositeOpposite(BlockItemUseContext context) {
         if (BlockRotator.flippinEligibility(context.getPlayer())) {
             return context.getClickedFace().getOpposite();
         }

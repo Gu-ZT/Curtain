@@ -1,9 +1,10 @@
 package dev.dubhe.curtain.features.player.fakes;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.world.level.Level;
+
+import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public interface IPistonBlock {
-    boolean publicShouldExtend(Level world, BlockPos blockPos, Direction direction);
+    boolean publicShouldExtend(World world, BlockPos blockPos, Direction direction);
 }
