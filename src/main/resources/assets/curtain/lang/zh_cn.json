@@ -97,8 +97,8 @@
   "curtain.rules.tnt_primer_momentum_removed.name": "移除TNT点燃时随机动量",
   "curtain.rules.tnt_primer_momentum_removed.desc": "TNT点燃时的随机动量将被移除",
 
-  "curtain.rules.hard_code_tnt_angle.name": "硬编码TNT角度",
-  "curtain.rules.hard_code_tnt_angle.desc": "把TNT水平随机角度设为固定值，可用于测试机器\n设为-1以使用默认值",
+  "curtain.rules.hardcode_tnt_angle.name": "硬编码TNT角度",
+  "curtain.rules.hardcode_tnt_angle.desc": "把TNT水平随机角度设为固定值，可用于测试机器\n设为-1以使用默认值",
 
   "curtain.rules.merge_tnt.name": "合并TNT",
   "curtain.rules.merge_tnt.desc": "合并静止的点燃的TNT实体",

@@ -54,3 +54,37 @@ jobs:
         uses: softprops/action-gh-release@v0.1.15
         with:
           files: build/libs/${{ steps.find-jar.outputs.jarname }}
+
+      - name: "✏️ Generate release changelog"
+        uses: heinrichreimer/github-changelog-generator-action@v2.3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          output: CHANGELOG.MD
+
+      - name: Commit
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: update Changelog
+          file_pattern: "CHANGELOG.MD"
+          branch: 1.19.2-dev
+          repository: .
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
+
+      - name: Split changelog
+        run: python .github/workflows/scripts/split_changelog.py
+
+      - name: publish mc mod
+        uses: Kir-Antipov/mc-publish@v3.2
+        with:
+          modrinth-id: 2Vw36Ezz
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+
+          curseforge-id: 845348
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+
+          files-primary: build/libs/${{ steps.find-jar.outputs.jarname }}
+          changelog-file: NEW_LOG.MD

@@ -4,6 +4,7 @@ import dev.dubhe.curtain.features.player.fakes.IEntity;
 import dev.dubhe.curtain.features.player.patches.EntityPlayerMPFake;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -24,7 +25,8 @@ public abstract class EntityMixin implements IEntity {
 
     @Shadow public Level level;
 
-    @Shadow @Nullable public abstract Entity getControllingPassenger();
+
+    @Shadow @Nullable public abstract LivingEntity getControllingPassenger();
 
     @Override
     public float getMainYaw(float partialTicks)

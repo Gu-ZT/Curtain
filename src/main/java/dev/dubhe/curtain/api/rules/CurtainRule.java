@@ -209,4 +209,12 @@ public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
     public String getNormalName() {
         return field.getName();
     }
+
+    public String[] getSuggestions() {
+        return suggestions;
+    }
+
+    public T getDefaultValue() {
+        return defaultValue;
+    }
 }
