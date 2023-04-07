@@ -88,15 +88,18 @@ public class MenuHelper {
                         .withUnderlined(true)
                         .withClickEvent(new ClickEvent(
                                 ClickEvent.Action.SUGGEST_COMMAND,
-                                "/curtain setValue %s %s".formatted(rule.getNormalName(), value)
+                                "/curtain setValue %s %s".formatted(rule.getNormalName(),
+                                        rule.getType() == String.class ? "\"%s\"".formatted(value) : value)
                         ))
                         .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent("单击来快速填充"))));
         main.append(v);
         for (String s : suggestion) {
-            if (s.equals(value)) continue;
+            if (replaceQuotation(s).equals(value)) continue;
             main.append(" ");
-            MutableComponent x = new TextComponent("[%s]".formatted(s))
-                    .withStyle(rule.isDefault(s) ? ChatFormatting.DARK_GREEN : ChatFormatting.YELLOW);
+
+            MutableComponent x = new TextComponent("[%s]".formatted(replaceQuotation(s)))
+                    .withStyle(rule.isDefault(replaceQuotation(s)) ? ChatFormatting.DARK_GREEN : ChatFormatting.YELLOW);
+
             x.withStyle(Style.EMPTY.withClickEvent(new ClickEvent(
                     ClickEvent.Action.SUGGEST_COMMAND,
                     "/curtain setValue %s %s".formatted(rule.getNormalName(), s)
@@ -104,5 +107,9 @@ public class MenuHelper {
             main.append(x);
         }
         return main;
+    }
+
+    private static String replaceQuotation(String s) {
+        return s.replace("\"", "");
     }
 }
