@@ -21,10 +21,7 @@ public class LogCommand {
                         .suggests((context, builder) -> suggest(LoggerManager.getLoggerSet(), builder))
                         .executes(context -> {
                             String loggerName = StringArgumentType.getString(context, "loggerName");
-                            ServerPlayer player = context.getSource().getPlayer();
-                            if (player == null) {
-                                return 0;
-                            }
+                            ServerPlayer player = context.getSource().getPlayerOrException();
                             if (LoggerManager.isSubscribedLogger(player.getName().getString(), loggerName)) {
                                 LoggerManager.unsubscribeLogger(player.getName().getString(), loggerName);
                             } else {

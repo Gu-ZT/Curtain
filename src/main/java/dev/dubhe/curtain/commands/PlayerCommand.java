@@ -2,6 +2,7 @@ package dev.dubhe.curtain.commands;
 
 //Copy from https://github.com/gnembon/fabric-carpet/blob/master/src/main/java/carpet/commands/PlayerCommand.java
 
+import com.google.common.collect.Sets;
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
@@ -15,14 +16,15 @@ import dev.dubhe.curtain.features.player.fakes.IServerPlayer;
 import dev.dubhe.curtain.features.player.helpers.EntityPlayerActionPack;
 import dev.dubhe.curtain.features.player.patches.EntityPlayerMPFake;
 import dev.dubhe.curtain.utils.CommandHelper;
-import dev.dubhe.curtain.utils.Messenger;
+import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.arguments.DimensionArgument;
 import net.minecraft.commands.arguments.coordinates.RotationArgument;
 import net.minecraft.commands.arguments.coordinates.Vec3Argument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.UUIDUtil;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
@@ -33,7 +35,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Set;
 import java.util.function.Consumer;
 
 import static net.minecraft.commands.Commands.argument;
@@ -41,10 +45,12 @@ import static net.minecraft.commands.Commands.literal;
 import static net.minecraft.commands.SharedSuggestionProvider.suggest;
 
 public class PlayerCommand {
+
+    // TODO: allow any order like execute
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         final String[] gamemodeStrings = Arrays.stream(GameType.values())
-                .map(GameType::getName)
-                .toArray(String[]::new);
+                .map(GameType::getName).toList()
+                .toArray(new String[]{});
         LiteralArgumentBuilder<CommandSourceStack> literalargumentbuilder = literal("player")
                 .requires((player) -> CommandHelper.canUseCommand(player, CurtainRules.commandPlayer))
                 .then(argument("player", StringArgumentType.word())
@@ -132,7 +138,7 @@ public class PlayerCommand {
     }
 
     private static Collection<String> getPlayers(CommandSourceStack source) {
-        Set<String> players = new LinkedHashSet<>(List.of("Steve", "Alex"));
+        Set<String> players = Sets.newLinkedHashSet(Arrays.asList("Steve", "Alex"));
         players.addAll(source.getOnlinePlayerNames());
         return players;
     }
@@ -146,7 +152,7 @@ public class PlayerCommand {
     private static boolean cantManipulate(CommandContext<CommandSourceStack> context) {
         Player player = getPlayer(context);
         if (player == null) {
-            Messenger.m(context.getSource(), "r Can only manipulate existing players");
+            sendFeedback(context.getSource(), new TextComponent("Can only manipulate existing players").withStyle(ChatFormatting.RED));
             return true;
         }
         Player sendingPlayer;
@@ -156,11 +162,9 @@ public class PlayerCommand {
             return false;
         }
 
-        if (!context.getSource().getServer().getPlayerList().isOp(sendingPlayer.getGameProfile())) {
-            if (sendingPlayer != player && !(player instanceof EntityPlayerMPFake)) {
-                Messenger.m(context.getSource(), "r Non OP players can't control other real players");
-                return true;
-            }
+        if (!context.getSource().getServer().getPlayerList().isOp(sendingPlayer.getGameProfile()) && sendingPlayer != player && !(player instanceof EntityPlayerMPFake)) {
+            sendFeedback(context.getSource(), new TextComponent("Non OP players can't control other real players").withStyle(ChatFormatting.RED));
+            return true;
         }
         return false;
     }
@@ -169,7 +173,7 @@ public class PlayerCommand {
         if (cantManipulate(context)) return true;
         Player player = getPlayer(context);
         if (player instanceof EntityPlayerMPFake) return false;
-        Messenger.m(context.getSource(), "r Only fake players can be moved or killed");
+        sendFeedback(context.getSource(), new TextComponent("Only fake players can be moved or killed").withStyle(ChatFormatting.RED));
         return true;
     }
 
@@ -182,25 +186,25 @@ public class PlayerCommand {
         PlayerList manager = server.getPlayerList();
         Player player = manager.getPlayerByName(playerName);
         if (player != null) {
-            Messenger.m(context.getSource(), "r Player ", "rb " + playerName, "r  is already logged on");
+            sendFeedback(context.getSource(), new TextComponent("Player ").withStyle(ChatFormatting.RED)
+                    .append(new TextComponent(playerName).withStyle(ChatFormatting.RED))
+                    .append(new TextComponent(" is already logged on").withStyle(ChatFormatting.RED).withStyle(ChatFormatting.BOLD))
+            );
             return true;
         }
         GameProfile profile = server.getProfileCache().get(playerName).orElse(null);
         if (profile == null) {
-            if (!CurtainRules.allowSpawningOfflinePlayers) {
-                Messenger.m(context.getSource(), "r Player " + playerName + " is either banned by Mojang, or auth servers are down. " +
-                        "Banned players can only be summoned in Singleplayer and in servers in off-line mode.");
-                return true;
-            } else {
-                profile = new GameProfile(UUIDUtil.createOfflinePlayerUUID(playerName), playerName);
-            }
+            profile = new GameProfile(Player.createPlayerUUID(playerName), playerName);
         }
         if (manager.getBans().isBanned(profile)) {
-            Messenger.m(context.getSource(), "r Player ", "rb " + playerName, "r  is banned on this server");
+            sendFeedback(context.getSource(), new TextComponent("Player ").withStyle(ChatFormatting.RED)
+                    .append(new TextComponent(playerName).withStyle(ChatFormatting.RED))
+                    .append(new TextComponent(" is banned on this server").withStyle(ChatFormatting.RED).withStyle(ChatFormatting.BOLD))
+            );
             return true;
         }
         if (manager.isUsingWhitelist() && manager.isWhiteListed(profile) && !context.getSource().hasPermission(2)) {
-            Messenger.m(context.getSource(), "r Whitelisted players can only be spawned by operators");
+            sendFeedback(context.getSource(), new TextComponent("Whitelisted players can only be spawned by operators").withStyle(ChatFormatting.RED));
             return true;
         }
         return false;
@@ -214,9 +218,9 @@ public class PlayerCommand {
 
     private static int lookAt(CommandContext<CommandSourceStack> context) {
         return manipulate(context, ap -> {
-            //try {
+//            try {
             ap.lookAt(Vec3Argument.getVec3(context, "position"));
-            //} catch (CommandSyntaxException ignored) {}
+//            } catch (CommandSyntaxException ignore) {}
         });
     }
 
@@ -233,21 +237,13 @@ public class PlayerCommand {
         }
     }
 
+    @SuppressWarnings("ConstantConditions")
     private static int spawn(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         if (cantSpawn(context)) return 0;
         CommandSourceStack source = context.getSource();
-        Vec3 pos = tryGetArg(
-                () -> Vec3Argument.getVec3(context, "position"),
-                source::getPosition
-        );
-        Vec2 facing = tryGetArg(
-                () -> RotationArgument.getRotation(context, "direction").getRotation(context.getSource()),
-                source::getRotation
-        );
-        ResourceKey<Level> dimType = tryGetArg(
-                () -> DimensionArgument.getDimension(context, "dimension").dimension(),
-                () -> source.getLevel().dimension() // dimension.getType()
-        );
+        Vec3 pos = tryGetArg(() -> Vec3Argument.getVec3(context, "position"), source::getPosition);
+        Vec2 facing = tryGetArg(() -> RotationArgument.getRotation(context, "direction").getRotation(context.getSource()), source::getRotation);
+        ResourceKey<Level> dimType = tryGetArg(() -> DimensionArgument.getDimension(context, "dimension").dimension(), () -> source.getLevel().dimension());
         GameType mode = GameType.CREATIVE;
         boolean flying = false;
         try {
@@ -260,7 +256,7 @@ public class PlayerCommand {
             String opGameMode = StringArgumentType.getString(context, "gamemode");
             mode = GameType.byName(opGameMode, null);
             if (mode == null) {
-                Messenger.m(context.getSource(), "rb Invalid game mode: " + opGameMode + ".");
+                sendFeedback(context.getSource(), new TextComponent("Invalid game mode: " + opGameMode + ".").withStyle(ChatFormatting.RED).withStyle(ChatFormatting.BOLD));
                 return 0;
             }
         } catch (IllegalArgumentException ignored) {
@@ -268,28 +264,25 @@ public class PlayerCommand {
         if (mode == GameType.SPECTATOR) {
             // Force override flying to true for spectator players, or they will fell out of the world.
             flying = true;
-        } else if (mode.isSurvival()) {
-            // Force override flying to false for survival-like players, or they will fly too
-            flying = false;
         }
         String playerName = StringArgumentType.getString(context, "player");
         String prefix = "none".equals(CurtainRules.fakePlayerNamePrefix) || playerName.startsWith(CurtainRules.fakePlayerNamePrefix) ? "" : CurtainRules.fakePlayerNamePrefix;
         String suffix = "none".equals(CurtainRules.fakePlayerNameSuffix) || playerName.endsWith(CurtainRules.fakePlayerNameSuffix) ? "" : CurtainRules.fakePlayerNameSuffix;
         playerName = prefix + playerName + suffix;
         if (playerName.length() > maxPlayerLength(source.getServer())) {
-            Messenger.m(context.getSource(), "rb Player name: " + playerName + " is too long");
+            sendFeedback(context.getSource(), new TextComponent("Player name: " + playerName + " is too long").withStyle(ChatFormatting.RED).withStyle(ChatFormatting.BOLD));
             return 0;
         }
 
         MinecraftServer server = source.getServer();
         if (!Level.isInSpawnableBounds(new BlockPos(pos.x, pos.y, pos.z))) {
-            Messenger.m(context.getSource(), "rb Player " + playerName + " cannot be placed outside of the world");
+            sendFeedback(context.getSource(), new TextComponent("Player " + playerName + " cannot be placed outside of the world").withStyle(ChatFormatting.RED).withStyle(ChatFormatting.BOLD));
             return 0;
         }
-        Player player = EntityPlayerMPFake.createFakePlayer(playerName, server, pos.x, pos.y, pos.z, facing.y, facing.x, dimType, mode, flying);
+        Player player = EntityPlayerMPFake.createFake(playerName, server, pos.x, pos.y, pos.z, facing.y, facing.x, dimType, mode, flying);
         if (player == null) {
-            Messenger.m(context.getSource(), "rb Player " + StringArgumentType.getString(context, "player") + " doesn't exist " +
-                    "and cannot spawn in online mode. Turn the server offline to spawn non-existing players");
+            sendFeedback(context.getSource(), new TextComponent("Player " + playerName + " doesn't exist " +
+                    "and cannot spawn in online mode. Turn the server offline to spawn non-existing players").withStyle(ChatFormatting.RED).withStyle(ChatFormatting.BOLD));
             return 0;
         }
         return 1;
@@ -324,7 +317,7 @@ public class PlayerCommand {
     private static int shadow(CommandContext<CommandSourceStack> context) {
         ServerPlayer player = getPlayer(context);
         if (player instanceof EntityPlayerMPFake) {
-            Messenger.m(context.getSource(), "r Cannot shadow fake players");
+            sendFeedback(context.getSource(), new TextComponent("Cannot shadow fake players").withStyle(ChatFormatting.RED));
             return 0;
         }
         ServerPlayer sendingPlayer = null;
@@ -336,5 +329,9 @@ public class PlayerCommand {
         if (sendingPlayer != player && cantManipulate(context)) return 0;
         EntityPlayerMPFake.createShadow(player.server, player);
         return 1;
+    }
+
+    private static void sendFeedback(CommandSourceStack source, Component message) {
+        source.sendSuccess(message, source.getServer().getLevel(Level.OVERWORLD) != null);
     }
 }

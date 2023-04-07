@@ -2,6 +2,7 @@ package dev.dubhe.curtain.features.player.menu.component;
 
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -19,7 +20,7 @@ public class RadioButtonPanel extends Button{
     private int selected_Button = 0;
 
     public RadioButtonPanel(Item ToggledOn_DisplayItem,Item toggledOff_DisplayItem ,List<Pair<Integer, Integer>> slotsAndItemCounts, List<Function> functions,List<Pair<Component,Component>> text,Container container) {
-        super(true, ToggledOn_DisplayItem, 0, Component.empty(), container, 0);
+        super(true, ToggledOn_DisplayItem, 0, new TextComponent(""), container, 0);
         this.SlotsAndItemCounts = slotsAndItemCounts;
         this.FunctionsForEveryButton = functions;
         this.ToggledOff_DisplayItem = toggledOff_DisplayItem;

@@ -20,7 +20,7 @@ public class MenuHelper {
      * @return 主菜单聊天组件
      */
     public static @NotNull Component main() {
-        MutableComponent main = Component.empty();
+        MutableComponent main = new TextComponent("");
         MutableComponent title = TranslationHelper.translate(MENU_TITLE).withStyle(Style.EMPTY.withBold(true));
         main.append(title).append("\n");
         for (CurtainRule<?> rule : Curtain.rules.ruleMap.values()) {
@@ -32,7 +32,7 @@ public class MenuHelper {
         MutableComponent categories = TranslationHelper.translate(MENU_CATEGORIES).withStyle(Style.EMPTY.withBold(true));
         main.append(categories);
         for (String s : RuleManager.CATEGORIES_RULES.keySet()) {
-            MutableComponent category = Component.empty().withStyle(ChatFormatting.AQUA);
+            MutableComponent category = new TextComponent("").withStyle(ChatFormatting.AQUA);
             category.append("[");
             category.append(TranslationHelper.translate(CATEGORIES.formatted(Curtain.MODID, s)));
             category.append("]");
@@ -55,8 +55,8 @@ public class MenuHelper {
      * @return 分类聊天组件
      */
     public static @NotNull Component category(String name) {
-        MutableComponent main = Component.empty();
-        MutableComponent display = Component.literal(name);
+        MutableComponent main = new TextComponent("");
+        MutableComponent display = new TextComponent(name);
         if (RuleManager.CATEGORIES_RULES.containsKey(name)) {
             display = TranslationHelper.translate(CATEGORIES.formatted(Curtain.MODID, name));
         }
@@ -74,15 +74,15 @@ public class MenuHelper {
      * @return 规则聊天组件
      */
     public static @NotNull Component rule(@NotNull CurtainRule<?> rule) {
-        MutableComponent main = Component.empty();
-        MutableComponent name = Component.empty();
+        MutableComponent main = new TextComponent("");
+        MutableComponent name = new TextComponent("");
         name.append(rule.getNameComponent());
-        name.append(Component.literal("(%s): ".formatted(rule.getNormalName())));
+        name.append(new TextComponent("(%s): ".formatted(rule.getNormalName())));
         name.withStyle(Style.EMPTY.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, rule.getDescComponent())));
         String value = String.valueOf(rule.getValue());
         Collection<String> suggestion = rule.getExamples();
         main.append(name);
-        MutableComponent v = Component.literal("[%s]".formatted(value))
+        MutableComponent v = new TextComponent("[%s]".formatted(value))
                 .withStyle(rule.isDefault(value) ? ChatFormatting.DARK_GREEN : ChatFormatting.YELLOW)
                 .withStyle(Style.EMPTY
                         .withUnderlined(true)
@@ -91,17 +91,19 @@ public class MenuHelper {
                                 "/curtain setValue %s %s".formatted(rule.getNormalName(),
                                         rule.getType() == String.class ? "\"%s\"".formatted(value) : value)
                         ))
-                        .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("单击来快速填充"))));
+                        .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent("单击来快速填充"))));
         main.append(v);
         for (String s : suggestion) {
             if (replaceQuotation(s).equals(value)) continue;
             main.append(" ");
-            MutableComponent x = Component.literal("[%s]".formatted(replaceQuotation(s)))
+
+            MutableComponent x = new TextComponent("[%s]".formatted(replaceQuotation(s)))
                     .withStyle(rule.isDefault(replaceQuotation(s)) ? ChatFormatting.DARK_GREEN : ChatFormatting.YELLOW);
+
             x.withStyle(Style.EMPTY.withClickEvent(new ClickEvent(
                     ClickEvent.Action.SUGGEST_COMMAND,
                     "/curtain setValue %s %s".formatted(rule.getNormalName(), s)
-            )).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("单击来快速填充"))));
+            )).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent("单击来快速填充"))));
             main.append(x);
         }
         return main;

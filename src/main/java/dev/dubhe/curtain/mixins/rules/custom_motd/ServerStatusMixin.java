@@ -2,6 +2,7 @@ package dev.dubhe.curtain.mixins.rules.custom_motd;
 
 import dev.dubhe.curtain.CurtainRules;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.protocol.status.ServerStatus;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -13,7 +14,7 @@ public abstract class ServerStatusMixin {
     @Inject(method = "getDescription", at = @At("HEAD"), cancellable = true)
     private void getDescriptionAlternative(CallbackInfoReturnable<Component> cir) {
         if (!CurtainRules.customMOTD.contentEquals("none")) {
-            cir.setReturnValue(Component.literal(CurtainRules.customMOTD));
+            cir.setReturnValue(new TextComponent(CurtainRules.customMOTD));
             cir.cancel();
         }
     }

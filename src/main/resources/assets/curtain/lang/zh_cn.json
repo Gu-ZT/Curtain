@@ -79,9 +79,6 @@
   "curtain.rules.desert_shrubs.name": "树苗在沙漠干枯",
   "curtain.rules.desert_shrubs.desc": "炎热无水的气候下树苗变成枯萎的灌木",
 
-  "curtain.rules.xp_from_explosions.name": "爆炸掉落经验",
-  "curtain.rules.xp_from_explosions.desc": "任何类型的爆炸都能使能掉落经验的方块掉落经验",
-
   "curtain.rules.explosion_no_block_damage.name": "爆炸不摧毁方块",
   "curtain.rules.explosion_no_block_damage.desc": "爆炸不摧毁方块",
 
