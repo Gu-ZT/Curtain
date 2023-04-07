@@ -64,7 +64,7 @@ public class ToggledButton extends Button {
         );
 
         ItemStack slotItem = container.getItem(Slot);
-        if (slotItem.is(this.Enabled_DisplayItem) || slotItem.is(this.Disabled_DisplayItem) || slotItem.is(this.ToggledOff_DisplayItem) || slotItem.isEmpty()) {
+        if (slotItem.getItem() == this.Enabled_DisplayItem || slotItem.getItem() == this.Disabled_DisplayItem || slotItem.getItem() == this.ToggledOff_DisplayItem || slotItem.isEmpty()) {
             container.setItem(Slot, DisplayItem);
         }
     }

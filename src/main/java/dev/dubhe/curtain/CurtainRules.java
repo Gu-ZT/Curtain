@@ -9,7 +9,9 @@ import dev.dubhe.curtain.utils.TranslationHelper;
 import net.minecraft.command.CommandSource;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.network.rcon.IServer;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.text.StringTextComponent;
 
 
 import static dev.dubhe.curtain.api.rules.Categories.*;
@@ -20,7 +22,7 @@ public class CurtainRules {
 
     public static class LanguageValidator implements IValidator<String> {
         @Override
-        public boolean validate(CommandSourceStack source, CurtainRule<String> rule, String newValue) {
+        public boolean validate(CommandSource source, CurtainRule<String> rule, String newValue) {
             return TranslationHelper.getLanguages().contains(newValue);
         }
     }
@@ -34,7 +36,7 @@ public class CurtainRules {
 
     public static class ViewDistanceValidator implements IValidator<Integer> {
         @Override
-        public boolean validate(CommandSourceStack source, CurtainRule<Integer> rule, String newValue) {
+        public boolean validate(CommandSource source, CurtainRule<Integer> rule, String newValue) {
             int value;
             try {
                 value = Integer.parseInt(newValue);
@@ -42,19 +44,19 @@ public class CurtainRules {
                 return false;
             }
             if (value < 0 || value > 32) {
-                source.sendFailure(new TextComponent("view distance has to be between 0 and 32"));
+                source.sendFailure(new StringTextComponent("view distance has to be between 0 and 32"));
                 return false;
             }
             MinecraftServer server = source.getServer();
             if (server.isDedicatedServer()) {
-                int vd = (value > 2) ? value : ((ServerInterface) server).getProperties().viewDistance;
+                int vd = (value > 2) ? value : ((IServer) server).getProperties().viewDistance;
                 if (vd != server.getPlayerList().getViewDistance()) {
                     server.getPlayerList().setViewDistance(vd);
                 }
 
                 return true;
             } else {
-                source.sendFailure(new TextComponent("view distance can only be changed on a server"));
+                source.sendFailure(new StringTextComponent("view distance can only be changed on a server"));
                 return false;
             }
         }
@@ -146,7 +148,7 @@ public class CurtainRules {
     public static class StackableShulkerBoxValidator implements IValidator<String> {
 
         @Override
-        public boolean validate(CommandSourceStack source, CurtainRule<String> rule, String newValue) {
+        public boolean validate(CommandSource source, CurtainRule<String> rule, String newValue) {
             if (newValue.matches("^[0-9]+$")) {
                 int value = Integer.parseInt(newValue);
                 if (value <= 64 && value >= 2) {
@@ -252,10 +254,10 @@ public class CurtainRules {
     public static class CheckOptimizedTntEnabledValidator implements IValidator<Integer> {
 
         @Override
-        public boolean validate(CommandSourceStack source, CurtainRule<Integer> rule, String newValue) {
+        public boolean validate(CommandSource source, CurtainRule<Integer> rule, String newValue) {
             boolean b = optimizedTNT || rule.isDefault(newValue);
             if (!b) {
-                source.sendFailure(new TextComponent("optimizedTNT must be enabled"));
+                source.sendFailure(new StringTextComponent("optimizedTNT must be enabled"));
             }
             return b;
         }
@@ -264,7 +266,7 @@ public class CurtainRules {
     public static class TNTRandomRangeValidator implements IValidator<Integer> {
 
         @Override
-        public boolean validate(CommandSourceStack source, CurtainRule<Integer> rule, String newValue) {
+        public boolean validate(CommandSource source, CurtainRule<Integer> rule, String newValue) {
             double value = Double.parseDouble(newValue);
             return value == -1 || value >= 0;
         }
@@ -286,11 +288,11 @@ public class CurtainRules {
     public static class TNTAngleValidator implements IValidator<Double> {
 
         @Override
-        public boolean validate(CommandSourceStack source, CurtainRule<Double> rule, String newValue) {
+        public boolean validate(CommandSource source, CurtainRule<Double> rule, String newValue) {
             double value = Double.parseDouble(newValue);
             boolean b = ((value >= 0 && value < Math.PI * 2) || rule.isDefault(newValue));
             if (!b) {
-                source.sendFailure(new TextComponent("Must be between 0 and 2pi, or -1"));
+                source.sendFailure(new StringTextComponent("Must be between 0 and 2pi, or -1"));
             }
             return b;
         }
@@ -318,14 +320,14 @@ public class CurtainRules {
 
 
     @Rule(
-            categories = {CREATIVE,SURVIVAL},
-            suggestions = {"true","false"}
+            categories = {CREATIVE, SURVIVAL},
+            suggestions = {"true", "false"}
     )
     public static boolean openFakePlayerInventory = false;
 
     @Rule(
-            categories = {CREATIVE,SURVIVAL},
-            suggestions = {"true","false"}
+            categories = {CREATIVE, SURVIVAL},
+            suggestions = {"true", "false"}
     )
     public static boolean openFakePlayerEnderChest = false;
 }

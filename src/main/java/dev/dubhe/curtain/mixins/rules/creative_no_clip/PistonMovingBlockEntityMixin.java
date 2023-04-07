@@ -31,7 +31,7 @@ public abstract class PistonMovingBlockEntityMixin {
     }
 
     @Redirect(method = "moveCollidedEntities", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;setDeltaMovement(DDD)V"))
-    private static void ignoreAccel(Entity entity, double x, double y, double z) {
+    private void ignoreAccel(Entity entity, double x, double y, double z) {
         if (CurtainRules.creativeNoClip && entity instanceof PlayerEntity player && player.isCreative() && player.abilities.flying) {
             return;
         }

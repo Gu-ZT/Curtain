@@ -11,6 +11,7 @@ import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import dev.dubhe.curtain.Curtain;
 import dev.dubhe.curtain.utils.TranslationHelper;
 import net.minecraft.command.CommandSource;
+import net.minecraft.command.ISuggestionProvider;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextComponent;
 
@@ -76,7 +77,7 @@ public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> CurtainRule<T> newRule(String[] categories, Class<? extends IValidator<?>> @NotNull [] validators, String[] suggestions, Field field, String serializedName) {
+    public static <T> CurtainRule<T> newRule(String[] categories, Class<? extends IValidator<?>>[] validators, String[] suggestions, Field field, String serializedName) {
         List<IValidator<T>> validators1 = new ArrayList<>();
         for (Class<? extends IValidator<?>> validator : validators) {
             try {
@@ -90,7 +91,7 @@ public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> CurtainRule<T> newRule(String[] categories, Class<? extends IValidator<?>> @NotNull [] validators, String[] suggestions, Field field) {
+    public static <T> CurtainRule<T> newRule(String[] categories, Class<? extends IValidator<?>>[] validators, String[] suggestions, Field field) {
         List<IValidator<T>> validators1 = new ArrayList<>();
         for (Class<? extends IValidator<?>> validator : validators) {
             try {
@@ -152,12 +153,12 @@ public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
             return (T) (Float) Float.parseFloat(str);
         else if (this.field.getType() == Double.class)
             return (T) (Double) Double.parseDouble(str);
-        else throw new CommandSyntaxException(this, new TextComponent("%s is not a legal value".formatted(str)));
+        else throw new CommandSyntaxException(this, new StringTextComponent("%s is not a legal value".formatted(str)));
     }
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        return SharedSuggestionProvider.suggest(this.suggestions, builder);
+        return ISuggestionProvider.suggest(this.suggestions, builder);
     }
 
     @Override

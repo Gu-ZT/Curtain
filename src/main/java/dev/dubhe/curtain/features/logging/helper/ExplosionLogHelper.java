@@ -5,16 +5,17 @@ import dev.dubhe.curtain.features.logging.LoggerManager;
 import dev.dubhe.curtain.utils.Messenger;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.level.Explosion;
-import net.minecraft.world.phys.Vec3;
 
+
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.registry.DynamicRegistries;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextComponent;
+import net.minecraft.world.Explosion;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
@@ -25,9 +26,9 @@ import static dev.dubhe.curtain.utils.Messenger.c;
 
 public class ExplosionLogHelper {
     private final boolean createFire;
-    private final Explosion.BlockInteraction blockDestructionType;
-    private final RegistryAccess regs;
-    public final Vec3 pos;
+    private final Explosion.Mode blockDestructionType;
+    private final DynamicRegistries regs;
+    public final Vector3d pos;
     private final float power;
     private boolean affectBlocks = false;
     private final Object2IntMap<EntityChangedStatusWithCount> impactedEntities = new Object2IntOpenHashMap<>();
@@ -36,11 +37,11 @@ public class ExplosionLogHelper {
     private static int explosionCountInCurrentGT = 0;
     private static boolean newTick;
 
-    private static Component log;
+    private static ITextComponent log;
 
-    public ExplosionLogHelper(double x, double y, double z, float power, boolean createFire, Explosion.BlockInteraction blockDestructionType, RegistryAccess regs) {
+    public ExplosionLogHelper(double x, double y, double z, float power, boolean createFire, Explosion.Mode blockDestructionType, DynamicRegistries regs) {
         this.power = power;
-        this.pos = new Vec3(x, y, z);
+        this.pos = new Vector3d(x, y, z);
         this.createFire = createFire;
         this.blockDestructionType = blockDestructionType;
         this.regs = regs;
@@ -59,7 +60,7 @@ public class ExplosionLogHelper {
         }
         explosionCountInCurrentGT++;
 
-        List<Component> messages = new ArrayList<>();
+        List<ITextComponent> messages = new ArrayList<>();
         if (newTick) messages.add(c("wb tick : ", "d " + gametime));
 
         messages.add(c("d #" + explosionCountInCurrentGT, "gb ->", Messenger.dblt("l", pos.x, pos.y, pos.z)));
@@ -76,24 +77,24 @@ public class ExplosionLogHelper {
                 messages.add(c((k.pos.equals(pos)) ? "r   - TNT" : "w   - ",
                         Messenger.dblt((k.pos.equals(pos)) ? "r" : "y", k.pos.x, k.pos.y, k.pos.z), "w  dV",
                         Messenger.dblt("d", k.accel.x, k.accel.y, k.accel.z),
-                        "w  " + regs.registryOrThrow(ForgeRegistries.ENTITIES.getRegistryKey()).getKey(k.type).getPath(), (v > 1) ? "l (" + v + ")" : ""
+                        "w  " + ForgeRegistries.ENTITIES.getKey(k.type).getPath(), (v > 1) ? "l (" + v + ")" : ""
                 ));
             });
         }
 
-        Iterator<Component> iterator = messages.iterator();
-        MutableComponent rt = new TextComponent("");
-        for (Component component = iterator.next(); iterator.hasNext(); component = iterator.next()) {
+        Iterator<ITextComponent> iterator = messages.iterator();
+        TextComponent rt = new StringTextComponent("");
+        for (ITextComponent component = iterator.next(); iterator.hasNext(); component = iterator.next()) {
             rt.append(component);
             if (iterator.hasNext()) {
-                rt.append(new TextComponent("\n"));
+                rt.append(new StringTextComponent("\n"));
             }
         }
         log = rt;
         LoggerManager.ableSendToChat("explosion");
     }
 
-    public void onEntityImpacted(Entity entity, Vec3 accel) {
+    public void onEntityImpacted(Entity entity, Vector3d accel) {
         EntityChangedStatusWithCount ent = new EntityChangedStatusWithCount(entity, accel);
         impactedEntities.put(ent, impactedEntities.getOrDefault(ent, 0) + 1);
     }
@@ -104,14 +105,14 @@ public class ExplosionLogHelper {
         }
 
         @Override
-        public Component display(ServerPlayer player) {
+        public ITextComponent display(ServerPlayerEntity player) {
             return log;
         }
     }
 
 
-    public record EntityChangedStatusWithCount(Vec3 pos, EntityType<?> type, Vec3 accel) {
-        public EntityChangedStatusWithCount(Entity e, Vec3 accel) {
+    public record EntityChangedStatusWithCount(Vector3d pos, EntityType<?> type, Vector3d accel) {
+        public EntityChangedStatusWithCount(Entity e, Vector3d accel) {
             this(e.position(), e.getType(), accel);
         }
     }

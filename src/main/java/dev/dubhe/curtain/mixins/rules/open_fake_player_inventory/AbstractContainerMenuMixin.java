@@ -13,11 +13,15 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.List;
+
 @Mixin(Container.class)
 public abstract class AbstractContainerMenuMixin {
-    @Final
+
+
     @Shadow
-    public NonNullList<Slot> slots;
+    @Final
+    public List<Slot> slots;
 
     @Inject(method = "doClick", at = @At("HEAD"), cancellable = true)
     private void onClick(int mouseX, int mouseY, ClickType clickType, PlayerEntity player, CallbackInfoReturnable<ItemStack> cir) {

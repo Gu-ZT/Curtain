@@ -38,7 +38,7 @@ public class PlayerListMixin {
         }
     }
 
-    @Redirect(method = "placeNewPlayer", at = @At(value = "NEW", target = "Lnet/minecraft/network/play/ServerPlayNetHandler;<init>(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/network/NetworkManager;Lnet/minecraft/entity/player/ServerPlayerEntity;)V"))
+    @Redirect(method = "placeNewPlayer", at = @At(value = "NEW", target = "net/minecraft/network/play/ServerPlayNetHandler"))
     private ServerPlayNetHandler replaceNetworkHandler(MinecraftServer server, NetworkManager networkManager, ServerPlayerEntity playerIn)
     {
         boolean isServerPlayerEntity = playerIn instanceof EntityPlayerMPFake;

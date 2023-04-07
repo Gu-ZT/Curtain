@@ -64,6 +64,7 @@ public class LoggerManager {
                 }
             }
             SPlayerListHeaderFooterPacket packet = new SPlayerListHeaderFooterPacket();
+            ((SPlayerListHeaderFooterPacketMixin) packet).setHeader(new StringTextComponent(""));
             ((SPlayerListHeaderFooterPacketMixin) packet).setFooter(msg);
             player.connection.send(packet);
         }
