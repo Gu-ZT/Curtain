@@ -1,10 +1,11 @@
 package dev.dubhe.curtain.mixins.rules.fill_updates;
 
 import dev.dubhe.curtain.CurtainRules;
-import net.minecraft.core.BlockPos;
-import net.minecraft.server.commands.FillCommand;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.block.Block;
+
+import net.minecraft.block.Block;
+import net.minecraft.command.impl.FillCommand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.server.ServerWorld;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -15,10 +16,10 @@ public abstract class FillCommandMixin {
             method = "fillBlocks",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/server/level/ServerLevel;blockUpdated(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/Block;)V"
+                    target = "Lnet/minecraft/world/server/ServerWorld;blockUpdated(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/Block;)V"
             )
     )
-    private static void conditionalUpdating(ServerLevel serverWorld, BlockPos blockPos, Block block) {
+    private static void conditionalUpdating(ServerWorld serverWorld, BlockPos blockPos, Block block) {
         if (CurtainRules.fillUpdates) {
             serverWorld.blockUpdated(blockPos, block);
         }

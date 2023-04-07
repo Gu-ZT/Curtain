@@ -1,13 +1,10 @@
 package dev.dubhe.curtain.mixins.rules.desert_shrubs;
 
 import dev.dubhe.curtain.CurtainRules;
-
 import dev.dubhe.curtain.utils.BlockSaplingHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SaplingBlock;
-import net.minecraft.tags.FluidTags;
-
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.server.ServerWorld;
