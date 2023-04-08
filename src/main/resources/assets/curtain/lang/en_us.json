@@ -94,8 +94,8 @@
   "curtain.rules.tnt_primer_momentum_removed.name": "tntPrimerMomentumRemoved",
   "curtain.rules.tnt_primer_momentum_removed.desc": "Removes random TNT momentum when primed",
 
-  "curtain.rules.hard_code_tnt_angle.name": "hardcodeTNTangle",
-  "curtain.rules.hard_code_tnt_angle.desc": "Sets the horizontal random angle on TNT for debugging of TNT contraptions\nSet to -1 for default behavior",
+  "curtain.rules.hardcode_tnt_angle.name": "hardcodeTNTangle",
+  "curtain.rules.hardcode_tnt_angle.desc": "Sets the horizontal random angle on TNT for debugging of TNT contraptions\nSet to -1 for default behavior",
 
   "curtain.rules.merge_tnt.name": "mergeTNT",
   "curtain.rules.merge_tnt.desc": "Merges stationary primed TNT entities",

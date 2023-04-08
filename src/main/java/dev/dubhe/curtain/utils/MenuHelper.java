@@ -104,9 +104,9 @@ public class MenuHelper {
         for (String s : suggestion) {
             if (s.equals(value)) continue;
             main.append(" ");
-            IFormattableTextComponent x = new StringTextComponent("[%s]".formatted(s))
+            IFormattableTextComponent x = new StringTextComponent("[%s]".formatted(replaceQuotation(s)))
                     .withStyle(style -> style
-                            .withColor(rule.isDefault(s) ? TextFormatting.DARK_GREEN : TextFormatting.YELLOW)
+                            .withColor(rule.isDefault(replaceQuotation(s)) ? TextFormatting.DARK_GREEN : TextFormatting.YELLOW)
                             .withClickEvent(new ClickEvent(
                                     ClickEvent.Action.SUGGEST_COMMAND,
                                     "/curtain setValue %s %s".formatted(rule.getNormalName(), s)
@@ -115,5 +115,9 @@ public class MenuHelper {
             main.append(x);
         }
         return main;
+    }
+
+    private static String replaceQuotation(String s) {
+        return s.replace("\"", "");
     }
 }
