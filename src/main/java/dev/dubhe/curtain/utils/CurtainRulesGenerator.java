@@ -3,8 +3,6 @@ package dev.dubhe.curtain.utils;
 import dev.dubhe.curtain.CurtainRules;
 import dev.dubhe.curtain.api.rules.CurtainRule;
 import dev.dubhe.curtain.api.rules.RuleManager;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -58,8 +56,7 @@ public class CurtainRulesGenerator {
         TranslationHelper.addTransMap("en_us", TranslationHelper.getTranslationFromResourcePath(stream));
     }
 
-    @Contract(pure = true)
-    private static @Nullable String getTypeString(Class<?> clazz) {
+    private static String getTypeString(Class<?> clazz) {
         if (clazz != Boolean.TYPE && clazz != Boolean.class) {
             if (clazz != Integer.TYPE && clazz != Integer.class) {
                 if (clazz == String.class) {
