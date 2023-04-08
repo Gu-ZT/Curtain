@@ -25,4 +25,5 @@ public interface ICurtain {
     default void addRules(Class<?> rulesClass) {
         RuleManager.addRules(rulesClass);
     }
+
 }
