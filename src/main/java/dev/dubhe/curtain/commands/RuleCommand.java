@@ -1,7 +1,12 @@
 package dev.dubhe.curtain.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.*;
+import com.mojang.brigadier.arguments.ArgumentType;
+import com.mojang.brigadier.arguments.BoolArgumentType;
+import com.mojang.brigadier.arguments.DoubleArgumentType;
+import com.mojang.brigadier.arguments.FloatArgumentType;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import dev.dubhe.curtain.Curtain;
@@ -11,20 +16,22 @@ import dev.dubhe.curtain.api.rules.RuleException;
 import dev.dubhe.curtain.api.rules.RuleManager;
 import dev.dubhe.curtain.utils.MenuHelper;
 import dev.dubhe.curtain.utils.TranslationHelper;
-import net.minecraft.ChatFormatting;
-import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.commands.Commands;
-import net.minecraft.network.chat.ClickEvent;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.command.CommandSource;
+import net.minecraft.command.Commands;
+import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.TextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.event.ClickEvent;
 
-import static dev.dubhe.curtain.utils.TranslationKeys.*;
-import static net.minecraft.commands.SharedSuggestionProvider.suggest;
+import static dev.dubhe.curtain.utils.TranslationKeys.AS_DEFAULT;
+import static dev.dubhe.curtain.utils.TranslationKeys.CHANGE;
+import static dev.dubhe.curtain.utils.TranslationKeys.CHANGE_DEFAULT;
+import static net.minecraft.command.ISuggestionProvider.suggest;
+
 
 public class RuleCommand {
-    public static void register(@NotNull CommandDispatcher<CommandSourceStack> dispatcher, @NotNull RuleManager manager) {
-        dispatcher.register(Commands.literal(manager.getId()).requires(stack -> stack.hasPermission(Commands.LEVEL_GAMEMASTERS))
+    public static void register(CommandDispatcher<CommandSource> dispatcher, RuleManager manager) {
+        dispatcher.register(Commands.literal(manager.getId()).requires(stack -> stack.hasPermission(2))
                 .executes(RuleCommand::showMenu)
                 .then(Commands.literal("category")
                         .then(Commands.argument("name", StringArgumentType.word())
@@ -36,31 +43,24 @@ public class RuleCommand {
         );
     }
 
-    private static int showMenu(@NotNull CommandContext<CommandSourceStack> context) {
-        Component component = MenuHelper.main();
+    private static int showMenu(CommandContext<CommandSource> context) {
+        TextComponent component = MenuHelper.main();
         context.getSource().sendSuccess(component, false);
         return 1;
     }
 
-    private static int showCategory(@NotNull CommandContext<CommandSourceStack> context) {
-        Component component = MenuHelper.category(context.getArgument("name", String.class));
+    private static int showCategory(CommandContext<CommandSource> context) {
+        TextComponent component = MenuHelper.category(context.getArgument("name", String.class));
         context.getSource().sendSuccess(component, false);
         return 1;
     }
 
-    private static ArgumentBuilder<CommandSourceStack, ?> valueNode(boolean setDefault, ArgumentBuilder<CommandSourceStack, ?> builder) {
+    private static ArgumentBuilder<CommandSource, ?> valueNode(boolean setDefault, ArgumentBuilder<CommandSource, ?> builder) {
         for (CurtainRule<?> rule : RuleManager.RULES.values()) {
             builder.then(Commands.literal(rule.getNormalName()).executes(context -> RuleCommand.getValue(context, rule))
                     .then(
                             Commands.argument("value", RuleCommand.getValue(rule.getType()))
-                                    .suggests((context, builder1) -> {
-                                        for (String example : rule.getExamples()) {
-                                            if (example.startsWith(builder1.getRemainingLowerCase())) {
-                                                builder1.suggest(example);
-                                            }
-                                        }
-                                        return builder1.buildFuture();
-                                    })
+                                    .suggests((c, b) -> suggest(rule.getExamples(), b))
                                     .executes(context -> setValue(rule.getNormalName(), context, setDefault))
                     ));
         }
@@ -87,12 +87,12 @@ public class RuleCommand {
         } else throw RuleException.type();
     }
 
-    private static int getValue(@NotNull CommandContext<CommandSourceStack> context, CurtainRule<?> rule) {
+    private static int getValue(CommandContext<CommandSource> context, CurtainRule<?> rule) {
         context.getSource().sendSuccess(MenuHelper.rule(rule), false);
         return 1;
     }
 
-    private static int setValue(String name, CommandContext<CommandSourceStack> context, boolean setDefault) {
+    private static int setValue(String name, CommandContext<CommandSource> context, boolean setDefault) {
         CurtainRule<?> rule = RuleManager.RULES.get(name);
         if (null == rule) throw RuleException.nu11();
         Object obj = context.getArgument("value", rule.getType());
@@ -103,21 +103,21 @@ public class RuleCommand {
             Curtain.rules.setDefault(rule.getNormalName());
             Curtain.rules.saveToFile();
             context.getSource().sendSuccess(
-                    TranslationHelper.translate(CHANGE_DEFAULT, ruleName, obj).withStyle(ChatFormatting.GRAY),
+                    TranslationHelper.translate(CHANGE_DEFAULT, ruleName, obj).withStyle(TextFormatting.GRAY),
                     false
             );
         } else {
-            Style style = Style.EMPTY.withClickEvent(new ClickEvent(
-                    ClickEvent.Action.SUGGEST_COMMAND,
-                    "/curtain setDefault %s %s".formatted(name, obj)
-            ));
-            Component component = TranslationHelper.translate(CHANGE, ruleName, obj)
-                    .withStyle(ChatFormatting.GRAY)
+            IFormattableTextComponent component = TranslationHelper.translate(CHANGE, ruleName, obj)
+                    .withStyle(s -> s.withColor(TextFormatting.GRAY))
                     .append(" ")
                     .append(
                             TranslationHelper.translate(AS_DEFAULT)
-                                    .withStyle(ChatFormatting.DARK_GREEN)
-                                    .withStyle(style)
+                                    .withStyle(s -> s
+                                            .withColor(TextFormatting.DARK_GREEN)
+                                            .withClickEvent(new ClickEvent(
+                                                    ClickEvent.Action.SUGGEST_COMMAND,
+                                                    "/curtain setDefault %s %s".formatted(name, obj)
+                                            )))
                     );
             context.getSource().sendSuccess(component, false);
             return 0;

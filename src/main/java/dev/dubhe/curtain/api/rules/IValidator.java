@@ -1,8 +1,8 @@
 package dev.dubhe.curtain.api.rules;
 
-import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.command.CommandSource;
 
 @FunctionalInterface
 public interface IValidator<T> {
-    boolean validate(CommandSourceStack source, CurtainRule<T> rule, String newValue);
+    boolean validate(CommandSource source, CurtainRule<T> rule, String newValue);
 }

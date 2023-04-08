@@ -3,76 +3,64 @@ package dev.dubhe.curtain.utils;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.ClipContext;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.EntityRayTraceResult;
+import net.minecraft.util.math.RayTraceContext;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.World;
+
 
 public class Tracer {
     @SuppressWarnings("ConstantConditions")
-    public static HitResult rayTrace(Entity source, float partialTicks, double reach, boolean fluids) {
-        BlockHitResult blockHit = rayTraceBlocks(source, partialTicks, reach, fluids);
+    public static RayTraceResult rayTrace(Entity source, float partialTicks, double reach, boolean fluids) {
+        BlockRayTraceResult blockHit = rayTraceBlocks(source, partialTicks, reach, fluids);
         double maxSqDist = reach * reach;
         if (blockHit != null) maxSqDist = blockHit.getLocation().distanceToSqr(source.getEyePosition(partialTicks));
-        EntityHitResult entityHit = rayTraceEntities(source, partialTicks, reach, maxSqDist);
+        EntityRayTraceResult entityHit = rayTraceEntities(source, partialTicks, reach, maxSqDist);
         return entityHit == null ? blockHit : entityHit;
     }
 
-    public static BlockHitResult rayTraceBlocks(Entity source, float partialTicks, double reach, boolean fluids)
-    {
-        Vec3 pos = source.getEyePosition(partialTicks);
-        Vec3 rotation = source.getViewVector(partialTicks);
-        Vec3 reachEnd = pos.add(rotation.x * reach, rotation.y * reach, rotation.z * reach);
-        return source.level.clip(new ClipContext(pos, reachEnd, ClipContext.Block.OUTLINE, fluids ? ClipContext.Fluid.ANY : ClipContext.Fluid.NONE, source));
+    public static BlockRayTraceResult rayTraceBlocks(Entity source, float partialTicks, double reach, boolean fluids) {
+        Vector3d pos = source.getEyePosition(partialTicks);
+        Vector3d rotation = source.getViewVector(partialTicks);
+        Vector3d reachEnd = pos.add(rotation.x * reach, rotation.y * reach, rotation.z * reach);
+        return source.level.clip(new RayTraceContext(pos, reachEnd, RayTraceContext.BlockMode.OUTLINE, fluids ? RayTraceContext.FluidMode.ANY : RayTraceContext.FluidMode.NONE, source));
     }
 
-    public static EntityHitResult rayTraceEntities(Entity source, float partialTicks, double reach, double maxSqDist)
-    {
-        Vec3 pos = source.getEyePosition(partialTicks);
-        Vec3 reachVec = source.getViewVector(partialTicks).scale(reach);
-        AABB box = source.getBoundingBox().expandTowards(reachVec).inflate(1);
+    public static EntityRayTraceResult rayTraceEntities(Entity source, float partialTicks, double reach, double maxSqDist) {
+        Vector3d pos = source.getEyePosition(partialTicks);
+        Vector3d reachVec = source.getViewVector(partialTicks).scale(reach);
+        AxisAlignedBB box = source.getBoundingBox().expandTowards(reachVec).inflate(1);
         return rayTraceEntities(source, pos, pos.add(reachVec), box, e -> !e.isSpectator() && e.canBeCollidedWith(), maxSqDist);
     }
 
-    public static EntityHitResult rayTraceEntities(Entity source, Vec3 start, Vec3 end, AABB box, Predicate<Entity> predicate, double maxSqDistance)
-    {
-        Level world = source.level;
+    public static EntityRayTraceResult rayTraceEntities(Entity source, Vector3d start, Vector3d end, AxisAlignedBB box, Predicate<Entity> predicate, double maxSqDistance) {
+        World world = source.level;
         double targetDistance = maxSqDistance;
         Entity target = null;
-        Vec3 targetHitPos = null;
-        for (Entity current : world.getEntities(source, box, predicate))
-        {
-            AABB currentBox = current.getBoundingBox().inflate(current.getPickRadius());
-            Optional<Vec3> currentHit = currentBox.clip(start, end);
-            if (currentBox.contains(start))
-            {
-                if (targetDistance >= 0)
-                {
+        Vector3d targetHitPos = null;
+        for (Entity current : world.getEntities(source, box, predicate)) {
+            AxisAlignedBB currentBox = current.getBoundingBox().inflate(current.getPickRadius());
+            Optional<Vector3d> currentHit = currentBox.clip(start, end);
+            if (currentBox.contains(start)) {
+                if (targetDistance >= 0) {
                     target = current;
                     targetHitPos = currentHit.orElse(start);
                     targetDistance = 0;
                 }
-            }
-            else if (currentHit.isPresent())
-            {
-                Vec3 currentHitPos = currentHit.get();
+            } else if (currentHit.isPresent()) {
+                Vector3d currentHitPos = currentHit.get();
                 double currentDistance = start.distanceToSqr(currentHitPos);
-                if (currentDistance < targetDistance || targetDistance == 0)
-                {
-                    if (current.getRootVehicle() == source.getRootVehicle())
-                    {
-                        if (targetDistance == 0)
-                        {
+                if (currentDistance < targetDistance || targetDistance == 0) {
+                    if (current.getRootVehicle() == source.getRootVehicle()) {
+                        if (targetDistance == 0) {
                             target = current;
                             targetHitPos = currentHitPos;
                         }
-                    }
-                    else
-                    {
+                    } else {
                         target = current;
                         targetHitPos = currentHitPos;
                         targetDistance = currentDistance;
@@ -81,6 +69,6 @@ public class Tracer {
             }
         }
         if (target == null) return null;
-        return new EntityHitResult(target, targetHitPos);
+        return new EntityRayTraceResult(target, targetHitPos);
     }
 }

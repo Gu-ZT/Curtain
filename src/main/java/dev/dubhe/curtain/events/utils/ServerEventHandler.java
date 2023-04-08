@@ -2,7 +2,7 @@ package dev.dubhe.curtain.events.utils;
 
 import dev.dubhe.curtain.CurtainRules;
 import dev.dubhe.curtain.features.logging.LoggerManager;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -21,7 +21,7 @@ public class ServerEventHandler {
 
     @SubscribeEvent
     public void onPlayLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
-        if (event.getEntity() instanceof ServerPlayer player) {
+        if (event.getEntity() instanceof ServerPlayerEntity player) {
             String playerName = player.getName().getString();
             if (CurtainRules.defaultLoggers.contentEquals("none")) {
                 return;
@@ -35,7 +35,7 @@ public class ServerEventHandler {
 
     @SubscribeEvent
     public void onPlayLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
-        if (event.getEntity() instanceof ServerPlayer player) {
+        if (event.getEntity() instanceof ServerPlayerEntity player) {
             String playerName = player.getName().getString();
             LoggerManager.unsubscribeAllLogger(playerName);
         }
