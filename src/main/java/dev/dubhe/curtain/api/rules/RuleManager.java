@@ -5,8 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.level.storage.LevelResource;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.world.storage.FolderName;
 
 import java.io.File;
 import java.io.FileReader;
@@ -56,7 +55,7 @@ public class RuleManager {
         this.loadFromFile();
     }
 
-    public static void addRules(@NotNull Class<?> rules) {
+    public static void addRules(Class<?> rules) {
         for (Field field : rules.getFields()) {
             if (!LIMIT.contains(field.getType())) continue;
             Rule annotation = field.getAnnotation(Rule.class);
@@ -79,8 +78,8 @@ public class RuleManager {
         }
     }
 
-    private @NotNull File getFile() {
-        return server.getWorldPath(LevelResource.ROOT).resolve(id + ".json").toFile();
+    private File getFile() {
+        return server.getWorldPath(FolderName.ROOT).resolve(id + ".json").toFile();
     }
 
     public void saveToFile() {

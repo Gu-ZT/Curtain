@@ -2,42 +2,43 @@ package dev.dubhe.curtain.utils;
 
 import dev.dubhe.curtain.CurtainRules;
 import dev.dubhe.curtain.features.player.fakes.IPistonBlock;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.BlockSource;
-import net.minecraft.core.Direction;
-import net.minecraft.core.dispenser.DispenseItemBehavior;
-import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseRailBlock;
-import net.minecraft.world.level.block.BedBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.DirectionalBlock;
-import net.minecraft.world.level.block.DispenserBlock;
-import net.minecraft.world.level.block.EndRodBlock;
-import net.minecraft.world.level.block.HopperBlock;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.ObserverBlock;
-import net.minecraft.world.level.block.RotatedPillarBlock;
-import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.SlabBlock;
-import net.minecraft.world.level.block.StairBlock;
-import net.minecraft.world.level.block.piston.PistonBaseBlock;
-import net.minecraft.world.level.block.piston.PistonStructureResolver;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.Half;
-import net.minecraft.world.level.block.state.properties.SlabType;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.block.BedBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.DirectionalBlock;
+import net.minecraft.block.DispenserBlock;
+import net.minecraft.block.EndRodBlock;
+import net.minecraft.block.HopperBlock;
+import net.minecraft.block.HorizontalBlock;
+import net.minecraft.block.ObserverBlock;
+import net.minecraft.block.PistonBlock;
+import net.minecraft.block.PistonBlockStructureHelper;
+import net.minecraft.block.RailBlock;
+import net.minecraft.block.RotatedPillarBlock;
+import net.minecraft.block.SlabBlock;
+import net.minecraft.block.StairsBlock;
+import net.minecraft.dispenser.IBlockSource;
+import net.minecraft.dispenser.IDispenseItemBehavior;
+import net.minecraft.dispenser.OptionalDispenseBehavior;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.state.properties.Half;
+import net.minecraft.state.properties.SlabType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
+import net.minecraft.util.Rotation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.World;
+
 
 public class BlockRotator {
-    public static boolean flipBlockWithCactus(BlockState state, Level world, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (!player.getAbilities().mayBuild || !CurtainRules.flippingCactus || !playerHoldsCactusMainhand(player)) {
+    public static boolean flipBlockWithCactus(BlockState state, World world, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+        if (!player.abilities.mayBuild || !CurtainRules.flippingCactus || !playerHoldsCactusMainhand(player)) {
             return false;
         }
         CurtainRules.impendingFillSkipUpdates.set(true);
@@ -46,9 +47,82 @@ public class BlockRotator {
         return retval;
     }
 
-    public static ItemStack dispenserRotate(BlockSource source, ItemStack stack) {
+    private static Direction rotateClockwise(Direction direction, Direction.Axis direction$Axis_1) {
+        switch (direction$Axis_1) {
+            case X:
+                if (direction != Direction.WEST && direction != Direction.EAST) {
+                    return rotateXClockwise(direction);
+                }
+
+                return direction;
+            case Y:
+                if (direction != Direction.UP && direction != Direction.DOWN) {
+                    return rotateYClockwise(direction);
+                }
+
+                return direction;
+            case Z:
+                if (direction != Direction.NORTH && direction != Direction.SOUTH) {
+                    return rotateZClockwise(direction);
+                }
+
+                return direction;
+            default:
+                throw new IllegalStateException("Unable to get CW facing for axis " + direction$Axis_1);
+        }
+    }
+
+    private static Direction rotateYClockwise(Direction dir) {
+        switch (dir) {
+            case NORTH:
+                return Direction.EAST;
+            case EAST:
+                return Direction.SOUTH;
+            case SOUTH:
+                return Direction.WEST;
+            case WEST:
+                return Direction.NORTH;
+            default:
+                throw new IllegalStateException("Unable to get Y-rotated facing of " + dir);
+        }
+    }
+
+    private static Direction rotateXClockwise(Direction dir) {
+        switch (dir) {
+            case NORTH:
+                return Direction.DOWN;
+            case EAST:
+            case WEST:
+            default:
+                throw new IllegalStateException("Unable to get X-rotated facing of " + dir);
+            case SOUTH:
+                return Direction.UP;
+            case UP:
+                return Direction.NORTH;
+            case DOWN:
+                return Direction.SOUTH;
+        }
+    }
+
+    private static Direction rotateZClockwise(Direction dir) {
+        switch (dir) {
+            case EAST:
+                return Direction.DOWN;
+            case SOUTH:
+            default:
+                throw new IllegalStateException("Unable to get Z-rotated facing of " + dir);
+            case WEST:
+                return Direction.UP;
+            case UP:
+                return Direction.EAST;
+            case DOWN:
+                return Direction.WEST;
+        }
+    }
+
+    public static ItemStack dispenserRotate(IBlockSource source, ItemStack stack) {
         Direction sourceFace = source.getBlockState().getValue(DispenserBlock.FACING);
-        Level world = source.getLevel();
+        World world = source.getLevel();
         BlockPos blockpos = source.getPos().relative(sourceFace);
         BlockState blockstate = world.getBlockState(blockpos);
         Block block = blockstate.getBlock();
@@ -56,34 +130,34 @@ public class BlockRotator {
         // Block rotation for blocks that can be placed in all 6 or 4 rotations.
         if (block instanceof DirectionalBlock || block instanceof DispenserBlock) {
             Direction face = blockstate.getValue(DirectionalBlock.FACING);
-            if (block instanceof PistonBaseBlock
-                    && (blockstate.getValue(PistonBaseBlock.EXTENDED)
+            if (block instanceof PistonBlock
+                    && (blockstate.getValue(PistonBlock.EXTENDED)
                     || (((IPistonBlock) block).publicShouldExtend(world, blockpos, face)
-                    && (new PistonStructureResolver(world, blockpos, face, true)).resolve()))) {
+                    && (new PistonBlockStructureHelper(world, blockpos, face, true)).resolve()))) {
                 return stack;
             }
 
-            Direction rotatedFace = face.getClockWise(sourceFace.getAxis());
+            Direction rotatedFace = rotateClockwise(face, sourceFace.getAxis());
             if (sourceFace.get3DDataValue() % 2 == 0 || rotatedFace == face) {
                 // Flip to make blocks always rotate clockwise relative to the dispenser
                 // when index is equal to zero. when index is equal to zero the dispenser is in the opposite direction.
                 rotatedFace = rotatedFace.getOpposite();
             }
             world.setBlock(blockpos, blockstate.setValue(DirectionalBlock.FACING, rotatedFace), 3);
-        } else if (block instanceof HorizontalDirectionalBlock) {
+        } else if (block instanceof HorizontalBlock) {
             // Block rotation for blocks that can be placed in only 4 horizontal rotations.
             if (block instanceof BedBlock) {
                 return stack;
             }
-            Direction face = blockstate.getValue(HorizontalDirectionalBlock.FACING).getClockWise(Direction.Axis.Y);
+            Direction face = blockstate.getValue(HorizontalBlock.FACING);
             if (sourceFace == Direction.DOWN) {
                 face = face.getOpposite();
             }
-            world.setBlock(blockpos, blockstate.setValue(HorizontalDirectionalBlock.FACING, face), 3);
+            world.setBlock(blockpos, blockstate.setValue(HorizontalBlock.FACING, face), 3);
         } else if (block == Blocks.HOPPER) {
             Direction face = blockstate.getValue(HopperBlock.FACING);
             if (face != Direction.DOWN) {
-                face = face.getClockWise(Direction.Axis.Y);
+                face = rotateClockwise(face, Direction.Axis.Y);
                 world.setBlock(blockpos, blockstate.setValue(HopperBlock.FACING, face), 3);
             }
         }
@@ -91,21 +165,21 @@ public class BlockRotator {
         return stack;
     }
 
-    public static boolean flipBlock(BlockState state, Level world, Player player, InteractionHand hand, BlockHitResult hit) {
+    public static boolean flipBlock(BlockState state, World world, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         Block block = state.getBlock();
         BlockPos pos = hit.getBlockPos();
-        Vec3 hitVec = hit.getLocation().subtract(pos.getX(), pos.getY(), pos.getZ());
+        Vector3d hitVec = hit.getLocation().subtract(pos.getX(), pos.getY(), pos.getZ());
         Direction facing = hit.getDirection();
         BlockState newState = null;
 
-        if ((block instanceof HorizontalDirectionalBlock || block instanceof BaseRailBlock) && !(block instanceof BedBlock)) {
+        if ((block instanceof HorizontalBlock || block instanceof RailBlock) && !(block instanceof BedBlock)) {
             newState = state.rotate(Rotation.CLOCKWISE_90);
         } else if (block instanceof ObserverBlock || block instanceof EndRodBlock) {
             newState = state.setValue(DirectionalBlock.FACING, state.getValue(DirectionalBlock.FACING).getOpposite());
         } else if (block instanceof DispenserBlock) {
             newState = state.setValue(DispenserBlock.FACING, state.getValue(DispenserBlock.FACING).getOpposite());
-        } else if (block instanceof PistonBaseBlock) {
-            if (!(state.getValue(PistonBaseBlock.EXTENDED))) {
+        } else if (block instanceof PistonBlock) {
+            if (!(state.getValue(PistonBlock.EXTENDED))) {
                 newState = state.setValue(DirectionalBlock.FACING, state.getValue(DirectionalBlock.FACING).getOpposite());
             }
         } else if (block instanceof SlabBlock) {
@@ -116,9 +190,9 @@ public class BlockRotator {
             if (state.getValue(HopperBlock.FACING) != Direction.DOWN) {
                 newState = state.setValue(HopperBlock.FACING, state.getValue(HopperBlock.FACING).getClockWise());
             }
-        } else if (block instanceof StairBlock) {
+        } else if (block instanceof StairsBlock) {
             if ((facing == Direction.UP && hitVec.y == 1.0f) || (facing == Direction.DOWN && hitVec.y == 0.0f)) {
-                newState = state.setValue(StairBlock.HALF, state.getValue(StairBlock.HALF) == Half.TOP ? Half.BOTTOM : Half.TOP);
+                newState = state.setValue(StairsBlock.HALF, state.getValue(StairsBlock.HALF) == Half.TOP ? Half.BOTTOM : Half.TOP);
             } else {
                 boolean turnCounterClockwise = switch (facing) {
                     case NORTH -> (hitVec.x <= 0.5);
@@ -137,7 +211,7 @@ public class BlockRotator {
             });
         }
         if (newState != null) {
-            world.setBlock(pos, newState, Block.UPDATE_CLIENTS | 1024); // no constant matching 1024 in Block, what does this do?
+            world.setBlock(pos, newState, 2 | 1024); // no constant matching 1024 in Block, what does this do?
             world.setBlocksDirty(pos, state, newState);
             return true;
         }
@@ -145,18 +219,18 @@ public class BlockRotator {
     }
 
 
-    private static boolean playerHoldsCactusMainhand(Player playerIn) {
+    private static boolean playerHoldsCactusMainhand(PlayerEntity playerIn) {
         return playerIn.getMainHandItem().getItem() == Items.CACTUS;
     }
 
     public static boolean flippinEligibility(Entity entity) {
-        return CurtainRules.flippingCactus && entity instanceof Player p && p.getOffhandItem().getItem() == Items.CACTUS;
+        return CurtainRules.flippingCactus && entity instanceof PlayerEntity p && p.getOffhandItem().getItem() == Items.CACTUS;
     }
 
-    public static class CactusDispenserBehaviour extends OptionalDispenseItemBehavior implements DispenseItemBehavior {
+    public static class CactusDispenserBehaviour extends OptionalDispenseBehavior implements IDispenseItemBehavior {
         @SuppressWarnings("NullableProblems")
         @Override
-        protected ItemStack execute(BlockSource source, ItemStack stack) {
+        protected ItemStack execute(IBlockSource source, ItemStack stack) {
             if (CurtainRules.rotatorBlock) {
                 return BlockRotator.dispenserRotate(source, stack);
             } else {

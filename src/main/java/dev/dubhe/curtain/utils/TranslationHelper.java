@@ -4,10 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import dev.dubhe.curtain.CurtainRules;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextComponent;
 import org.apache.commons.io.IOUtils;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,9 +31,9 @@ public class TranslationHelper {
      * @param args 参数
      * @return 翻译后的聊天组件
      */
-    public static @NotNull MutableComponent translate(String key, Object... args) {
+    public static TextComponent translate(String key, Object... args) {
         Map<String, String> trans = TRANS_MAP.getOrDefault(CurtainRules.language, new HashMap<>());
-        return new TextComponent(trans.getOrDefault(key, key).formatted(args));
+        return new StringTextComponent(trans.getOrDefault(key, key).formatted(args));
     }
 
     /**
@@ -42,7 +41,7 @@ public class TranslationHelper {
      *
      * @return 已经加载的语言名称集合
      */
-    public static @NotNull Collection<String> getLanguages() {
+    public static Collection<String> getLanguages() {
         return TRANS_MAP.keySet();
     }
 
