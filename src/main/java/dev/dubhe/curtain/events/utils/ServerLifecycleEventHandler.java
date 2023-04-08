@@ -5,14 +5,13 @@ import dev.dubhe.curtain.api.rules.RuleManager;
 import dev.dubhe.curtain.commands.LogCommand;
 import dev.dubhe.curtain.commands.PlayerCommand;
 import dev.dubhe.curtain.commands.RuleCommand;
-import net.minecraftforge.event.server.ServerAboutToStartEvent;
-import net.minecraftforge.event.server.ServerStoppedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import org.jetbrains.annotations.NotNull;
+import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
+import net.minecraftforge.fml.event.server.FMLServerStoppedEvent;
 
 public class ServerLifecycleEventHandler {
     @SubscribeEvent
-    public void onServerAboutToStart(@NotNull ServerAboutToStartEvent event) {
+    public void onServerAboutToStart(FMLServerAboutToStartEvent event) {
         Curtain.rules = new RuleManager(event.getServer(), Curtain.MODID);
         Curtain.minecraftServer = event.getServer();
         RuleCommand.register(event.getServer().getCommands().getDispatcher(), Curtain.rules);
@@ -21,7 +20,7 @@ public class ServerLifecycleEventHandler {
     }
 
     @SubscribeEvent
-    public void onServerStopped(@NotNull ServerStoppedEvent event) {
+    public void onServerStopped(FMLServerStoppedEvent event) {
         Curtain.rules.saveToFile();
     }
 }

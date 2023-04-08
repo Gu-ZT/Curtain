@@ -1,7 +1,8 @@
 package dev.dubhe.curtain.utils;
 
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.item.ItemStack;
+
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 
 public class InventoryHelper {
     // From nbt/NbtElement.java createTag()
@@ -21,12 +22,12 @@ public class InventoryHelper {
 
     public static boolean cleanUpShulkerBoxTag(ItemStack stack) {
         boolean changed = false;
-        CompoundTag tag = stack.getTag();
+        CompoundNBT tag = stack.getTag();
 
         if (tag == null || !tag.contains("BlockEntityTag", TAG_COMPOUND))
             return false;
 
-        CompoundTag bet = tag.getCompound("BlockEntityTag");
+        CompoundNBT bet = tag.getCompound("BlockEntityTag");
         if (bet.contains("Items", TAG_LIST) && bet.getList("Items", TAG_COMPOUND).isEmpty()) {
             bet.remove("Items");
             changed = true;
@@ -44,12 +45,12 @@ public class InventoryHelper {
     }
 
     public static boolean shulkerBoxHasItems(ItemStack stack) {
-        CompoundTag tag = stack.getTag();
+        CompoundNBT tag = stack.getTag();
 
         if (tag == null || !tag.contains("BlockEntityTag", TAG_COMPOUND))
             return false;
 
-        CompoundTag bet = tag.getCompound("BlockEntityTag");
+        CompoundNBT bet = tag.getCompound("BlockEntityTag");
         return bet.contains("Items", TAG_LIST) && !bet.getList("Items", TAG_COMPOUND).isEmpty();
     }
 }

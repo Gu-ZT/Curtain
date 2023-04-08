@@ -6,16 +6,20 @@ import dev.dubhe.curtain.features.logging.builtin.MobcapsLogger;
 import dev.dubhe.curtain.features.logging.builtin.TPSLogger;
 import dev.dubhe.curtain.features.logging.helper.ExplosionLogHelper;
 import dev.dubhe.curtain.features.logging.helper.TNTLogHelper;
-import net.minecraft.ChatFormatting;
-import net.minecraft.Util;
-import net.minecraft.network.chat.ChatType;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.protocol.game.ClientboundTabListPacket;
-import net.minecraft.server.level.ServerPlayer;
+import dev.dubhe.curtain.mixins.SPlayerListHeaderFooterPacketMixin;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.network.play.server.SPlayerListHeaderFooterPacket;
+import net.minecraft.util.Util;
+import net.minecraft.util.text.ChatType;
+import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.common.extensions.IForgePacketBuffer;
 
 import java.util.*;
+
+import static net.minecraft.util.Util.NIL_UUID;
 
 public class LoggerManager {
     private static final Map<String, AbstractLogger> registeredLogger = new HashMap<>();
@@ -37,21 +41,21 @@ public class LoggerManager {
             if (!entry.getValue().contains(loggerName)) {
                 continue;
             }
-            ServerPlayer player = Curtain.minecraftServer.getPlayerList().getPlayerByName(entry.getKey());
+            ServerPlayerEntity player = Curtain.minecraftServer.getPlayerList().getPlayerByName(entry.getKey());
             if (player != null) {
-                Component msg = logger.display(player);
-                player.sendMessage(msg, ChatType.SYSTEM, Util.NIL_UUID);
+                ITextComponent msg = logger.display(player);
+                player.sendMessage(msg, ChatType.SYSTEM, NIL_UUID);
             }
         }
     }
 
     public static void updateHUD() {
         for (Map.Entry<String, Set<String>> entry : subscribedPlayer.entrySet()) {
-            ServerPlayer player = Curtain.minecraftServer.getPlayerList().getPlayerByName(entry.getKey());
+            ServerPlayerEntity player = Curtain.minecraftServer.getPlayerList().getPlayerByName(entry.getKey());
             if (player == null) {
                 continue;
             }
-            MutableComponent msg = new TextComponent("");
+            IFormattableTextComponent msg = new StringTextComponent("");
             for (Iterator<String> iterator = entry.getValue().iterator(); iterator.hasNext(); ) {
                 String loggerName = iterator.next();
                 if (registeredLogger.containsKey(loggerName) && registeredLogger.get(loggerName).getType() == DisplayType.HUD) {
@@ -59,7 +63,9 @@ public class LoggerManager {
                     if (iterator.hasNext()) msg.append("\n");
                 }
             }
-            ClientboundTabListPacket packet = new ClientboundTabListPacket(new TextComponent(""), msg);
+            SPlayerListHeaderFooterPacket packet = new SPlayerListHeaderFooterPacket();
+            ((SPlayerListHeaderFooterPacketMixin) packet).setHeader(new StringTextComponent(""));
+            ((SPlayerListHeaderFooterPacketMixin) packet).setFooter(msg);
             player.connection.send(packet);
         }
     }
@@ -82,10 +88,10 @@ public class LoggerManager {
         loggerSet.add(loggerName);
         subscribedPlayer.put(playerName, loggerSet);
 
-        ServerPlayer player = Curtain.minecraftServer.getPlayerList().getPlayerByName(playerName);
+        ServerPlayerEntity player = Curtain.minecraftServer.getPlayerList().getPlayerByName(playerName);
         if (player != null) {
-            player.sendMessage((new TextComponent("%s subscribed logger %s".formatted(playerName, loggerName))
-                    .withStyle(ChatFormatting.GRAY)), ChatType.SYSTEM, Util.NIL_UUID);
+            player.sendMessage((new StringTextComponent("%s subscribed logger %s".formatted(playerName, loggerName))
+                    .withStyle(TextFormatting.GRAY)), ChatType.SYSTEM, Util.NIL_UUID);
         }
     }
 
@@ -114,10 +120,10 @@ public class LoggerManager {
         loggerSet.remove(loggerName);
         subscribedPlayer.put(playerName, loggerSet);
 
-        ServerPlayer player = Curtain.minecraftServer.getPlayerList().getPlayerByName(playerName);
+        ServerPlayerEntity player = Curtain.minecraftServer.getPlayerList().getPlayerByName(playerName);
         if (player != null) {
-            player.sendMessage(new TextComponent("%s unsubscribed logger %s".formatted(playerName, loggerName))
-                    .withStyle(ChatFormatting.GRAY), ChatType.SYSTEM, Util.NIL_UUID);
+            player.sendMessage(new StringTextComponent("%s unsubscribed logger %s".formatted(playerName, loggerName))
+                    .withStyle(TextFormatting.GRAY), ChatType.SYSTEM, Util.NIL_UUID);
         }
     }
 

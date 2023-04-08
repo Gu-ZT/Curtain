@@ -1,14 +1,15 @@
 package dev.dubhe.curtain.mixins.rules.creative_no_clip;
 
 import dev.dubhe.curtain.CurtainRules;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
+
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -19,13 +20,13 @@ public abstract class BlockItemMixin {
             method = "canPlace",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/world/level/Level;isUnobstructed(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Z"
+                    target = "Lnet/minecraft/world/World;isUnobstructed(Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/shapes/ISelectionContext;)Z"
             )
     )
-    private boolean canSpectatingPlace(Level world, BlockState state, BlockPos pos, CollisionContext context,
-                                       BlockPlaceContext contextOuter, BlockState stateOuter) {
-        Player player = contextOuter.getPlayer();
-        if (CurtainRules.creativeNoClip && player != null && player.isCreative() && player.getAbilities().flying) {
+    private boolean canSpectatingPlace(World world, BlockState state, BlockPos pos, ISelectionContext context,
+                                       BlockItemUseContext contextOuter, BlockState stateOuter) {
+        PlayerEntity player = contextOuter.getPlayer();
+        if (CurtainRules.creativeNoClip && player != null && player.isCreative() && player.abilities.flying) {
             // copy from canPlace
             VoxelShape voxelShape = state.getCollisionShape(world, pos, context);
             return voxelShape.isEmpty() || world.isUnobstructed(player, voxelShape.move(pos.getX(), pos.getY(), pos.getZ()));

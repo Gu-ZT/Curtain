@@ -2,10 +2,10 @@ package dev.dubhe.curtain.features.logging.builtin;
 
 import dev.dubhe.curtain.features.logging.AbstractHudLogger;
 import dev.dubhe.curtain.utils.SpawnReporter;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.Level;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.RegistryKey;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.World;
 
 public class MobcapsLogger extends AbstractHudLogger {
 
@@ -14,9 +14,9 @@ public class MobcapsLogger extends AbstractHudLogger {
     }
 
     @Override
-    public Component display(ServerPlayer player) {
-        ResourceKey<Level> dim = player.level.dimension();
-        Component msg = SpawnReporter.printMobcapsForDimension(player.getServer().getLevel(dim), false).get(0);
+    public ITextComponent display(ServerPlayerEntity player) {
+        RegistryKey<World> dim = player.level.dimension();
+        ITextComponent msg = SpawnReporter.printMobcapsForDimension(player.getServer().getLevel(dim), false).get(0);
         return msg;
     }
 }

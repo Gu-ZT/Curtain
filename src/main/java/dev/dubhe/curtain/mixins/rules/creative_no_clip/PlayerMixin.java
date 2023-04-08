@@ -1,18 +1,19 @@
 package dev.dubhe.curtain.mixins.rules.creative_no_clip;
 
 import dev.dubhe.curtain.CurtainRules;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(Player.class)
+@Mixin(PlayerEntity.class)
 public abstract class PlayerMixin extends LivingEntity {
 
-    protected PlayerMixin(EntityType<? extends LivingEntity> type, Level world) {
+    protected PlayerMixin(EntityType<? extends LivingEntity> type, World world) {
         super(type, world);
     }
 
@@ -20,34 +21,34 @@ public abstract class PlayerMixin extends LivingEntity {
             method = "tick",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/world/entity/player/Player;isSpectator()Z"
+                    target = "Lnet/minecraft/entity/player/PlayerEntity;isSpectator()Z"
             )
     )
-    private boolean canClipTroughWorld(Player playerEntity) {
+    private boolean canClipTroughWorld(PlayerEntity playerEntity) {
         return playerEntity.isSpectator()
-                || (CurtainRules.creativeNoClip && playerEntity.isCreative() && playerEntity.getAbilities().flying);
+                || (CurtainRules.creativeNoClip && playerEntity.isCreative() && playerEntity.abilities.flying);
     }
 
     @Redirect(method = "aiStep",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/world/entity/player/Player;isSpectator()Z"
+                    target = "Lnet/minecraft/entity/player/PlayerEntity;isSpectator()Z"
             )
     )
-    private boolean collidesWithEntities(Player playerEntity) {
+    private boolean collidesWithEntities(PlayerEntity playerEntity) {
         return playerEntity.isSpectator()
-                || (CurtainRules.creativeNoClip && playerEntity.isCreative() && playerEntity.getAbilities().flying);
+                || (CurtainRules.creativeNoClip && playerEntity.isCreative() && playerEntity.abilities.flying);
     }
 
     @Redirect(
             method = "updatePlayerPose",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/world/entity/player/Player;isSpectator()Z"
+                    target = "Lnet/minecraft/entity/player/PlayerEntity;isSpectator()Z"
             )
     )
-    private boolean spectatorsDontPose(Player playerEntity) {
+    private boolean spectatorsDontPose(PlayerEntity playerEntity) {
         return playerEntity.isSpectator()
-                || (CurtainRules.creativeNoClip && playerEntity.isCreative() && playerEntity.getAbilities().flying);
+                || (CurtainRules.creativeNoClip && playerEntity.isCreative() && playerEntity.abilities.flying);
     }
 }

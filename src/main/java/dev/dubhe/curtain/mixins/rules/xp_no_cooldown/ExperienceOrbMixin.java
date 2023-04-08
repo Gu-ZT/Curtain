@@ -1,11 +1,14 @@
 package dev.dubhe.curtain.mixins.rules.xp_no_cooldown;
 
 import dev.dubhe.curtain.CurtainRules;
-import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.entity.item.ExperienceOrbEntity;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Constant;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.injection.Slice;
 
-@Mixin(ExperienceOrb.class)
+@Mixin(ExperienceOrbEntity.class)
 public abstract class ExperienceOrbMixin {
     @ModifyConstant(
             method = "playerTouch",
@@ -17,7 +20,7 @@ public abstract class ExperienceOrbMixin {
                     ),
                     to = @At(
                             value = "INVOKE",
-                            target = "Lnet/minecraft/world/entity/ExperienceOrb;repairPlayerItems(Lnet/minecraft/world/entity/player/Player;I)I"
+                            target = "Lnet/minecraft/entity/player/PlayerEntity;take(Lnet/minecraft/entity/Entity;I)V"
                     )
             ),
             constant = @Constant(intValue = 2)
