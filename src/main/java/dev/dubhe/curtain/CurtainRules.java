@@ -117,12 +117,6 @@ public class CurtainRules {
     )
     public static boolean placementRotationFix = false;
 
-    @Rule(categories = CREATIVE, suggestions = {"true", "false"})
-    public static boolean fillUpdates = true;
-
-    @Rule(categories = CREATIVE, suggestions = {"true", "false"})
-    public static boolean interactionUpdates = true;
-
     @Rule(
             categories = {CREATIVE, SURVIVAL},
             suggestions = {"none", "tps", "mobcaps", "mobcaps,tps"}
@@ -318,14 +312,14 @@ public class CurtainRules {
 
 
     @Rule(
-            categories = {CREATIVE,SURVIVAL},
-            suggestions = {"true","false"}
+            categories = {CREATIVE, SURVIVAL},
+            suggestions = {"true", "false"}
     )
     public static boolean openFakePlayerInventory = false;
 
     @Rule(
-            categories = {CREATIVE,SURVIVAL},
-            suggestions = {"true","false"}
+            categories = {CREATIVE, SURVIVAL},
+            suggestions = {"true", "false"}
     )
     public static boolean openFakePlayerEnderChest = false;
 }

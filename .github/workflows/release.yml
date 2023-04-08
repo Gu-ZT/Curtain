@@ -4,18 +4,58 @@ on:
     types: [ published ]
 
 jobs:
+  changelog:
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.1.0
+
+      - name: "✏️ Generate release changelog"
+        uses: heinrichreimer/github-changelog-generator-action@v2.3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          output: CHANGELOG.MD
+
+      - name: Commit
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: update Changelog
+          file_pattern: "CHANGELOG.MD"
+          branch: 1.19.2-dev
+          repository: .
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
+
+      - name: Split changelog
+        run: python .github/workflows/scripts/split_changelog.py
+
+      - name: capture new log artifacts
+        uses: actions/upload-artifact@v3.1.1
+        with:
+          name: NEW_LOG.MD
+          path: NEW_LOG.MD
+
+
   build:
     permissions: write-all
+    needs:
+      - changelog
     strategy:
       matrix:
         java: [ 17 ]
         os: [ ubuntu-latest ]
-
+        branch: [ 1.19.4-dev, 1.19.2-dev, 1.18.2-dev, 1.16.5-dev]
     runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v3.1.0
+        with:
+          ref: ${{ matrix.branch }}
 
       - name: validate gradle wrapper
         uses: gradle/wrapper-validation-action@v1
@@ -55,27 +95,10 @@ jobs:
         with:
           files: build/libs/${{ steps.find-jar.outputs.jarname }}
 
-      - name: "✏️ Generate release changelog"
-        uses: heinrichreimer/github-changelog-generator-action@v2.3
+      - name: Download NEW_LOG.MD Artifact
+        uses: actions/download-artifact@v2.1.1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          output: CHANGELOG.MD
-
-      - name: Commit
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: update Changelog
-          file_pattern: "CHANGELOG.MD"
-          branch: 1.19.2-dev
-          repository: .
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.10'
-
-      - name: Split changelog
-        run: python .github/workflows/scripts/split_changelog.py
+          name: NEW_LOG.MD
 
       - name: publish mc mod
         uses: Kir-Antipov/mc-publish@v3.2
@@ -88,3 +111,4 @@ jobs:
 
           files-primary: build/libs/${{ steps.find-jar.outputs.jarname }}
           changelog-file: NEW_LOG.MD
+
