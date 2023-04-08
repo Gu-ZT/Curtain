@@ -1,4 +1,4 @@
-package dev.dubhe.curtain.mixins.rules.fill_updates;
+package dev.dubhe.curtain.mixins.rules.cactus;
 
 import dev.dubhe.curtain.CurtainRules;
 import net.minecraft.core.BlockPos;
@@ -26,6 +26,7 @@ public abstract class LevelMixin {
 
     @Redirect(
             method = "markAndNotifyBlock",
+            remap = false,
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/level/Level;blockUpdated(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/Block;)V"
