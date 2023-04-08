@@ -33,7 +33,7 @@ public abstract class LevelChunkMixin {
             )
     )
     private void onRemovedBlock(BlockState blockState, World world, BlockPos blockPos, BlockState state, boolean b) {
-        if (!CurtainRules.impendingFillSkipUpdates.get()) {
+        if (CurtainRules.impendingFillSkipUpdates.get()) {
             if (state.hasTileEntity() && !state.is(state.getBlock())) {
                 world.removeBlockEntity(blockPos);
             }
