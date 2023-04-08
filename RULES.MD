@@ -97,20 +97,6 @@
         * 默认：`false`
         * 建议：`true`, `false`
         * 分类：`生存`
-    * fillUpdates
-        * 名称：`fill更新开关`
-        * 描述：`fill/clone/setblock命令以及结构方块执行时是否产生更新`
-        * 类型：`Boolean`
-        * 默认：`true`
-        * 建议：`true`, `false`
-        * 分类：`创造`
-    * interactionUpdates
-        * 名称：`放置方块产生更新`
-        * 描述：`放置方块是否产生更新的开关，设为false以避免产生更新`
-        * 类型：`Boolean`
-        * 默认：`true`
-        * 建议：`true`, `false`
-        * 分类：`创造`
     * stackableShulkerBoxes
         * 名称：`潜影盒堆叠`
         * 描述：`空潜影盒可在地上堆叠到 64
