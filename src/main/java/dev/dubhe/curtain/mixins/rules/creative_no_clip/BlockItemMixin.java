@@ -1,7 +1,6 @@
 package dev.dubhe.curtain.mixins.rules.creative_no_clip;
 
 import dev.dubhe.curtain.CurtainRules;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;

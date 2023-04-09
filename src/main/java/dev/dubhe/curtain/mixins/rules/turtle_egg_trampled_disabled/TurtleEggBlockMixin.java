@@ -1,7 +1,6 @@
 package dev.dubhe.curtain.mixins.rules.turtle_egg_trampled_disabled;
 
 import dev.dubhe.curtain.CurtainRules;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.TurtleEggBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;

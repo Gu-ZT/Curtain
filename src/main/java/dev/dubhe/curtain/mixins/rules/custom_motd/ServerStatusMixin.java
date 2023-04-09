@@ -1,7 +1,6 @@
 package dev.dubhe.curtain.mixins.rules.custom_motd;
 
 import dev.dubhe.curtain.CurtainRules;
-
 import net.minecraft.network.ServerStatusResponse;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;

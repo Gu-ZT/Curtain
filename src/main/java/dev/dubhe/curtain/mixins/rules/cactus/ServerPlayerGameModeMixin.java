@@ -1,7 +1,6 @@
 package dev.dubhe.curtain.mixins.rules.cactus;
 
 import dev.dubhe.curtain.utils.BlockRotator;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.management.PlayerInteractionManager;

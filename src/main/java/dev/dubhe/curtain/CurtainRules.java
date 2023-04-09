@@ -5,7 +5,6 @@ import dev.dubhe.curtain.api.rules.IValidator;
 import dev.dubhe.curtain.api.rules.Rule;
 import dev.dubhe.curtain.api.rules.Validators;
 import dev.dubhe.curtain.utils.TranslationHelper;
-
 import net.minecraft.command.CommandSource;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,8 +12,14 @@ import net.minecraft.network.rcon.IServer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.StringTextComponent;
 
-
-import static dev.dubhe.curtain.api.rules.Categories.*;
+import static dev.dubhe.curtain.api.rules.Categories.BUGFIX;
+import static dev.dubhe.curtain.api.rules.Categories.CLIENT;
+import static dev.dubhe.curtain.api.rules.Categories.COMMAND;
+import static dev.dubhe.curtain.api.rules.Categories.CREATIVE;
+import static dev.dubhe.curtain.api.rules.Categories.DISPENSER;
+import static dev.dubhe.curtain.api.rules.Categories.FEATURE;
+import static dev.dubhe.curtain.api.rules.Categories.SURVIVAL;
+import static dev.dubhe.curtain.api.rules.Categories.TNT;
 
 
 public class CurtainRules {

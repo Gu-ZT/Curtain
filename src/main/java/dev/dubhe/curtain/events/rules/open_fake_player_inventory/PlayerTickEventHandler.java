@@ -10,12 +10,12 @@ import static dev.dubhe.curtain.features.player.menu.MenuHashMap.FAKE_PLAYER_INV
 
 public class PlayerTickEventHandler {
     @SubscribeEvent
-    public void onTick(TickEvent.PlayerTickEvent playerTickEvent){
-        if(CurtainRules.openFakePlayerInventory &&
+    public void onTick(TickEvent.PlayerTickEvent playerTickEvent) {
+        if (CurtainRules.openFakePlayerInventory &&
                 playerTickEvent.player instanceof ServerPlayerEntity serverPlayer &&
                 serverPlayer instanceof EntityPlayerMPFake &&
                 serverPlayer.isAlive()
-        ){
+        ) {
             FAKE_PLAYER_INVENTORY_MENU_MAP.get(serverPlayer).tick();
         }
     }

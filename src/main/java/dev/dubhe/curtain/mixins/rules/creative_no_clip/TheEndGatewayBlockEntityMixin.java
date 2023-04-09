@@ -1,7 +1,6 @@
 package dev.dubhe.curtain.mixins.rules.creative_no_clip;
 
 import dev.dubhe.curtain.CurtainRules;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.EndGatewayTileEntity;
 import org.spongepowered.asm.mixin.Mixin;

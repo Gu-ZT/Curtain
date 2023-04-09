@@ -3,7 +3,6 @@ package dev.dubhe.curtain.mixins;
 import dev.dubhe.curtain.CurtainRules;
 import dev.dubhe.curtain.features.player.fakes.IEntity;
 import dev.dubhe.curtain.utils.BlockRotator;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Direction;
 import org.spongepowered.asm.mixin.Mixin;

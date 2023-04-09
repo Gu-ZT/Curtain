@@ -5,8 +5,6 @@ import dev.dubhe.curtain.features.logging.LoggerManager;
 import dev.dubhe.curtain.utils.Messenger;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.ServerPlayerEntity;

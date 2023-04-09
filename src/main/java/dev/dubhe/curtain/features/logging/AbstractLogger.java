@@ -6,6 +6,7 @@ import net.minecraft.util.text.ITextComponent;
 public abstract class AbstractLogger {
     private final String name;
     private final DisplayType type;
+
     public AbstractLogger(String name, DisplayType type) {
         this.name = name;
         this.type = type;
@@ -15,6 +16,7 @@ public abstract class AbstractLogger {
         this.name = name;
         this.type = DisplayType.CHAT;
     }
+
     public String getName() {
         return name;
     }

@@ -1,7 +1,6 @@
 package dev.dubhe.curtain.mixins.rules.cactus;
 
 import dev.dubhe.curtain.utils.BlockRotator;
-
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.IDispenseItemBehavior;
 import net.minecraft.item.Item;
