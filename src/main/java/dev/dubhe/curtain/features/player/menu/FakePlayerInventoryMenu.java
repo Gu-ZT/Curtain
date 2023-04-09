@@ -166,7 +166,7 @@ public class FakePlayerInventoryMenu implements IInventory {
 
     @Override
     public boolean stillValid(PlayerEntity player) {
-        if (this.player.isAlive())
+        if (!this.player.isAlive())
             return false;
         return !(player.distanceToSqr(this.player) > 64.0d);
     }
