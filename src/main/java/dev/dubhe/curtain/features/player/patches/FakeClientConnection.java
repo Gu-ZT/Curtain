@@ -8,7 +8,7 @@ import net.minecraft.network.protocol.PacketFlow;
 public class FakeClientConnection extends Connection {
     public FakeClientConnection(PacketFlow packetFlow) {
         super(packetFlow);
-        ((IClientConnection)this).setChannel(new EmbeddedChannel());
+        ((IClientConnection) this).setChannel(new EmbeddedChannel());
     }
 
     @Override

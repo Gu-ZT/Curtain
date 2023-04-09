@@ -4,14 +4,22 @@ import dev.dubhe.curtain.Curtain;
 import dev.dubhe.curtain.api.rules.CurtainRule;
 import dev.dubhe.curtain.api.rules.RuleManager;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.*;
+import net.minecraft.network.chat.ClickEvent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.HoverEvent;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import static dev.dubhe.curtain.utils.TranslationKeys.*;
+import static dev.dubhe.curtain.utils.TranslationKeys.CATEGORIES;
+import static dev.dubhe.curtain.utils.TranslationKeys.MENU_CATEGORIES;
+import static dev.dubhe.curtain.utils.TranslationKeys.MENU_CATEGORY;
+import static dev.dubhe.curtain.utils.TranslationKeys.MENU_TITLE;
+import static dev.dubhe.curtain.utils.TranslationKeys.MENU_VERSION;
 
 public class MenuHelper {
     /**
