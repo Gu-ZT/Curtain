@@ -4,7 +4,6 @@ import dev.dubhe.curtain.api.rules.RuleManager;
 import dev.dubhe.curtain.utils.TranslationHelper;
 
 import java.io.InputStream;
-import java.io.Reader;
 
 public interface ICurtain {
 
