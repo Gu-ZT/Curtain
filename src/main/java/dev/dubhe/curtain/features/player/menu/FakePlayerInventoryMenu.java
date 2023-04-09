@@ -29,48 +29,48 @@ public class FakePlayerInventoryMenu implements Container {
     public final NonNullList<ItemStack> Armor;
     public final NonNullList<ItemStack> Offhand;
 
-    private final NonNullList<ItemStack> Buttons = NonNullList.withSize(13,ItemStack.EMPTY);
+    private final NonNullList<ItemStack> Buttons = NonNullList.withSize(13, ItemStack.EMPTY);
 
     private final List<Button> ButtonList = new ArrayList<>();
     private final List<NonNullList<ItemStack>> Components;
     private final Player player;
     private final EntityPlayerActionPack actionPack;
 
-    public void tick(){
+    public void tick() {
         this.checkButton();
     }
 
-    public FakePlayerInventoryMenu(Player player){
+    public FakePlayerInventoryMenu(Player player) {
         this.player = player;
         this.PlayerItems = player.getInventory().items;
         this.Armor = player.getInventory().armor;
         this.Offhand = player.getInventory().offhand;
-        this.actionPack = ((IServerPlayer)player).getActionPack();
-        this.Components = ImmutableList.of(this.PlayerItems,this.Armor,this.Offhand,this.Buttons);
+        this.actionPack = ((IServerPlayer) player).getActionPack();
+        this.Components = ImmutableList.of(this.PlayerItems, this.Armor, this.Offhand, this.Buttons);
         this.createMenu();
         this.actionPack.setSlot(1);
     }
 
     @Override
     public int getContainerSize() {
-        return this.PlayerItems.size()+this.Armor.size()+this.Offhand.size()+this.Buttons.size();
+        return this.PlayerItems.size() + this.Armor.size() + this.Offhand.size() + this.Buttons.size();
     }
 
     @Override
     public boolean isEmpty() {
-        for (ItemStack itemStack:
-             this.PlayerItems) {
-            if(!itemStack.isEmpty())
+        for (ItemStack itemStack :
+                this.PlayerItems) {
+            if (!itemStack.isEmpty())
                 return false;
         }
-        for (ItemStack itemStack:
+        for (ItemStack itemStack :
                 this.Armor) {
-            if(!itemStack.isEmpty())
+            if (!itemStack.isEmpty())
                 return false;
         }
-        for (ItemStack itemStack:
+        for (ItemStack itemStack :
                 this.Offhand) {
-            if(!itemStack.isEmpty())
+            if (!itemStack.isEmpty())
                 return false;
         }
 
@@ -170,9 +170,9 @@ public class FakePlayerInventoryMenu implements Container {
 
     @Override
     public boolean stillValid(@NotNull Player player) {
-        if(this.player.isRemoved())
+        if (this.player.isRemoved())
             return false;
-        return !(player.distanceToSqr(this.player)>64.0d);
+        return !(player.distanceToSqr(this.player) > 64.0d);
     }
 
     @Override
@@ -183,17 +183,17 @@ public class FakePlayerInventoryMenu implements Container {
         }
     }
 
-    private void createMenu(){
-        List<Pair<Integer,Integer>> slots_and_itemCounts = new ArrayList<>();
+    private void createMenu() {
+        List<Pair<Integer, Integer>> slots_and_itemCounts = new ArrayList<>();
         List<Function> functions = new ArrayList<>();
-        List<Pair<Component,Component>> components = new ArrayList<>();
+        List<Pair<Component, Component>> components = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
-            slots_and_itemCounts.add(new Pair<>(i+9,i+1));
-            int finalI = i+1;
-            functions.add(()->actionPack.setSlot(finalI));
+            slots_and_itemCounts.add(new Pair<>(i + 9, i + 1));
+            int finalI = i + 1;
+            functions.add(() -> actionPack.setSlot(finalI));
             components.add(new Pair<>(
-                    TranslationHelper.translate("curtain.rules.open_fake_player_inventory.menu.slot",i+1).withStyle(Style.EMPTY.withColor(ChatFormatting.RED).withBold(true).withItalic(false)),
-                    TranslationHelper.translate("curtain.rules.open_fake_player_inventory.menu.slot",i+1).withStyle(Style.EMPTY.withColor(ChatFormatting.WHITE).withBold(true).withItalic(false))
+                    TranslationHelper.translate("curtain.rules.open_fake_player_inventory.menu.slot", i + 1).withStyle(Style.EMPTY.withColor(ChatFormatting.RED).withBold(true).withItalic(false)),
+                    TranslationHelper.translate("curtain.rules.open_fake_player_inventory.menu.slot", i + 1).withStyle(Style.EMPTY.withColor(ChatFormatting.WHITE).withBold(true).withItalic(false))
             ));
         }
 
@@ -222,12 +222,12 @@ public class FakePlayerInventoryMenu implements Container {
         ToggledButton attackInterval14 = new ToggledButton(
                 Items.BARRIER,
                 Items.STRUCTURE_VOID,
-                TranslationHelper.translate("curtain.rules.open_fake_player_inventory.menu.attack_interval_14","ON")
+                TranslationHelper.translate("curtain.rules.open_fake_player_inventory.menu.attack_interval_14", "ON")
                         .withStyle(
                                 Style.EMPTY.withColor(ChatFormatting.GRAY)
                                         .withBold(true)
                                         .withItalic(false)),
-                TranslationHelper.translate("curtain.rules.open_fake_player_inventory.menu.attack_interval_14","OFF")
+                TranslationHelper.translate("curtain.rules.open_fake_player_inventory.menu.attack_interval_14", "OFF")
                         .withStyle(
                                 Style.EMPTY.withColor(ChatFormatting.WHITE)
                                         .withBold(true)
@@ -237,15 +237,15 @@ public class FakePlayerInventoryMenu implements Container {
                 5
         );
 
-        ToggledButton attackContinuous  = new ToggledButton(
+        ToggledButton attackContinuous = new ToggledButton(
                 Items.BARRIER,
                 Items.STRUCTURE_VOID,
-                TranslationHelper.translate("curtain.rules.open_fake_player_inventory.menu.attack_continuous","ON")
+                TranslationHelper.translate("curtain.rules.open_fake_player_inventory.menu.attack_continuous", "ON")
                         .withStyle(
                                 Style.EMPTY.withColor(ChatFormatting.GRAY)
                                         .withBold(true)
                                         .withItalic(false)),
-                TranslationHelper.translate("curtain.rules.open_fake_player_inventory.menu.attack_continuous","OFF")
+                TranslationHelper.translate("curtain.rules.open_fake_player_inventory.menu.attack_continuous", "OFF")
                         .withStyle(
                                 Style.EMPTY.withColor(ChatFormatting.WHITE)
                                         .withBold(true)
@@ -258,12 +258,12 @@ public class FakePlayerInventoryMenu implements Container {
         ToggledButton useContinuous = new ToggledButton(
                 Items.BARRIER,
                 Items.STRUCTURE_VOID,
-                TranslationHelper.translate("curtain.rules.open_fake_player_inventory.menu.use_continuous","ON")
+                TranslationHelper.translate("curtain.rules.open_fake_player_inventory.menu.use_continuous", "ON")
                         .withStyle(
                                 Style.EMPTY.withColor(ChatFormatting.GRAY)
                                         .withBold(true)
                                         .withItalic(false)),
-                TranslationHelper.translate("curtain.rules.open_fake_player_inventory.menu.use_continuous","OFF")
+                TranslationHelper.translate("curtain.rules.open_fake_player_inventory.menu.use_continuous", "OFF")
                         .withStyle(
                                 Style.EMPTY.withColor(ChatFormatting.WHITE)
                                         .withBold(true)
@@ -273,21 +273,21 @@ public class FakePlayerInventoryMenu implements Container {
                 8
         );
 
-        stop_all_button.addClickEvent(()->{
+        stop_all_button.addClickEvent(() -> {
             attackInterval14.reset();
             attackContinuous.reset();
             useContinuous.reset();
             actionPack.stopAll();
         });
 
-        attackInterval14.addClickEvent(()-> actionPack.start(EntityPlayerActionPack.ActionType.ATTACK, EntityPlayerActionPack.Action.interval(14)));
-        attackInterval14.addToggledOffEvent(()-> actionPack.start(EntityPlayerActionPack.ActionType.ATTACK, EntityPlayerActionPack.Action.once()));
+        attackInterval14.addClickEvent(() -> actionPack.start(EntityPlayerActionPack.ActionType.ATTACK, EntityPlayerActionPack.Action.interval(14)));
+        attackInterval14.addToggledOffEvent(() -> actionPack.start(EntityPlayerActionPack.ActionType.ATTACK, EntityPlayerActionPack.Action.once()));
 
-        attackContinuous.addClickEvent(()-> actionPack.start(EntityPlayerActionPack.ActionType.ATTACK, EntityPlayerActionPack.Action.continuous()));
-        attackContinuous.addToggledOffEvent(()-> actionPack.start(EntityPlayerActionPack.ActionType.ATTACK, EntityPlayerActionPack.Action.once()));
+        attackContinuous.addClickEvent(() -> actionPack.start(EntityPlayerActionPack.ActionType.ATTACK, EntityPlayerActionPack.Action.continuous()));
+        attackContinuous.addToggledOffEvent(() -> actionPack.start(EntityPlayerActionPack.ActionType.ATTACK, EntityPlayerActionPack.Action.once()));
 
-        useContinuous.addClickEvent(()-> actionPack.start(EntityPlayerActionPack.ActionType.USE, EntityPlayerActionPack.Action.continuous()));
-        useContinuous.addToggledOffEvent(()-> actionPack.start(EntityPlayerActionPack.ActionType.USE, EntityPlayerActionPack.Action.once()));
+        useContinuous.addClickEvent(() -> actionPack.start(EntityPlayerActionPack.ActionType.USE, EntityPlayerActionPack.Action.continuous()));
+        useContinuous.addToggledOffEvent(() -> actionPack.start(EntityPlayerActionPack.ActionType.USE, EntityPlayerActionPack.Action.once()));
 
 
         ButtonList.add(stop_all_button);
@@ -296,7 +296,7 @@ public class FakePlayerInventoryMenu implements Container {
         ButtonList.add(useContinuous);
     }
 
-    private void checkButton(){
+    private void checkButton() {
         for (var button :
                 ButtonList) {
             button.onCheck();

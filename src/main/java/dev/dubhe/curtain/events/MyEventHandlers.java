@@ -3,9 +3,9 @@ package dev.dubhe.curtain.events;
 import dev.dubhe.curtain.events.rules.open_fake_player_inventory.PlayerLoggedEventHandler;
 import dev.dubhe.curtain.events.rules.open_fake_player_inventory.PlayerTickEventHandler;
 import dev.dubhe.curtain.events.rules.open_fake_player_inventory.entityInteractHandler;
-import dev.dubhe.curtain.events.utils.WorldEventHandler;
 import dev.dubhe.curtain.events.utils.ServerEventHandler;
 import dev.dubhe.curtain.events.utils.ServerLifecycleEventHandler;
+import dev.dubhe.curtain.events.utils.WorldEventHandler;
 import net.minecraftforge.common.MinecraftForge;
 
 public class MyEventHandlers {

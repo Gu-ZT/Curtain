@@ -12,7 +12,14 @@ import net.minecraft.server.ServerInterface;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
-import static dev.dubhe.curtain.api.rules.Categories.*;
+import static dev.dubhe.curtain.api.rules.Categories.BUGFIX;
+import static dev.dubhe.curtain.api.rules.Categories.CLIENT;
+import static dev.dubhe.curtain.api.rules.Categories.COMMAND;
+import static dev.dubhe.curtain.api.rules.Categories.CREATIVE;
+import static dev.dubhe.curtain.api.rules.Categories.DISPENSER;
+import static dev.dubhe.curtain.api.rules.Categories.FEATURE;
+import static dev.dubhe.curtain.api.rules.Categories.SURVIVAL;
+import static dev.dubhe.curtain.api.rules.Categories.TNT;
 
 
 public class CurtainRules {

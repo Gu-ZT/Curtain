@@ -27,7 +27,9 @@ public class ExplosionMixin {
     @Shadow
     @Final
     private Level level;
-    @Shadow @Final private List<BlockPos> toBlow;
+    @Shadow
+    @Final
+    private List<BlockPos> toBlow;
     private ExplosionLogHelper eLogger;
 
     @Inject(method = "explode", at = @At("HEAD"), cancellable = true)

@@ -20,7 +20,7 @@ public class MemoryLogger extends AbstractHudLogger {
         long usedMemory = totalMemory - freeMemory;
         MutableComponent msg = new TextComponent("");
         msg.append(new TextComponent("%.1f".formatted(usedMemory / 1024 / 1024f) + " M")
-                        .withStyle(ChatFormatting.GRAY));
+                .withStyle(ChatFormatting.GRAY));
         msg.append(new TextComponent(" / ").withStyle(ChatFormatting.WHITE));
         msg.append(new TextComponent("%.1f".formatted(totalMemory / 1024 / 1024f) + " M")
                 .withStyle(ChatFormatting.GRAY));
