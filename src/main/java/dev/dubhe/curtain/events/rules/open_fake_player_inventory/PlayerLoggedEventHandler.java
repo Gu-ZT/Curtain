@@ -8,11 +8,12 @@ import static dev.dubhe.curtain.features.player.menu.MenuHashMap.FAKE_PLAYER_INV
 
 public class PlayerLoggedEventHandler {
     @SubscribeEvent
-    public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event){
-        FAKE_PLAYER_INVENTORY_MENU_MAP.put(event.getEntity(),new FakePlayerInventoryMenu(event.getEntity()));
+    public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
+        FAKE_PLAYER_INVENTORY_MENU_MAP.put(event.getEntity(), new FakePlayerInventoryMenu(event.getEntity()));
     }
+
     @SubscribeEvent
-    public void onPlayerLeave(PlayerEvent.PlayerLoggedOutEvent event){
+    public void onPlayerLeave(PlayerEvent.PlayerLoggedOutEvent event) {
         FAKE_PLAYER_INVENTORY_MENU_MAP.remove(event.getEntity());
     }
 }

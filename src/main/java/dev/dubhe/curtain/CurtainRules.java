@@ -1,8 +1,8 @@
 package dev.dubhe.curtain;
 
 import dev.dubhe.curtain.api.rules.CurtainRule;
-import dev.dubhe.curtain.api.rules.Rule;
 import dev.dubhe.curtain.api.rules.IValidator;
+import dev.dubhe.curtain.api.rules.Rule;
 import dev.dubhe.curtain.api.rules.Validators;
 import dev.dubhe.curtain.utils.TranslationHelper;
 import net.minecraft.commands.CommandSourceStack;

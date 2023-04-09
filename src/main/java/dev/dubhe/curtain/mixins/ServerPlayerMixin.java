@@ -14,25 +14,22 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ServerPlayer.class)
-public abstract class ServerPlayerMixin implements IServerPlayer
-{
+public abstract class ServerPlayerMixin implements IServerPlayer {
     @Unique
     public EntityPlayerActionPack actionPack;
+
     @Override
-    public EntityPlayerActionPack getActionPack()
-    {
+    public EntityPlayerActionPack getActionPack() {
         return actionPack;
     }
 
     @Inject(method = "<init>", at = @At(value = "RETURN"))
-    private void onServerPlayerEntityContructor(MinecraftServer p_215088_, ServerLevel p_215089_, GameProfile p_215090_, ProfilePublicKey p_215091_, CallbackInfo ci)
-    {
+    private void onServerPlayerEntityContructor(MinecraftServer p_215088_, ServerLevel p_215089_, GameProfile p_215090_, ProfilePublicKey p_215091_, CallbackInfo ci) {
         this.actionPack = new EntityPlayerActionPack((ServerPlayer) (Object) this);
     }
 
     @Inject(method = "tick", at = @At(value = "HEAD"))
-    private void onTick(CallbackInfo ci)
-    {
+    private void onTick(CallbackInfo ci) {
         actionPack.onUpdate();
     }
 }

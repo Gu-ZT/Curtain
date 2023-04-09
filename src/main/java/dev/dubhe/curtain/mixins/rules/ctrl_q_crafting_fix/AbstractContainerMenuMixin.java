@@ -17,17 +17,23 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(AbstractContainerMenu.class)
 public abstract class AbstractContainerMenuMixin {
-    @Shadow public abstract ItemStack getCarried();
+    @Shadow
+    public abstract ItemStack getCarried();
 
-    @Shadow @Final public NonNullList<Slot> slots;
+    @Shadow
+    @Final
+    public NonNullList<Slot> slots;
 
-    @Shadow public abstract void clicked(int p_150400_, int p_150401_, ClickType p_150402_, Player p_150403_);
+    @Shadow
+    public abstract void clicked(int p_150400_, int p_150401_, ClickType p_150402_, Player p_150403_);
 
-    @Shadow public abstract void broadcastChanges();
+    @Shadow
+    public abstract void broadcastChanges();
 
-    @Shadow protected abstract void resetQuickCraft();
+    @Shadow
+    protected abstract void resetQuickCraft();
 
-    @Inject( method = "doClick", at = @At(value = "HEAD"), cancellable = true)
+    @Inject(method = "doClick", at = @At(value = "HEAD"), cancellable = true)
     private void onThrowClick(int slotId, int clickData, ClickType clickType, Player player, CallbackInfo ci) {
         if (clickType == ClickType.THROW && CurtainRules.ctrlQCraftingFix && this.getCarried().isEmpty() && slotId >= 0) {
             Slot slot = slots.get(slotId);

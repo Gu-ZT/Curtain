@@ -15,7 +15,7 @@ public abstract class PlayerMixin {
     @Shadow
     protected abstract void touch(Entity entity);
 
-    @Redirect(method = "aiStep",at = @At(value = "INVOKE",target = "Ljava/util/List;add(Ljava/lang/Object;)Z"))
+    @Redirect(method = "aiStep", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z"))
     public boolean processXpOrbCollisions(List<Entity> instance, Object e) {
         Entity entity = (Entity) e;
         if (CurtainRules.xpNoCooldown) {
