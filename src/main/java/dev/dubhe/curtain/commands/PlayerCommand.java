@@ -16,7 +16,6 @@ import dev.dubhe.curtain.features.player.fakes.IServerPlayer;
 import dev.dubhe.curtain.features.player.helpers.EntityPlayerActionPack;
 import dev.dubhe.curtain.features.player.patches.EntityPlayerMPFake;
 import dev.dubhe.curtain.utils.CommandHelper;
-
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.arguments.DimensionArgument;
 import net.minecraft.command.arguments.RotationArgument;
@@ -30,12 +29,11 @@ import net.minecraft.util.RegistryKey;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector2f;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.GameType;
 import net.minecraft.world.World;
-
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -48,13 +46,12 @@ import static net.minecraft.command.ISuggestionProvider.suggest;
 
 
 public class PlayerCommand {
-
-    // TODO: allow any order like execute
     public static void register(CommandDispatcher<CommandSource> dispatcher) {
-        final String[] gamemodeStrings = Arrays.stream(GameType.values())
-                .map(GameType::getName).toList()
+        final String[] gamemodes = Arrays.stream(GameType.values())
+                .map(GameType::getName)
+                .toList()
                 .toArray(new String[]{});
-        LiteralArgumentBuilder<CommandSource> literalargumentbuilder = literal("player")
+        LiteralArgumentBuilder<CommandSource> builder = literal("player")
                 .requires((player) -> CommandHelper.canUseCommand(player, CurtainRules.commandPlayer))
                 .then(argument("player", StringArgumentType.word())
                         .suggests((c, b) -> suggest(getPlayers(c.getSource()), b))
@@ -103,20 +100,20 @@ public class PlayerCommand {
                         ).then(literal("spawn").executes(PlayerCommand::spawn)
                                 .then(literal("in").requires((player) -> player.hasPermission(2))
                                         .then(argument("gamemode", StringArgumentType.word())
-                                                .suggests((c, b) -> suggest(gamemodeStrings, b))
+                                                .suggests((c, b) -> suggest(gamemodes, b))
                                                 .executes(PlayerCommand::spawn)))
                                 .then(literal("at").then(argument("position", Vec3Argument.vec3()).executes(PlayerCommand::spawn)
                                         .then(literal("facing").then(argument("direction", RotationArgument.rotation()).executes(PlayerCommand::spawn)
                                                 .then(literal("in").then(argument("dimension", DimensionArgument.dimension()).executes(PlayerCommand::spawn)
                                                         .then(literal("in").requires((player) -> player.hasPermission(2))
-                                                                .then(argument("gamemode", StringArgumentType.word()).suggests((c, b) -> suggest(gamemodeStrings, b))
+                                                                .then(argument("gamemode", StringArgumentType.word()).suggests((c, b) -> suggest(gamemodes, b))
                                                                         .executes(PlayerCommand::spawn)
                                                                 )))
                                                 )))
                                 ))
                         )
                 );
-        dispatcher.register(literalargumentbuilder);
+        dispatcher.register(builder);
     }
 
     private static LiteralArgumentBuilder<CommandSource> makeActionCommand(String actionName, EntityPlayerActionPack.ActionType type) {
@@ -165,9 +162,11 @@ public class PlayerCommand {
             return false;
         }
 
-        if (!context.getSource().getServer().getPlayerList().isOp(sendingPlayer.getGameProfile()) && sendingPlayer != player && !(player instanceof EntityPlayerMPFake)) {
-            sendFeedback(context.getSource(), new StringTextComponent("Non OP players can't control other real players").withStyle(TextFormatting.RED));
-            return true;
+        if (!context.getSource().getServer().getPlayerList().isOp(sendingPlayer.getGameProfile())) {
+            if (sendingPlayer != player && !(player instanceof EntityPlayerMPFake)) {
+                sendFeedback(context.getSource(), new StringTextComponent("Non OP players can't control other real players").withStyle(TextFormatting.RED));
+                return true;
+            }
         }
         return false;
     }
@@ -182,8 +181,8 @@ public class PlayerCommand {
 
     private static boolean cantSpawn(CommandContext<CommandSource> context) {
         String playerName = StringArgumentType.getString(context, "player");
-        String prefix = "none".equals(CurtainRules.fakePlayerNamePrefix) || playerName.startsWith(CurtainRules.fakePlayerNamePrefix) ? "" : CurtainRules.fakePlayerNamePrefix;
-        String suffix = "none".equals(CurtainRules.fakePlayerNameSuffix) || playerName.endsWith(CurtainRules.fakePlayerNameSuffix) ? "" : CurtainRules.fakePlayerNameSuffix;
+        String prefix = "none".equals(CurtainRules.fakePlayerNamePrefix) ? "" : CurtainRules.fakePlayerNamePrefix;
+        String suffix = "none".equals(CurtainRules.fakePlayerNameSuffix) ? "" : CurtainRules.fakePlayerNameSuffix;
         playerName = prefix + playerName + suffix;
         MinecraftServer server = context.getSource().getServer();
         PlayerList manager = server.getPlayerList();
@@ -241,7 +240,6 @@ public class PlayerCommand {
         }
     }
 
-    @SuppressWarnings("ConstantConditions")
     private static int spawn(CommandContext<CommandSource> context) throws CommandSyntaxException {
         if (cantSpawn(context)) return 0;
         CommandSource source = context.getSource();
@@ -270,8 +268,8 @@ public class PlayerCommand {
             flying = true;
         }
         String playerName = StringArgumentType.getString(context, "player");
-        String prefix = "none".equals(CurtainRules.fakePlayerNamePrefix) || playerName.startsWith(CurtainRules.fakePlayerNamePrefix) ? "" : CurtainRules.fakePlayerNamePrefix;
-        String suffix = "none".equals(CurtainRules.fakePlayerNameSuffix) || playerName.endsWith(CurtainRules.fakePlayerNameSuffix) ? "" : CurtainRules.fakePlayerNameSuffix;
+        String prefix = "none".equals(CurtainRules.fakePlayerNamePrefix) ? "" : CurtainRules.fakePlayerNamePrefix;
+        String suffix = "none".equals(CurtainRules.fakePlayerNameSuffix) ? "" : CurtainRules.fakePlayerNameSuffix;
         playerName = prefix + playerName + suffix;
         if (playerName.length() > maxPlayerLength(source.getServer())) {
             sendFeedback(context.getSource(), new StringTextComponent("Player name: " + playerName + " is too long").withStyle(TextFormatting.RED).withStyle(TextFormatting.BOLD));
@@ -279,13 +277,13 @@ public class PlayerCommand {
         }
 
         MinecraftServer server = source.getServer();
-        if (!World.isInSpawnableBounds(new BlockPos(pos.x, pos.y, pos.z))) {
+        if (!World.isInWorldBounds(new BlockPos(pos.x, pos.y, pos.z))) {
             sendFeedback(context.getSource(), new StringTextComponent("Player " + playerName + " cannot be placed outside of the world").withStyle(TextFormatting.RED).withStyle(TextFormatting.BOLD));
             return 0;
         }
         PlayerEntity player = EntityPlayerMPFake.createFake(playerName, server, pos.x, pos.y, pos.z, facing.y, facing.x, dimType, mode, flying);
         if (player == null) {
-            sendFeedback(context.getSource(), new StringTextComponent("Player " + playerName + " doesn't exist " +
+            sendFeedback(context.getSource(), new StringTextComponent("Player " + StringArgumentType.getString(context, "player") + " doesn't exist " +
                     "and cannot spawn in online mode. Turn the server offline to spawn non-existing players").withStyle(TextFormatting.RED).withStyle(TextFormatting.BOLD));
             return 0;
         }
@@ -335,7 +333,7 @@ public class PlayerCommand {
         return 1;
     }
 
-    private static void sendFeedback(CommandSource source, IFormattableTextComponent message) {
+    private static void sendFeedback(CommandSource source, ITextComponent message) {
         source.sendSuccess(message, source.getServer().getLevel(World.OVERWORLD) != null);
     }
 }

@@ -11,8 +11,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(EnderPearlEntity.class)
-public abstract class ThrownEnderpearlMixin extends ProjectileItemEntity {
-    public ThrownEnderpearlMixin(EntityType<? extends ProjectileItemEntity> entityType_1, World world_1) {
+public abstract class EnderPearlEntityMixin extends ProjectileItemEntity {
+    public EnderPearlEntityMixin(EntityType<? extends ProjectileItemEntity> entityType_1, World world_1) {
         super(entityType_1, world_1);
     }
 
@@ -20,7 +20,7 @@ public abstract class ThrownEnderpearlMixin extends ProjectileItemEntity {
             value = "INVOKE",
             target = "Lnet/minecraft/network/NetworkManager;isConnected()Z"
     ))
-    private boolean isConnectionGood(NetworkManager instance) {
-        return instance.isConnected() || getOwner() instanceof EntityPlayerMPFake;
+    private boolean isConnectionGood(NetworkManager networkManager) {
+        return networkManager.isConnected() || getOwner() instanceof EntityPlayerMPFake;
     }
 }

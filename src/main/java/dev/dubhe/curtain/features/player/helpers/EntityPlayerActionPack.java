@@ -1,7 +1,6 @@
 package dev.dubhe.curtain.features.player.helpers;
 
 import dev.dubhe.curtain.features.player.fakes.IServerPlayer;
-import dev.dubhe.curtain.features.player.patches.EntityPlayerMPFake;
 import dev.dubhe.curtain.utils.Tracer;
 import net.minecraft.block.BlockState;
 import net.minecraft.command.arguments.EntityAnchorArgument;
@@ -10,6 +9,7 @@ import net.minecraft.entity.item.BoatEntity;
 import net.minecraft.entity.item.ItemFrameEntity;
 import net.minecraft.entity.item.minecart.MinecartEntity;
 import net.minecraft.entity.passive.horse.AbstractHorseEntity;
+import net.minecraft.entity.passive.horse.HorseEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -17,12 +17,9 @@ import net.minecraft.network.play.client.CPlayerDiggingPacket;
 import net.minecraft.network.play.server.SHeldItemChangePacket;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.*;
 import net.minecraft.util.math.vector.Vector2f;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
@@ -116,9 +113,9 @@ public class EntityPlayerActionPack {
             case WEST:
                 return look(90, 0);
             case UP:
-                return look(player.getYHeadRot(), -90);
+                return look(player.getViewYRot(1.0F), -90);
             case DOWN:
-                return look(player.getYHeadRot(), 90);
+                return look(player.getViewYRot(1.0F), 90);
         }
         return this;
     }
@@ -128,9 +125,7 @@ public class EntityPlayerActionPack {
     }
 
     public EntityPlayerActionPack look(float yaw, float pitch) {
-        player.setYHeadRot(yaw % 360); //setYaw
-        player.setYHeadRot(MathHelper.clamp(pitch, -90, 90)); // setPitch
-        // maybe player.setPositionAndAngles(player.x, player.y, player.z, yaw, MathHelper.clamp(pitch,-90.0F, 90.0F));
+        player.absMoveTo(player.getX(), player.getY(), player.getZ(), yaw % 360, MathHelper.clamp(pitch, -90, 90));
         return this;
     }
 
@@ -140,7 +135,7 @@ public class EntityPlayerActionPack {
     }
 
     public EntityPlayerActionPack turn(float yaw, float pitch) {
-        return look(player.yRot + yaw, player.xRot + pitch);
+        return look(player.getViewYRot(1.0F) + yaw, player.getViewXRot(1.0F) + pitch);
     }
 
     public EntityPlayerActionPack turn(Vector2f rotation) {
@@ -166,10 +161,10 @@ public class EntityPlayerActionPack {
         //test what happens
         List<Entity> entities;
         if (onlyRideables) {
-            entities = player.level.getEntities(player, player.getBoundingBox().inflate(3.0D, 1.0D, 3.0D),
-                    e -> e instanceof MinecartEntity || e instanceof BoatEntity || e instanceof AbstractHorseEntity);
+            entities = player.level.getEntities(player, player.getBoundingBox().expandTowards(3.0D, 1.0D, 3.0D),
+                    e -> e instanceof MinecartEntity || e instanceof BoatEntity || e instanceof HorseEntity);
         } else {
-            entities = player.level.getEntities(player, player.getBoundingBox().inflate(3.0D, 1.0D, 3.0D));
+            entities = player.level.getEntities(player, player.getBoundingBox().expandTowards(3.0D, 1.0D, 3.0D), EntityPredicates.NO_SPECTATORS);
         }
         if (entities.size() == 0)
             return this;
@@ -221,13 +216,11 @@ public class EntityPlayerActionPack {
                 }
             }
         }
-        float vel = sneaking ? 0.3F : 1.0F;
-        // The != 0.0F checks are needed given else real players can't control minecarts, however it works with fakes and else they don't stop immediately
-        if (forward != 0.0F || player instanceof EntityPlayerMPFake) {
-            player.zza = forward * vel;
+        if (forward != 0.0F) {
+            player.zza = forward * (sneaking ? 0.3F : 1.0F);
         }
-        if (strafing != 0.0F || player instanceof EntityPlayerMPFake) {
-            player.xxa = strafing * vel;
+        if (strafing != 0.0F) {
+            player.xxa = strafing * (sneaking ? 0.3F : 1.0F);
         }
     }
 
@@ -284,7 +277,7 @@ public class EntityPlayerActionPack {
                             BlockRayTraceResult blockHit = (BlockRayTraceResult) hit;
                             BlockPos pos = blockHit.getBlockPos();
                             Direction side = blockHit.getDirection();
-                            if (pos.getY() < player.getLevel().getMaxBuildHeight() - (side == Direction.UP ? 1 : 0) && world.mayInteract(player, pos)) {
+                            if (pos.getY() < player.server.getMaxBuildHeight() - (side == Direction.UP ? 1 : 0) && world.mayInteract(player, pos)) {
                                 ActionResultType result = player.gameMode.useItemOn(player, world, player.getItemInHand(hand), hand, blockHit);
                                 if (result.consumesAction()) {
                                     if (result.shouldSwing()) player.swing(hand);
@@ -299,7 +292,7 @@ public class EntityPlayerActionPack {
                             EntityRayTraceResult entityHit = (EntityRayTraceResult) hit;
                             Entity entity = entityHit.getEntity();
                             boolean handWasEmpty = player.getItemInHand(hand).isEmpty();
-                            boolean itemFrameEmpty = (entity instanceof ItemFrameEntity frameEntity) && frameEntity.getItem().isEmpty();
+                            boolean itemFrameEmpty = (entity instanceof ItemFrameEntity) && ((ItemFrameEntity) entity).getItem().isEmpty();
                             Vector3d relativeHitPos = entityHit.getLocation().subtract(entity.getX(), entity.getY(), entity.getZ());
                             if (entity.interactAt(player, relativeHitPos, hand).consumesAction()) {
                                 ap.itemUseCooldown = 3;
@@ -346,8 +339,6 @@ public class EntityPlayerActionPack {
                     }
                     case BLOCK: {
                         EntityPlayerActionPack ap = ((IServerPlayer) player).getActionPack();
-                        if (!action.isContinuous && player.gameMode.isCreative())
-                            ap.blockHitDelay = 0; //Reset delay when attack(once)
                         if (ap.blockHitDelay > 0) {
                             ap.blockHitDelay--;
                             return false;
@@ -364,14 +355,14 @@ public class EntityPlayerActionPack {
                         BlockState state = player.level.getBlockState(pos);
                         boolean blockBroken = false;
                         if (player.gameMode.getGameModeForPlayer().isCreative()) {
-                            player.gameMode.handleBlockBreakAction(pos, CPlayerDiggingPacket.Action.START_DESTROY_BLOCK, side, player.getLevel().getMaxBuildHeight());
+                            player.gameMode.handleBlockBreakAction(pos, CPlayerDiggingPacket.Action.START_DESTROY_BLOCK, side, player.server.getMaxBuildHeight());
                             ap.blockHitDelay = 5;
                             blockBroken = true;
                         } else if (ap.currentBlock == null || !ap.currentBlock.equals(pos)) {
                             if (ap.currentBlock != null) {
-                                player.gameMode.handleBlockBreakAction(ap.currentBlock, CPlayerDiggingPacket.Action.ABORT_DESTROY_BLOCK, side, player.getLevel().getMaxBuildHeight());
+                                player.gameMode.handleBlockBreakAction(ap.currentBlock, CPlayerDiggingPacket.Action.ABORT_DESTROY_BLOCK, side, player.server.getMaxBuildHeight());
                             }
-                            player.gameMode.handleBlockBreakAction(pos, CPlayerDiggingPacket.Action.START_DESTROY_BLOCK, side, player.getLevel().getMaxBuildHeight());
+                            player.gameMode.handleBlockBreakAction(pos, CPlayerDiggingPacket.Action.START_DESTROY_BLOCK, side, player.server.getMaxBuildHeight());
                             boolean notAir = !state.isAir();
                             if (notAir && ap.curBlockDamageMP == 0) {
                                 state.attack(player.level, pos, player);
@@ -387,7 +378,7 @@ public class EntityPlayerActionPack {
                         } else {
                             ap.curBlockDamageMP += state.getDestroyProgress(player, player.level, pos);
                             if (ap.curBlockDamageMP >= 1) {
-                                player.gameMode.handleBlockBreakAction(pos, CPlayerDiggingPacket.Action.STOP_DESTROY_BLOCK, side, player.getLevel().getMaxBuildHeight());
+                                player.gameMode.handleBlockBreakAction(pos, CPlayerDiggingPacket.Action.STOP_DESTROY_BLOCK, side, player.server.getMaxBuildHeight());
                                 ap.currentBlock = null;
                                 ap.blockHitDelay = 5;
                                 blockBroken = true;
@@ -408,7 +399,7 @@ public class EntityPlayerActionPack {
                 EntityPlayerActionPack ap = ((IServerPlayer) player).getActionPack();
                 if (ap.currentBlock == null) return;
                 player.level.destroyBlockProgress(-1, ap.currentBlock, -1);
-                player.gameMode.handleBlockBreakAction(ap.currentBlock, CPlayerDiggingPacket.Action.ABORT_DESTROY_BLOCK, Direction.DOWN, player.getLevel().getMaxBuildHeight());
+                player.gameMode.handleBlockBreakAction(ap.currentBlock, CPlayerDiggingPacket.Action.ABORT_DESTROY_BLOCK, Direction.DOWN, player.server.getMaxBuildHeight());
                 ap.currentBlock = null;
             }
         },

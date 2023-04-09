@@ -26,8 +26,11 @@ import java.util.List;
 import java.util.UUID;
 
 @Mixin(PlayerList.class)
-public class PlayerListMixin {
-    @Shadow @Final private MinecraftServer server;
+public abstract class PlayerListMixin
+{
+    @Shadow
+    @Final
+    private MinecraftServer server;
 
     @Inject(method = "load", at = @At(value = "RETURN", shift = At.Shift.BEFORE))
     private void fixStartingPos(ServerPlayerEntity serverPlayerEntity_1, CallbackInfoReturnable<CompoundNBT> cir)
@@ -53,7 +56,7 @@ public class PlayerListMixin {
     }
 
     @Redirect(method = "getPlayerForLogin", at = @At(value = "INVOKE", target = "Ljava/util/Iterator;hasNext()Z"))
-    private boolean cancelWhileLoop(Iterator<ServerPlayerEntity> iterator)
+    private boolean cancelWhileLoop(Iterator iterator)
     {
         return false;
     }
@@ -61,11 +64,11 @@ public class PlayerListMixin {
     @Inject(method = "getPlayerForLogin", at = @At(value = "INVOKE", shift = At.Shift.BEFORE,
             target = "Ljava/util/Iterator;hasNext()Z"), locals = LocalCapture.CAPTURE_FAILHARD)
     private void newWhileLoop(GameProfile gameProfile_1, CallbackInfoReturnable<ServerPlayerEntity> cir, UUID uUID_1,
-                              List<ServerPlayerEntity> list_1, ServerPlayerEntity serverPlayerEntity, Iterator<ServerPlayerEntity> var5)
+                              List list_1, ServerPlayerEntity serverPlayerEntity, Iterator var5)
     {
         while (var5.hasNext())
         {
-            ServerPlayerEntity serverPlayerEntity_3 = var5.next();
+            ServerPlayerEntity serverPlayerEntity_3 = (ServerPlayerEntity) var5.next();
             if(serverPlayerEntity_3 instanceof EntityPlayerMPFake)
             {
                 ((EntityPlayerMPFake)serverPlayerEntity_3).kill(new TranslationTextComponent("multiplayer.disconnect.duplicate_login"));
@@ -74,4 +77,5 @@ public class PlayerListMixin {
             serverPlayerEntity_3.connection.disconnect(new TranslationTextComponent("multiplayer.disconnect.duplicate_login"));
         }
     }
+
 }
