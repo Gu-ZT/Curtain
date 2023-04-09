@@ -9,7 +9,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(PlayerEntity.class)
-public class PlayerMixin {
+public abstract class PlayerEntityMixin
+{
+    /**
+     * To make sure player attacks are able to knockback fake players
+     */
     @Redirect(
             method = "attack",
             at = @At(
@@ -18,7 +22,8 @@ public class PlayerMixin {
                     ordinal = 0
             )
     )
-    private boolean velocityModifiedAndNotCarpetFakePlayer(Entity target) {
+    private boolean velocityModifiedAndNotCarpetFakePlayer(Entity target)
+    {
         return target.hurtMarked && !(target instanceof EntityPlayerMPFake);
     }
 }

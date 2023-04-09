@@ -9,23 +9,18 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
 @SuppressWarnings("NullableProblems")
-public class NetHandlerPlayServerFake extends ServerPlayNetHandler
-{
-    public NetHandlerPlayServerFake(MinecraftServer server, NetworkManager cc, ServerPlayerEntity playerIn)
-    {
+public class NetHandlerPlayServerFake extends ServerPlayNetHandler {
+    public NetHandlerPlayServerFake(MinecraftServer server, NetworkManager cc, ServerPlayerEntity playerIn) {
         super(server, cc, playerIn);
     }
 
     @Override
-    public void send(final IPacket<?> packet)
-    {
+    public void send(final IPacket<?> packet) {
     }
 
     @Override
-    public void disconnect(ITextComponent message)
-    {
-        if (player instanceof EntityPlayerMPFake && message instanceof TranslationTextComponent && ((TranslationTextComponent) message).getKey().equals("multiplayer.disconnect.idling"))
-        {
+    public void disconnect(ITextComponent message) {
+        if (player instanceof EntityPlayerMPFake && message instanceof TranslationTextComponent && ((TranslationTextComponent) message).getKey().equals("multiplayer.disconnect.idling")) {
             ((EntityPlayerMPFake) player).kill(new TranslationTextComponent(((TranslationTextComponent) message).getKey()));
         }
     }
