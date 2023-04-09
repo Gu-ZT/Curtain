@@ -12,5 +12,6 @@ public interface IEntity {
     void setPortalTimer(int amount);
 
     int getPublicNetherPortalCooldown();
+
     void setPublicNetherPortalCooldown(int what);
 }

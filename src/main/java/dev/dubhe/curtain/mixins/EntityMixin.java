@@ -23,20 +23,21 @@ public abstract class EntityMixin implements IEntity {
     public float yRotO;
 
 
-    @Shadow public Level level;
+    @Shadow
+    public Level level;
 
 
-    @Shadow @Nullable public abstract LivingEntity getControllingPassenger();
+    @Shadow
+    @Nullable
+    public abstract LivingEntity getControllingPassenger();
 
     @Override
-    public float getMainYaw(float partialTicks)
-    {
+    public float getMainYaw(float partialTicks) {
         return partialTicks == 1.0F ? this.yRot : Mth.lerp(partialTicks, this.yRotO, this.yRot);
     }
 
     @Inject(method = "isControlledByLocalInstance", at = @At("HEAD"), cancellable = true)
-    private void isFakePlayer(CallbackInfoReturnable<Boolean> cir)
-    {
+    private void isFakePlayer(CallbackInfoReturnable<Boolean> cir) {
         if (getControllingPassenger() instanceof EntityPlayerMPFake) cir.setReturnValue(!level.isClientSide);
     }
 }

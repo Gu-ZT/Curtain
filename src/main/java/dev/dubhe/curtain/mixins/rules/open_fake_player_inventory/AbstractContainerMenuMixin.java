@@ -19,8 +19,8 @@ public abstract class AbstractContainerMenuMixin {
     @Shadow
     public NonNullList<Slot> slots;
 
-    @Inject(method = "doClick",at = @At("HEAD"),cancellable = true)
-    private void onClick(int mouseX, int mouseY, ClickType clickType, Player player, CallbackInfo ci){
+    @Inject(method = "doClick", at = @At("HEAD"), cancellable = true)
+    private void onClick(int mouseX, int mouseY, ClickType clickType, Player player, CallbackInfo ci) {
         if (mouseX < 0) return;
         Slot slot = slots.get(mouseX);
         ItemStack itemStack = slot.getItem();
