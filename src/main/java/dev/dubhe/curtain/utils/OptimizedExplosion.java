@@ -181,7 +181,7 @@ public class OptimizedExplosion {
     public static <T> void shuffle(ObjectArrayList<T> objectArrayList, Random randomSource) {
         int i = objectArrayList.size();
 
-        for(int j = i; j > 1; --j) {
+        for (int j = i; j > 1; --j) {
             int k = randomSource.nextInt(j);
             objectArrayList.set(j - 1, objectArrayList.set(k, objectArrayList.get(j - 1)));
         }

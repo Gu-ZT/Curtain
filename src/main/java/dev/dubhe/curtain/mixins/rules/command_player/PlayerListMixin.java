@@ -25,48 +25,40 @@ import java.util.UUID;
 
 @Mixin(PlayerList.class)
 public class PlayerListMixin {
-    @Shadow @Final private MinecraftServer server;
+    @Shadow
+    @Final
+    private MinecraftServer server;
 
     @Inject(method = "load", at = @At(value = "RETURN", shift = At.Shift.BEFORE))
-    private void fixStartingPos(ServerPlayer serverPlayerEntity_1, CallbackInfoReturnable<CompoundTag> cir)
-    {
-        if (serverPlayerEntity_1 instanceof EntityPlayerMPFake)
-        {
+    private void fixStartingPos(ServerPlayer serverPlayerEntity_1, CallbackInfoReturnable<CompoundTag> cir) {
+        if (serverPlayerEntity_1 instanceof EntityPlayerMPFake) {
             ((EntityPlayerMPFake) serverPlayerEntity_1).fixStartingPosition.run();
         }
     }
 
     @Redirect(method = "placeNewPlayer", at = @At(value = "NEW", target = "net/minecraft/server/network/ServerGamePacketListenerImpl"))
-    private ServerGamePacketListenerImpl replaceNetworkHandler(MinecraftServer server, Connection networkManager, ServerPlayer playerIn)
-    {
+    private ServerGamePacketListenerImpl replaceNetworkHandler(MinecraftServer server, Connection networkManager, ServerPlayer playerIn) {
         boolean isServerPlayerEntity = playerIn instanceof EntityPlayerMPFake;
-        if (isServerPlayerEntity)
-        {
+        if (isServerPlayerEntity) {
             return new NetHandlerPlayServerFake(this.server, networkManager, playerIn);
-        }
-        else
-        {
+        } else {
             return new ServerGamePacketListenerImpl(this.server, networkManager, playerIn);
         }
     }
 
     @Redirect(method = "getPlayerForLogin", at = @At(value = "INVOKE", target = "Ljava/util/Iterator;hasNext()Z"))
-    private boolean cancelWhileLoop(Iterator<ServerPlayer> iterator)
-    {
+    private boolean cancelWhileLoop(Iterator<ServerPlayer> iterator) {
         return false;
     }
 
     @Inject(method = "getPlayerForLogin", at = @At(value = "INVOKE", shift = At.Shift.BEFORE,
             target = "Ljava/util/Iterator;hasNext()Z"), locals = LocalCapture.CAPTURE_FAILHARD)
     private void newWhileLoop(GameProfile gameProfile_1, CallbackInfoReturnable<ServerPlayer> cir, UUID uUID_1,
-                              List<ServerPlayer> list_1, ServerPlayer serverPlayerEntity, Iterator<ServerPlayer> var5)
-    {
-        while (var5.hasNext())
-        {
+                              List<ServerPlayer> list_1, ServerPlayer serverPlayerEntity, Iterator<ServerPlayer> var5) {
+        while (var5.hasNext()) {
             ServerPlayer serverPlayerEntity_3 = var5.next();
-            if(serverPlayerEntity_3 instanceof EntityPlayerMPFake)
-            {
-                ((EntityPlayerMPFake)serverPlayerEntity_3).kill(new TranslatableComponent("multiplayer.disconnect.duplicate_login"));
+            if (serverPlayerEntity_3 instanceof EntityPlayerMPFake) {
+                ((EntityPlayerMPFake) serverPlayerEntity_3).kill(new TranslatableComponent("multiplayer.disconnect.duplicate_login"));
                 continue;
             }
             serverPlayerEntity_3.connection.disconnect(new TranslatableComponent("multiplayer.disconnect.duplicate_login"));

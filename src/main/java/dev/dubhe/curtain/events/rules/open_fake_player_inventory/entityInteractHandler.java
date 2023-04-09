@@ -11,12 +11,12 @@ import static dev.dubhe.curtain.features.player.menu.MenuHashMap.FAKE_PLAYER_INV
 
 public class entityInteractHandler {
     @SubscribeEvent
-    public void onInteractWithFakePlayer(PlayerInteractEvent.EntityInteract entityInteract){
-        if(entityInteract.getTarget() instanceof EntityPlayerMPFake fakeplayer){
+    public void onInteractWithFakePlayer(PlayerInteractEvent.EntityInteract entityInteract) {
+        if (entityInteract.getTarget() instanceof EntityPlayerMPFake fakeplayer) {
             SimpleMenuProvider provider = null;
             if (CurtainRules.openFakePlayerEnderChest && entityInteract.getEntity().isShiftKeyDown()) {
                 provider = new SimpleMenuProvider(
-                        (i,inventory,p)->
+                        (i, inventory, p) ->
                                 ChestMenu.threeRows(
                                         i,
                                         inventory,
@@ -24,10 +24,9 @@ public class entityInteractHandler {
                                 ),
                         fakeplayer.getDisplayName()
                 );
-            }
-            else if(CurtainRules.openFakePlayerInventory){
+            } else if (CurtainRules.openFakePlayerInventory) {
                 provider = new SimpleMenuProvider(
-                        (i,inventory,p)->
+                        (i, inventory, p) ->
                                 ChestMenu.sixRows(
                                         i,
                                         inventory,
@@ -36,7 +35,7 @@ public class entityInteractHandler {
                         fakeplayer.getDisplayName()
                 );
             }
-            if(provider != null)
+            if (provider != null)
                 entityInteract.getPlayer().openMenu(provider);
         }
 

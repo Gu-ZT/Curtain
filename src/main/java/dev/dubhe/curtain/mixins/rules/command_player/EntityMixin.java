@@ -13,13 +13,15 @@ import javax.annotation.Nullable;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin {
-    @Shadow public Level level;
+    @Shadow
+    public Level level;
 
-    @Shadow @Nullable public abstract Entity getControllingPassenger();
+    @Shadow
+    @Nullable
+    public abstract Entity getControllingPassenger();
 
     @Inject(method = "isControlledByLocalInstance", at = @At("HEAD"), cancellable = true)
-    private void isFakePlayer(CallbackInfoReturnable<Boolean> cir)
-    {
+    private void isFakePlayer(CallbackInfoReturnable<Boolean> cir) {
         if (getControllingPassenger() instanceof EntityPlayerMPFake) cir.setReturnValue(!level.isClientSide);
     }
 }

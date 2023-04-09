@@ -25,14 +25,15 @@ public class Button {
     CompoundTag compoundTag = new CompoundTag();
 
 
-    public Button(Component text,Container container,int slot){
-        this(true,Items.COMMAND_BLOCK,1,text,container,slot);
-    }
-    public Button(boolean isEnable, Item enabled_DisplayItem, int itemCount, Component text, Container container,int slot){
-        this(isEnable,enabled_DisplayItem,itemCount,text,Items.BARRIER,container,slot);
+    public Button(Component text, Container container, int slot) {
+        this(true, Items.COMMAND_BLOCK, 1, text, container, slot);
     }
 
-    public Button(boolean isEnable,Item displayItem,int itemCount,Component text,Item disabled_DisplayItem,Container container,int slot){
+    public Button(boolean isEnable, Item enabled_DisplayItem, int itemCount, Component text, Container container, int slot) {
+        this(isEnable, enabled_DisplayItem, itemCount, text, Items.BARRIER, container, slot);
+    }
+
+    public Button(boolean isEnable, Item displayItem, int itemCount, Component text, Item disabled_DisplayItem, Container container, int slot) {
         this.Enabled = isEnable;
         this.Enabled_DisplayItem = displayItem;
         this.Disabled_DisplayItem = disabled_DisplayItem;
@@ -40,11 +41,11 @@ public class Button {
         this.Text = text;
         this.Container = container;
         this.Slot = slot;
-        this.compoundTag.putBoolean("CurtainGUIItem",true);
+        this.compoundTag.putBoolean("CurtainGUIItem", true);
     }
 
-    protected void onClick(){
-        if(Enabled){
+    protected void onClick() {
+        if (Enabled) {
             for (var func :
                     this.Functions) {
                 func.accept();
@@ -53,32 +54,32 @@ public class Button {
         setupOrUpdateButton();
     }
 
-    public void addClickEvent(Function func){
+    public void addClickEvent(Function func) {
         this.Functions.add(func);
     }
 
-    public void setEnabled(boolean enabled){
+    public void setEnabled(boolean enabled) {
         this.Enabled = enabled;
         setupOrUpdateButton();
     }
 
-    protected void setupOrUpdateButton(){
+    protected void setupOrUpdateButton() {
         ItemStack DisplayItem = new ItemStack(
-                Enabled?this.Enabled_DisplayItem:this.Disabled_DisplayItem,
+                Enabled ? this.Enabled_DisplayItem : this.Disabled_DisplayItem,
                 this.ItemCount
         );
         DisplayItem.setTag(compoundTag.copy());
         DisplayItem.setHoverName(this.Text);
 
         ItemStack slotItem = Container.getItem(Slot);
-        if(slotItem.is(this.Enabled_DisplayItem) || slotItem.is(this.Disabled_DisplayItem) || slotItem.isEmpty()){
-            Container.setItem(Slot,DisplayItem);
+        if (slotItem.is(this.Enabled_DisplayItem) || slotItem.is(this.Disabled_DisplayItem) || slotItem.isEmpty()) {
+            Container.setItem(Slot, DisplayItem);
         }
     }
 
 
-    public void onCheck(){
-        if(!Init){
+    public void onCheck() {
+        if (!Init) {
             setupOrUpdateButton();
             Init = true;
         }
@@ -87,7 +88,7 @@ public class Button {
         }
     }
 
-    public void reset(){
+    public void reset() {
         Enabled = true;
         setupOrUpdateButton();
     }

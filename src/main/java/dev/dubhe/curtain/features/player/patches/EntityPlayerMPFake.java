@@ -28,7 +28,8 @@ import net.minecraft.world.level.block.entity.SkullBlockEntity;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class EntityPlayerMPFake extends ServerPlayer {
-    public Runnable fixStartingPosition = () -> {};
+    public Runnable fixStartingPosition = () -> {
+    };
     public boolean isAShadow;
 
     public static EntityPlayerMPFake createFake(String username, MinecraftServer server, double d0, double d1, double d2, double yaw, double pitch, ResourceKey<Level> dimensionId, GameType gamemode, boolean flying) {
@@ -38,8 +39,7 @@ public class EntityPlayerMPFake extends ServerPlayer {
         GameProfile gameprofile;
         try {
             gameprofile = server.getProfileCache().get(username).orElse(null); //findByName  .orElse(null)
-        }
-        finally {
+        } finally {
             GameProfileCache.setUsesAuthentication(server.isDedicatedServer() && server.usesAuthentication());
         }
         if (gameprofile == null) {
@@ -57,7 +57,7 @@ public class EntityPlayerMPFake extends ServerPlayer {
         EntityPlayerMPFake instance = new EntityPlayerMPFake(server, worldIn, gameprofile, false);
         instance.fixStartingPosition = () -> instance.moveTo(d0, d1, d2, (float) yaw, (float) pitch);
         server.getPlayerList().placeNewPlayer(new FakeClientConnection(PacketFlow.SERVERBOUND), instance);
-        instance.teleportTo(worldIn, d0, d1, d2, (float)yaw, (float)pitch);
+        instance.teleportTo(worldIn, d0, d1, d2, (float) yaw, (float) pitch);
         instance.setHealth(20.0F);
         instance.unsetRemoved();
         instance.maxUpStep = 0.6F;
@@ -125,8 +125,7 @@ public class EntityPlayerMPFake extends ServerPlayer {
         try {
             super.tick();
             this.doTick();
-        }
-        catch (NullPointerException ignored) {
+        } catch (NullPointerException ignored) {
             // happens with that paper port thingy - not sure what that would fix, but hey
             // the game not gonna crash violently.
         }
