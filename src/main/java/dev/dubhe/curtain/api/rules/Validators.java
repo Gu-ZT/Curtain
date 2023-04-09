@@ -3,7 +3,6 @@ package dev.dubhe.curtain.api.rules;
 import dev.dubhe.curtain.utils.CommandHelper;
 import net.minecraft.command.CommandSource;
 
-
 import java.util.List;
 
 public final class Validators {

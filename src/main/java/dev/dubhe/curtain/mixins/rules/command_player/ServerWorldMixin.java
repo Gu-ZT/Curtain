@@ -17,17 +17,21 @@ public abstract class ServerWorldMixin {
     @Shadow
     public abstract MinecraftServer getServer();
 
-    @Shadow boolean tickingEntities;
+    @Shadow
+    boolean tickingEntities;
 
-    @Shadow @Deprecated public abstract void onEntityRemoved(Entity p_217484_1_);
+    @Shadow
+    @Deprecated
+    public abstract void onEntityRemoved(Entity p_217484_1_);
 
-    @Shadow public abstract void updateSleepingPlayerList();
+    @Shadow
+    public abstract void updateSleepingPlayerList();
 
     @SuppressWarnings("UnnecessaryReturnStatement")
     @Inject(method = "removePlayerImmediately", at = @At("HEAD"))
     private void removePlayer(ServerPlayerEntity player, CallbackInfo ci) {
         player.remove(false);
-        if ( !(tickingEntities && player instanceof EntityPlayerMPFake) ) this.onEntityRemoved(player);
+        if (!(tickingEntities && player instanceof EntityPlayerMPFake)) this.onEntityRemoved(player);
         else {
             this.getServer().tell(new TickDelayedTask(getServer().getTickCount(), () ->
             {

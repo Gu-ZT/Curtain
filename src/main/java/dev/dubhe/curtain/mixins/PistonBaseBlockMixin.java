@@ -2,7 +2,6 @@ package dev.dubhe.curtain.mixins;
 
 import dev.dubhe.curtain.features.player.fakes.IPistonBlock;
 import net.minecraft.block.PistonBlock;
-
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

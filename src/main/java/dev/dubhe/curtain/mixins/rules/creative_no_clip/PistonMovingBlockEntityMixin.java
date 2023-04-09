@@ -19,9 +19,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PistonTileEntity.class)
 public abstract class PistonMovingBlockEntityMixin {
-    @Shadow private BlockState movedState;
+    @Shadow
+    private BlockState movedState;
 
-    @Shadow public abstract Direction getMovementDirection();
+    @Shadow
+    public abstract Direction getMovementDirection();
 
     @Inject(method = "moveEntityByPiston", at = @At("HEAD"), cancellable = true)
     private static void dontPushSpectators(Direction direction, Entity entity, double d, Direction direction2, CallbackInfo ci) {

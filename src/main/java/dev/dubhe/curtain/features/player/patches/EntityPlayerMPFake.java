@@ -1,17 +1,25 @@
 package dev.dubhe.curtain.features.player.patches;
 
 import com.mojang.authlib.GameProfile;
-import dev.dubhe.curtain.CurtainRules;
 import dev.dubhe.curtain.features.player.fakes.IServerPlayer;
-import dev.dubhe.curtain.utils.Messenger;
 import io.netty.buffer.ByteBufAllocator;
-import io.netty.channel.*;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelConfig;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelHandler;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelId;
+import io.netty.channel.ChannelMetadata;
+import io.netty.channel.ChannelPipeline;
+import io.netty.channel.ChannelProgressivePromise;
+import io.netty.channel.ChannelPromise;
+import io.netty.channel.DefaultChannelConfig;
+import io.netty.channel.EventLoop;
 import io.netty.util.Attribute;
 import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.EventExecutor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketDirection;
@@ -26,7 +34,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.FoodStats;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.concurrent.TickDelayedTask;
-import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -39,11 +46,11 @@ import javax.annotation.Nonnull;
 import java.net.SocketAddress;
 
 public class EntityPlayerMPFake extends ServerPlayerEntity {
-    public Runnable fixStartingPosition = () -> {};
+    public Runnable fixStartingPosition = () -> {
+    };
     public boolean isAShadow;
 
-    public static EntityPlayerMPFake createFake(String username, MinecraftServer server, double d0, double d1, double d2, double yaw, double pitch, RegistryKey<World> dimensionId, GameType gamemode, boolean flying)
-    {
+    public static EntityPlayerMPFake createFake(String username, MinecraftServer server, double d0, double d1, double d2, double yaw, double pitch, RegistryKey<World> dimensionId, GameType gamemode, boolean flying) {
         //prolly half of that crap is not necessary, but it works
         ServerWorld worldIn = server.getLevel(dimensionId);
         PlayerInteractionManager interactionManagerIn = new PlayerInteractionManager(worldIn);
@@ -51,16 +58,13 @@ public class EntityPlayerMPFake extends ServerPlayerEntity {
         GameProfile gameprofile;
         try {
             gameprofile = server.getProfileCache().get(username);
-        }
-        finally {
+        } finally {
             PlayerProfileCache.setUsesAuthentication(server.isDedicatedServer() && server.usesAuthentication());
         }
-        if (gameprofile == null)
-        {
+        if (gameprofile == null) {
             gameprofile = new GameProfile(PlayerEntity.createPlayerUUID(username), username);
         }
-        if (gameprofile.getProperties().containsKey("textures"))
-        {
+        if (gameprofile.getProperties().containsKey("textures")) {
             gameprofile = SkullTileEntity.updateGameprofile(gameprofile);
         }
         EntityPlayerMPFake instance = new EntityPlayerMPFake(server, worldIn, gameprofile, interactionManagerIn, false);
@@ -282,8 +286,9 @@ public class EntityPlayerMPFake extends ServerPlayerEntity {
                                 @Override
                                 public T get() {
                                     String name = key.name();
-                                    if ("fml:netversion".equals(name)) return (T)"FML***";
-                                    else if ("minecraft:netregistry".equals(name)) return (T)new FMLMCRegisterPacketHandler.ChannelList();
+                                    if ("fml:netversion".equals(name)) return (T) "FML***";
+                                    else if ("minecraft:netregistry".equals(name))
+                                        return (T) new FMLMCRegisterPacketHandler.ChannelList();
                                     else return null;
                                 }
 
@@ -535,7 +540,7 @@ public class EntityPlayerMPFake extends ServerPlayerEntity {
             e.printStackTrace();
         }
         server.getPlayerList().placeNewPlayer(networkManager, instance);
-        instance.teleportTo(worldIn, d0, d1, d2, (float)yaw, (float)pitch);
+        instance.teleportTo(worldIn, d0, d1, d2, (float) yaw, (float) pitch);
         instance.setHealth(20.0F);
         instance.removed = false;
         instance.maxUpStep = 0.6F;
@@ -548,8 +553,7 @@ public class EntityPlayerMPFake extends ServerPlayerEntity {
         return instance;
     }
 
-    public static EntityPlayerMPFake createShadow(MinecraftServer server, ServerPlayerEntity player)
-    {
+    public static EntityPlayerMPFake createShadow(MinecraftServer server, ServerPlayerEntity player) {
         player.getServer().getPlayerList().remove(player);
         player.connection.disconnect(new TranslationTextComponent("multiplayer.disconnect.duplicate_login"));
         ServerWorld worldIn = player.getLevel();//.getWorld(player.dimension);
@@ -573,35 +577,29 @@ public class EntityPlayerMPFake extends ServerPlayerEntity {
         return playerShadow;
     }
 
-    private EntityPlayerMPFake(MinecraftServer server, ServerWorld worldIn, GameProfile profile, PlayerInteractionManager interactionManagerIn, boolean shadow)
-    {
+    private EntityPlayerMPFake(MinecraftServer server, ServerWorld worldIn, GameProfile profile, PlayerInteractionManager interactionManagerIn, boolean shadow) {
         super(server, worldIn, profile, interactionManagerIn);
         isAShadow = shadow;
     }
 
     @Override
-    protected void playEquipSound(ItemStack stack)
-    {
+    protected void playEquipSound(ItemStack stack) {
         if (!isUsingItem()) super.playEquipSound(stack);
     }
 
     @Override
-    public void kill()
-    {
+    public void kill() {
         kill(new StringTextComponent("Killed"));
     }
 
-    public void kill(ITextComponent reason)
-    {
+    public void kill(ITextComponent reason) {
         shakeOff();
         this.server.tell(new TickDelayedTask(this.server.getTickCount(), () -> this.connection.onDisconnect(reason)));
     }
 
     @Override
-    public void tick()
-    {
-        if (this.getServer().getTickCount() % 10 == 0)
-        {
+    public void tick() {
+        if (this.getServer().getTickCount() % 10 == 0) {
             this.connection.resetPosition();
             this.getLevel().getChunkSource().move(this);
             //if (netherPortalCooldown==10) onTeleportationDone(); <- causes hard crash but would need to be done to enable portals
@@ -610,18 +608,15 @@ public class EntityPlayerMPFake extends ServerPlayerEntity {
         this.doTick();
     }
 
-    private void shakeOff()
-    {
+    private void shakeOff() {
         if (getVehicle() instanceof PlayerEntity) stopRiding();
-        for (Entity passenger : getIndirectPassengers())
-        {
+        for (Entity passenger : getIndirectPassengers()) {
             if (passenger instanceof PlayerEntity) passenger.stopRiding();
         }
     }
 
     @Override
-    public void die(@Nonnull DamageSource cause)
-    {
+    public void die(@Nonnull DamageSource cause) {
         shakeOff();
         super.die(cause);
         setHealth(20);

@@ -5,12 +5,10 @@ import dev.dubhe.curtain.mixins.WeightedRandomItemMixin;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2LongMap;
 import it.unimi.dsi.fastutil.objects.Object2LongOpenHashMap;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
-
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -19,9 +17,7 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.passive.OcelotEntity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.server.MinecraftServer;
-
 import net.minecraft.tags.BlockTags;
-
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -30,7 +26,6 @@ import net.minecraft.util.text.TextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.MobSpawnInfo;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.Heightmap;
@@ -39,7 +34,6 @@ import net.minecraft.world.gen.feature.structure.StructureManager;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.spawner.WorldEntitySpawner;
 import org.apache.commons.lang3.tuple.Pair;
-
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -344,25 +338,23 @@ public class SpawnReporter {
         return spawnGroup == EntityClassification.MONSTER && serverWorld.getBlockState(blockPos.below()).getBlock() == Blocks.NETHER_BRICKS && structureAccessor.getStructureAt(blockPos, false, Structure.NETHER_BRIDGE).isValid() ? Structure.NETHER_BRIDGE.getSpecialEnemies() : chunkGenerator.getMobsAt(biome != null ? biome : serverWorld.getBiome(blockPos), structureAccessor, spawnGroup, blockPos);
     }
 
-    public static List<TextComponent> report(BlockPos pos, ServerWorld worldIn)
-    {
+    public static List<TextComponent> report(BlockPos pos, ServerWorld worldIn) {
         List<TextComponent> rep = new ArrayList<>();
-        int x = pos.getX(); int y = pos.getY(); int z = pos.getZ();
+        int x = pos.getX();
+        int y = pos.getY();
+        int z = pos.getZ();
         IChunk chunk = worldIn.getChunk(pos);
         int lc = chunk.getHeight(Heightmap.Type.WORLD_SURFACE, x, z) + 1;
-        String where = String.format((y >= lc) ? "%d blocks above it." : "%d blocks below it.",  MathHelper.abs(y-lc));
+        String where = String.format((y >= lc) ? "%d blocks above it." : "%d blocks below it.", MathHelper.abs(y - lc));
         if (y == lc) where = "right at it.";
-        rep.add(Messenger.s(String.format("Maximum spawn Y value for (%+d, %+d) is %d. You are "+where, x, z, lc )));
+        rep.add(Messenger.s(String.format("Maximum spawn Y value for (%+d, %+d) is %d. You are " + where, x, z, lc)));
         rep.add(Messenger.s("Spawns:"));
-        for (EntityClassification enumcreaturetype : EntityClassification.values())
-        {
+        for (EntityClassification enumcreaturetype : EntityClassification.values()) {
             String type_code = String.format("%s", enumcreaturetype).substring(0, 3);
             List<MobSpawnInfo.Spawners> lst = method_29950(worldIn, worldIn.structureFeatureManager(), worldIn.getChunkSource().getGenerator(), enumcreaturetype, pos, worldIn.getBiome(pos));//  ((ChunkGenerator)worldIn.getChunkManager().getChunkGenerator()).getEntitySpawnList(, worldIn.getStructureAccessor(), enumcreaturetype, pos);
-            if (lst != null && !lst.isEmpty())
-            {
-                for (MobSpawnInfo.Spawners spawnEntry : lst)
-                {
-                    if (EntitySpawnPlacementRegistry.getPlacementType(spawnEntry.type)==null)
+            if (lst != null && !lst.isEmpty()) {
+                for (MobSpawnInfo.Spawners spawnEntry : lst) {
+                    if (EntitySpawnPlacementRegistry.getPlacementType(spawnEntry.type) == null)
                         continue; // vanilla bug
                     boolean canspawn = WorldEntitySpawner.isSpawnPositionOk(EntitySpawnPlacementRegistry.getPlacementType(spawnEntry.type), worldIn, pos, spawnEntry.type);
                     int will_spawn = -1;
@@ -370,12 +362,9 @@ public class SpawnReporter {
                     boolean fits1;
 
                     MobEntity mob;
-                    try
-                    {
+                    try {
                         mob = (MobEntity) spawnEntry.type.create(worldIn);
-                    }
-                    catch (Exception exception)
-                    {
+                    } catch (Exception exception) {
                         exception.printStackTrace();
                         return rep;
                     }
@@ -383,28 +372,23 @@ public class SpawnReporter {
                     boolean fits_true = false;
                     boolean fits_false = false;
 
-                    if (canspawn)
-                    {
+                    if (canspawn) {
                         will_spawn = 0;
-                        for (int attempt = 0; attempt < 50; ++attempt)
-                        {
-                            float f = (float)x + 0.5F;
-                            float f1 = (float)z + 0.5F;
-                            mob.moveTo((double)f, (double)y, (double)f1, worldIn.random.nextFloat() * 360.0F, 0.0F);
+                        for (int attempt = 0; attempt < 50; ++attempt) {
+                            float f = (float) x + 0.5F;
+                            float f1 = (float) z + 0.5F;
+                            mob.moveTo((double) f, (double) y, (double) f1, worldIn.random.nextFloat() * 360.0F, 0.0F);
                             fits1 = worldIn.noCollision(mob);
                             EntityType etype = mob.getType();
 
-                            for (int i = 0; i < 20; ++i)
-                            {
+                            for (int i = 0; i < 20; ++i) {
                                 if (
-                                        EntitySpawnPlacementRegistry.checkSpawnRules(etype,worldIn, SpawnReason.NATURAL, pos, worldIn.random) &&
+                                        EntitySpawnPlacementRegistry.checkSpawnRules(etype, worldIn, SpawnReason.NATURAL, pos, worldIn.random) &&
                                                 WorldEntitySpawner.isSpawnPositionOk(EntitySpawnPlacementRegistry.getPlacementType(etype), worldIn, pos, etype) &&
                                                 mob.checkSpawnRules(worldIn, SpawnReason.NATURAL)
                                     // && mob.canSpawn(worldIn) // entity collisions // mostly - except ocelots
-                                )
-                                {
-                                    if (etype == EntityType.OCELOT)
-                                    {
+                                ) {
+                                    if (etype == EntityType.OCELOT) {
                                         BlockState blockState = worldIn.getBlockState(pos.below());
                                         if ((pos.getY() < worldIn.getSeaLevel()) || !(blockState.is(Blocks.GRASS_BLOCK) || blockState.is(BlockTags.LEAVES))) {
                                             continue;
@@ -416,23 +400,17 @@ public class SpawnReporter {
                             mob.finalizeSpawn(worldIn, worldIn.getCurrentDifficultyAt(mob.blockPosition()), SpawnReason.NATURAL, null, null);
                             // the code invokes onInitialSpawn after getCanSpawHere
                             fits = fits1 && worldIn.noCollision(mob);
-                            if (fits)
-                            {
+                            if (fits) {
                                 fits_true = true;
-                            }
-                            else
-                            {
+                            } else {
                                 fits_false = true;
                             }
 
                             killEntity(mob);
 
-                            try
-                            {
+                            try {
                                 mob = (MobEntity) spawnEntry.type.create(worldIn);
-                            }
-                            catch (Exception exception)
-                            {
+                            } catch (Exception exception) {
                                 exception.printStackTrace();
                                 return rep;
                             }
@@ -442,21 +420,18 @@ public class SpawnReporter {
                     String creature_name = mob.getType().getDescription().getString();
                     String pack_size = String.format("%d", mob.getMaxSpawnClusterSize());//String.format("%d-%d", animal.minGroupCount, animal.maxGroupCount);
                     int weight = ((WeightedRandomItemMixin) spawnEntry).getWeight();
-                    if (canspawn)
-                    {
-                        String c = (fits_true && will_spawn>0)?"e":"gi";
+                    if (canspawn) {
+                        String c = (fits_true && will_spawn > 0) ? "e" : "gi";
                         rep.add(Messenger.c(
-                                String.format("%s %s: %s (%d:%d-%d/%d), can: ",c,type_code,creature_name,weight,spawnEntry.minCount, spawnEntry.maxCount,  mob.getMaxSpawnClusterSize()),
+                                String.format("%s %s: %s (%d:%d-%d/%d), can: ", c, type_code, creature_name, weight, spawnEntry.minCount, spawnEntry.maxCount, mob.getMaxSpawnClusterSize()),
                                 "l YES",
-                                c+" , fit: ",
-                                ((fits_true && fits_false)?"y YES and NO":(fits_true?"l YES":"r NO")),
-                                c+" , will: ",
-                                ((will_spawn>0)?"l ":"r ")+Math.round((double)will_spawn)/10+"%"
+                                c + " , fit: ",
+                                ((fits_true && fits_false) ? "y YES and NO" : (fits_true ? "l YES" : "r NO")),
+                                c + " , will: ",
+                                ((will_spawn > 0) ? "l " : "r ") + Math.round((double) will_spawn) / 10 + "%"
                         ));
-                    }
-                    else
-                    {
-                        rep.add(Messenger.c(String.format("gi %s: %s (%d:%d-%d/%d), can: ",type_code,creature_name,weight,spawnEntry.minCount, spawnEntry.maxCount, mob.getMaxSpawnClusterSize()), "n NO"));
+                    } else {
+                        rep.add(Messenger.c(String.format("gi %s: %s (%d:%d-%d/%d), can: ", type_code, creature_name, weight, spawnEntry.minCount, spawnEntry.maxCount, mob.getMaxSpawnClusterSize()), "n NO"));
                     }
                     killEntity(mob);
                 }
