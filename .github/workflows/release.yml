@@ -48,7 +48,7 @@ jobs:
       matrix:
         java: [ 17 ]
         os: [ ubuntu-latest ]
-        branch: [ 1.19.4-dev, 1.19.2-dev, 1.18.2-dev, 1.16.5-dev]
+        branch: [ 1.19.4, 1.19.2, 1.18.2, 1.16.5 ]
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -78,9 +78,6 @@ jobs:
         if: ${{ runner.os != 'Windows' }}
         run: chmod +x ./gradlew
 
-      - name: Set build number
-        run: sed -i "s/undefined/$GITHUB_RUN_NUMBER/g" gradle.properties
-
       - name: build
         run: ./gradlew build
 
@@ -103,6 +100,12 @@ jobs:
       - name: publish mc mod
         uses: Kir-Antipov/mc-publish@v3.2
         with:
+          name: ${{ run-name }} - mc${{ matrix.branch }}
+          game-versions: |
+            ${{ matrix.branch }}
+          java: |
+            ${{ matrix.java }}
+
           modrinth-id: 2Vw36Ezz
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
 
