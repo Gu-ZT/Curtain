@@ -100,7 +100,7 @@ jobs:
       - name: publish mc mod
         uses: Kir-Antipov/mc-publish@v3.2
         with:
-          name: "${{ github.run-name }} - mc${{ matrix.branch }}"
+          name: ${{ steps.find-jar.outputs.jarname }}
           game-versions: |
             ${{ matrix.branch }}
           java: |
