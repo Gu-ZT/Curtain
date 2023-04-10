@@ -22,6 +22,7 @@ jobs:
         with:
           commit_message: update Changelog
           file_pattern: "CHANGELOG.MD"
+          branch: 1.19.2
           repository: .
 
       - name: Set up Python
