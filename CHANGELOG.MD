@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.2](https://github.com/Gu-ZT/Curtain/tree/1.2.2) (2023-04-10)
+
+[Full Changelog](https://github.com/Gu-ZT/Curtain/compare/1.2.1...1.2.2)
+
+**Merged pull requests:**
+
+- remap\_fix [\#74](https://github.com/Gu-ZT/Curtain/pull/74) ([DancingSnow0517](https://github.com/DancingSnow0517))
+
 ## [1.2.1](https://github.com/Gu-ZT/Curtain/tree/1.2.1) (2023-04-09)
 
 [Full Changelog](https://github.com/Gu-ZT/Curtain/compare/1.2.0...1.2.1)
