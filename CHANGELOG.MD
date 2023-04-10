@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.2.1](https://github.com/Gu-ZT/Curtain/tree/1.2.1) (2023-04-09)
+
+[Full Changelog](https://github.com/Gu-ZT/Curtain/compare/1.2.0...1.2.1)
+
+**Merged pull requests:**
+
+- build\(curtain\): Update mod version to 1.2.1 [\#70](https://github.com/Gu-ZT/Curtain/pull/70) ([DancingSnow0517](https://github.com/DancingSnow0517))
+- remove\_fillupdate [\#64](https://github.com/Gu-ZT/Curtain/pull/64) ([DancingSnow0517](https://github.com/DancingSnow0517))
+- ci\(publish\): 添加分支1.19.4-dev [\#59](https://github.com/Gu-ZT/Curtain/pull/59) ([DancingSnow0517](https://github.com/DancingSnow0517))
+- ci\(publish\): 为多个分支适配 [\#57](https://github.com/Gu-ZT/Curtain/pull/57) ([DancingSnow0517](https://github.com/DancingSnow0517))
+- fix\(lang\): 是 `hardcode_tnt_angle` 不是 `hard_code_tnt_angle` [\#56](https://github.com/Gu-ZT/Curtain/pull/56) ([DancingSnow0517](https://github.com/DancingSnow0517))
+- fix\(menuHelper\): 这次应该是真的修好了 [\#55](https://github.com/Gu-ZT/Curtain/pull/55) ([DancingSnow0517](https://github.com/DancingSnow0517))
+- ci\(publish\): 添加自动上传curseforge和modrinth [\#53](https://github.com/Gu-ZT/Curtain/pull/53) ([DancingSnow0517](https://github.com/DancingSnow0517))
+- feat\(curtainRulesGenerator\): 添加生成RULES Action [\#52](https://github.com/Gu-ZT/Curtain/pull/52) ([DancingSnow0517](https://github.com/DancingSnow0517))
+- feat\(curtainRulesGenerator\): 写规则文件的生成器 [\#51](https://github.com/Gu-ZT/Curtain/pull/51) ([DancingSnow0517](https://github.com/DancingSnow0517))
+
 ## [1.2.0](https://github.com/Gu-ZT/Curtain/tree/1.2.0) (2023-04-04)
 
 [Full Changelog](https://github.com/Gu-ZT/Curtain/compare/1.1.1...1.2.0)
