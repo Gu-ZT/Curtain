@@ -26,7 +26,6 @@ public abstract class LevelMixin {
 
     @Redirect(
             method = "markAndNotifyBlock",
-            remap = false,
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/World;blockUpdated(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/Block;)V"
