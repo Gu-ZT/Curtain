@@ -64,7 +64,7 @@ public class ExplosionMixin {
 
     @Inject(method = "<init>(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;Lnet/minecraft/world/level/ExplosionDamageCalculator;DDDFZLnet/minecraft/world/level/Explosion$BlockInteraction;)V", at = @At(value = "RETURN"))
     private void onExplosionCreated(Level world, Entity entity, DamageSource damageSource, ExplosionDamageCalculator explosionBehavior, double x, double y, double z, float power, boolean createFire, Explosion.BlockInteraction destructionType, CallbackInfo ci) {
-        if (!world.isClientSide) {
+        if (world != null && !world.isClientSide) {  // Curtain: compat with Arclight
             eLogger = new ExplosionLogHelper(x, y, z, power, createFire, destructionType, level.registryAccess());
         }
     }
