@@ -14,11 +14,7 @@ import net.minecraftforge.fml.ModList;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import static dev.dubhe.curtain.utils.TranslationKeys.CATEGORIES;
-import static dev.dubhe.curtain.utils.TranslationKeys.MENU_CATEGORIES;
-import static dev.dubhe.curtain.utils.TranslationKeys.MENU_CATEGORY;
-import static dev.dubhe.curtain.utils.TranslationKeys.MENU_TITLE;
-import static dev.dubhe.curtain.utils.TranslationKeys.MENU_VERSION;
+import static dev.dubhe.curtain.utils.TranslationKeys.*;
 
 public class MenuHelper {
     /**
@@ -41,13 +37,13 @@ public class MenuHelper {
         for (String s : RuleManager.CATEGORIES_RULES.keySet()) {
             IFormattableTextComponent category = new StringTextComponent("").withStyle(style -> style.withColor(TextFormatting.AQUA));
             category.append("[");
-            category.append(TranslationHelper.translate(CATEGORIES.formatted(Curtain.MODID, s)));
+            category.append(TranslationHelper.translate(String.format(CATEGORIES, Curtain.MODID, s)));
             category.append("]");
             category.append(" ");
             category.withStyle(style -> style.withClickEvent(
                     new ClickEvent(
                             ClickEvent.Action.RUN_COMMAND,
-                            "/curtain category %s".formatted(s)
+                            String.format("/curtain category %s", s)
                     )
             ));
             main.append(category);
@@ -65,7 +61,7 @@ public class MenuHelper {
         TextComponent main = new StringTextComponent("");
         TextComponent display = new StringTextComponent(name);
         if (RuleManager.CATEGORIES_RULES.containsKey(name)) {
-            display = TranslationHelper.translate(CATEGORIES.formatted(Curtain.MODID, name));
+            display = TranslationHelper.translate(String.format(CATEGORIES, Curtain.MODID, name));
         }
         main.append(TranslationHelper.translate(MENU_CATEGORY, display.getString()).withStyle(style -> style.withBold(true)));
         for (String rule : RuleManager.CATEGORIES_RULES.getOrDefault(name, new ArrayList<>())) {
@@ -84,32 +80,32 @@ public class MenuHelper {
         TextComponent main = new StringTextComponent("");
         TextComponent name = new StringTextComponent("");
         name.append(rule.getNameComponent());
-        name.append(new StringTextComponent("(%s): ".formatted(rule.getNormalName())));
+        name.append(new StringTextComponent(String.format("(%s): ", rule.getNormalName())));
         name.withStyle(
                 style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, rule.getDescComponent()))
         );
         String value = String.valueOf(rule.getValue());
         Collection<String> suggestion = rule.getExamples();
         main.append(name);
-        IFormattableTextComponent v = new StringTextComponent("[%s]".formatted(value))
+        IFormattableTextComponent v = new StringTextComponent(String.format("[%s]", value))
                 .withStyle(style -> style
                         .withColor(rule.isDefault(value) ? TextFormatting.DARK_GREEN : TextFormatting.YELLOW)
                         .withUnderlined(true)
                         .withClickEvent(new ClickEvent(
                                 ClickEvent.Action.SUGGEST_COMMAND,
-                                "/curtain setValue %s %s".formatted(rule.getNormalName(), value)
+                                String.format("/curtain setValue %s %s", rule.getNormalName(), value)
                         ))
                         .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new StringTextComponent("单击来快速填充"))));
         main.append(v);
         for (String s : suggestion) {
             if (s.equals(value)) continue;
             main.append(" ");
-            IFormattableTextComponent x = new StringTextComponent("[%s]".formatted(replaceQuotation(s)))
+            IFormattableTextComponent x = new StringTextComponent(String.format("[%s]",replaceQuotation(s)))
                     .withStyle(style -> style
                             .withColor(rule.isDefault(replaceQuotation(s)) ? TextFormatting.DARK_GREEN : TextFormatting.YELLOW)
                             .withClickEvent(new ClickEvent(
                                     ClickEvent.Action.SUGGEST_COMMAND,
-                                    "/curtain setValue %s %s".formatted(rule.getNormalName(), s)
+                                    String.format("/curtain setValue %s %s",rule.getNormalName(), s)
                             ))
                             .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new StringTextComponent("单击来快速填充"))));
             main.append(x);

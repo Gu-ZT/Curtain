@@ -10,18 +10,9 @@ import dev.dubhe.curtain.mixins.SPlayerListHeaderFooterPacketMixin;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.play.server.SPlayerListHeaderFooterPacket;
 import net.minecraft.util.Util;
-import net.minecraft.util.text.ChatType;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.*;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static net.minecraft.util.Util.NIL_UUID;
 
@@ -94,7 +85,7 @@ public class LoggerManager {
 
         ServerPlayerEntity player = Curtain.minecraftServer.getPlayerList().getPlayerByName(playerName);
         if (player != null) {
-            player.sendMessage((new StringTextComponent("%s subscribed logger %s".formatted(playerName, loggerName))
+            player.sendMessage((new StringTextComponent(String.format("%s subscribed logger %s", playerName, loggerName))
                     .withStyle(TextFormatting.GRAY)), ChatType.SYSTEM, Util.NIL_UUID);
         }
     }
@@ -126,7 +117,7 @@ public class LoggerManager {
 
         ServerPlayerEntity player = Curtain.minecraftServer.getPlayerList().getPlayerByName(playerName);
         if (player != null) {
-            player.sendMessage(new StringTextComponent("%s unsubscribed logger %s".formatted(playerName, loggerName))
+            player.sendMessage(new StringTextComponent(String.format("%s unsubscribed logger %s", playerName, loggerName))
                     .withStyle(TextFormatting.GRAY), ChatType.SYSTEM, Util.NIL_UUID);
         }
     }

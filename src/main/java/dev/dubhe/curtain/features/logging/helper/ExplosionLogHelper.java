@@ -109,9 +109,14 @@ public class ExplosionLogHelper {
     }
 
 
-    public record EntityChangedStatusWithCount(Vector3d pos, EntityType<?> type, Vector3d accel) {
+    public static class EntityChangedStatusWithCount {
+        private final Vector3d pos;
+        private final EntityType<?> type;
+        private final Vector3d accel;
         public EntityChangedStatusWithCount(Entity e, Vector3d accel) {
-            this(e.position(), e.getType(), accel);
+            this.pos = e.position();
+            this.type = e.getType();
+            this.accel = accel;
         }
     }
 }

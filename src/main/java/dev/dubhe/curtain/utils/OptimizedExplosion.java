@@ -163,7 +163,8 @@ public class OptimizedExplosion {
 
                         entity.setDeltaMovement(entity.getDeltaMovement().add(d5 * d11, d7 * d11, d9 * d11));
 
-                        if (entity instanceof PlayerEntity player) {
+                        if (entity instanceof PlayerEntity) {
+                            PlayerEntity player = (PlayerEntity) entity;
 
                             if (!player.isSpectator()
                                     && (!player.isCreative() || !player.abilities.flying)) {  //getAbilities
@@ -220,7 +221,8 @@ public class OptimizedExplosion {
                 Block block = state.getBlock();
 
                 if (state.getMaterial() != Material.AIR) {
-                    if (block.dropFromExplosion(e) && world instanceof ServerWorld serverLevel) {
+                    if (block.dropFromExplosion(e) && world instanceof ServerWorld) {
+                        ServerWorld serverLevel = (ServerWorld ) world;
                         TileEntity blockEntity = state.hasTileEntity() ? world.getBlockEntity(blockpos) : null;  //hasBlockEntity()
 
                         LootContext.Builder lootBuilder = (new LootContext.Builder((ServerWorld) eAccess.getLevel()))

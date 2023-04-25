@@ -22,7 +22,7 @@ public class TPSLogger extends AbstractHudLogger {
     public ITextComponent display(ServerPlayerEntity player) {
         MinecraftServer server = Curtain.minecraftServer;
         final OptionalDouble averageTPS = Arrays.stream(server.tickTimes).average();
-        if (averageTPS.isEmpty()) {
+        if (averageTPS.equals(OptionalDouble.empty())) {
             return new StringTextComponent("No TPS data available").withStyle(TextFormatting.RED);
         }
         double MSPT = Arrays.stream(server.tickTimes).average().getAsDouble() * 1.0E-6D;
@@ -42,8 +42,8 @@ public class TPSLogger extends AbstractHudLogger {
         }
         TextFormatting finalColor = color;
         return new StringTextComponent("TPS: ").withStyle(TextFormatting.GRAY)
-                .append(new StringTextComponent("%.1f".formatted(TPS)).withStyle(finalColor))
+                .append(new StringTextComponent(String.format("%.1f", TPS)).withStyle(finalColor))
                 .append(new StringTextComponent(" MSPT: ").withStyle(TextFormatting.GRAY))
-                .append(new StringTextComponent("%.1f".formatted(MSPT)).withStyle(finalColor));
+                .append(new StringTextComponent(String.format("%.1f", MSPT)).withStyle(finalColor));
     }
 }

@@ -31,12 +31,12 @@ public class ToggledButton extends Button {
     public void onClick() {
         if (super.Enabled) {
             if (IsToggled) {
-                for (var func :
+                for (Function func :
                         ToggledOff_Func) {
                     func.accept();
                 }
             } else {
-                for (var func :
+                for (Function func :
                         super.Functions)
                     func.accept();
             }

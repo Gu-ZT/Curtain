@@ -12,11 +12,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class RuleManager {
     public static final List<Class<?>> LIMIT = new ArrayList<>();
@@ -87,22 +83,22 @@ public class RuleManager {
         for (String name : defaultRuleMap.keySet()) {
             CurtainRule<?> rule = defaultRuleMap.get(name);
             Object value = rule.getValue();
-            if (value instanceof String str)
-                object.addProperty(name, str);
-            else if (value instanceof Boolean bool)
-                object.addProperty(name, bool);
-            else if (value instanceof Byte num)
-                object.addProperty(name, num);
-            else if (value instanceof Short num)
-                object.addProperty(name, num);
-            else if (value instanceof Integer num)
-                object.addProperty(name, num);
-            else if (value instanceof Long num)
-                object.addProperty(name, num);
-            else if (value instanceof Float num)
-                object.addProperty(name, num);
-            else if (value instanceof Double num)
-                object.addProperty(name, num);
+            if (value instanceof String)
+                object.addProperty(name, (String) value);
+            else if (value instanceof Boolean)
+                object.addProperty(name, (Boolean) value);
+            else if (value instanceof Byte)
+                object.addProperty(name, (Byte) value);
+            else if (value instanceof Short)
+                object.addProperty(name, (Short) value);
+            else if (value instanceof Integer)
+                object.addProperty(name, (Integer) value);
+            else if (value instanceof Long)
+                object.addProperty(name, (Long) value);
+            else if (value instanceof Float)
+                object.addProperty(name, (Float) value);
+            else if (value instanceof Double)
+                object.addProperty(name, (Double) value);
             else
                 throw RuleException.type();
         }

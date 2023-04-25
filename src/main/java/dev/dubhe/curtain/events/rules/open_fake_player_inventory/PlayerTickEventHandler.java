@@ -12,11 +12,11 @@ public class PlayerTickEventHandler {
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent playerTickEvent) {
         if (CurtainRules.openFakePlayerInventory &&
-                playerTickEvent.player instanceof ServerPlayerEntity serverPlayer &&
-                serverPlayer instanceof EntityPlayerMPFake &&
-                serverPlayer.isAlive()
+                playerTickEvent.player instanceof ServerPlayerEntity
         ) {
-            FAKE_PLAYER_INVENTORY_MENU_MAP.get(serverPlayer).tick();
+            ServerPlayerEntity serverPlayer = (ServerPlayerEntity) playerTickEvent.player;
+            if (serverPlayer instanceof EntityPlayerMPFake &&
+                    serverPlayer.isAlive()) FAKE_PLAYER_INVENTORY_MENU_MAP.get(serverPlayer).tick();
         }
     }
 }

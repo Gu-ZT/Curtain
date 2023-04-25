@@ -47,7 +47,7 @@ public class Button {
 
     protected void onClick() {
         if (Enabled) {
-            for (var func :
+            for (Function func :
                     this.Functions) {
                 func.accept();
             }

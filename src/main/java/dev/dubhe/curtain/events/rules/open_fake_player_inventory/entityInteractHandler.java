@@ -12,7 +12,8 @@ import static dev.dubhe.curtain.features.player.menu.MenuHashMap.FAKE_PLAYER_INV
 public class entityInteractHandler {
     @SubscribeEvent
     public void onInteractWithFakePlayer(PlayerInteractEvent.EntityInteract entityInteract) {
-        if (entityInteract.getTarget() instanceof EntityPlayerMPFake fakeplayer) {
+        if (entityInteract.getTarget() instanceof EntityPlayerMPFake) {
+            EntityPlayerMPFake fakeplayer = (EntityPlayerMPFake) entityInteract.getTarget();
             SimpleNamedContainerProvider provider = null;
             if (CurtainRules.openFakePlayerEnderChest && entityInteract.getEntity().isShiftKeyDown()) {
                 provider = new SimpleNamedContainerProvider(

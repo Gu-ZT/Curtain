@@ -24,7 +24,7 @@ if (build_number != "undefined") {
 
 java {
     archivesBaseName = archives_base_name
-    toolchain.languageVersion = JavaLanguageVersion.of(17)
+    toolchain.languageVersion = JavaLanguageVersion.of(8)
 }
 
 minecraft {

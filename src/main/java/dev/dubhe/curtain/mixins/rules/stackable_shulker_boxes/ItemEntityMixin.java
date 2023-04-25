@@ -39,9 +39,9 @@ public abstract class ItemEntityMixin extends Entity implements ItemEntityInterf
     @Inject(method = "<init>(Lnet/minecraft/world/World;DDDLnet/minecraft/item/ItemStack;)V", at = @At("RETURN"))
     private void removeEmptyShulkerBoxTags(World worldIn, double x, double y, double z, ItemStack stack, CallbackInfo ci) {
         if (CurtainRules.shulkerBoxStackSize > 1
-                && stack.getItem() instanceof BlockItem blockItem
-                && blockItem.getBlock() instanceof ShulkerBoxBlock) {
-            InventoryHelper.cleanUpShulkerBoxTag(stack);
+                && stack.getItem() instanceof BlockItem) {
+            BlockItem blockItem = (BlockItem) stack.getItem();
+            if (blockItem.getBlock() instanceof ShulkerBoxBlock) InventoryHelper.cleanUpShulkerBoxTag(stack);
         }
     }
 
@@ -54,9 +54,9 @@ public abstract class ItemEntityMixin extends Entity implements ItemEntityInterf
     )
     private int getItemStackMaxAmount(ItemStack stack) {
         if (CurtainRules.shulkerBoxStackSize > 1
-                && stack.getItem() instanceof BlockItem blockItem
-                && blockItem.getBlock() instanceof ShulkerBoxBlock) {
-            return CurtainRules.shulkerBoxStackSize;
+                && stack.getItem() instanceof BlockItem) {
+            BlockItem blockItem = (BlockItem) stack.getItem();
+            if (blockItem.getBlock() instanceof ShulkerBoxBlock) return CurtainRules.shulkerBoxStackSize;
         }
         return stack.getMaxStackSize();
     }
@@ -70,8 +70,8 @@ public abstract class ItemEntityMixin extends Entity implements ItemEntityInterf
         ItemEntity self = (ItemEntity) (Object) this;
         ItemStack selfStack = self.getItem();
         if (CurtainRules.shulkerBoxStackSize == 1
-                || !(selfStack.getItem() instanceof BlockItem blockItem)
-                || !(blockItem.getBlock() instanceof ShulkerBoxBlock)) {
+                || !(selfStack.getItem() instanceof BlockItem)
+                || !(((BlockItem) selfStack.getItem()).getBlock() instanceof ShulkerBoxBlock)) {
             return;
         }
 

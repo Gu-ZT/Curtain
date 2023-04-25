@@ -3,6 +3,7 @@ package dev.dubhe.curtain.api.rules;
 import dev.dubhe.curtain.utils.CommandHelper;
 import net.minecraft.command.CommandSource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class Validators {
@@ -10,7 +11,18 @@ public final class Validators {
     }
 
     public static class CommandLevel implements IValidator<String> {
-        public static final List<String> OPTIONS = List.of("true", "false", "ops", "0", "1", "2", "3", "4");
+        public static final List<String> OPTIONS = new ArrayList<>();
+
+        static {
+            OPTIONS.add("true");
+            OPTIONS.add("false");
+            OPTIONS.add("ops");
+            OPTIONS.add("0");
+            OPTIONS.add("1");
+            OPTIONS.add("2");
+            OPTIONS.add("3");
+            OPTIONS.add("4");
+        }
 
         @Override
         public boolean validate(CommandSource source, CurtainRule<String> rule, String newValue) {

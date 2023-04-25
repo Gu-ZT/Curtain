@@ -116,7 +116,7 @@ public class RuleCommand {
                                             .withColor(TextFormatting.DARK_GREEN)
                                             .withClickEvent(new ClickEvent(
                                                     ClickEvent.Action.SUGGEST_COMMAND,
-                                                    "/curtain setDefault %s %s".formatted(name, obj)
+                                                    String.format("/curtain setDefault %s %s",name, obj)
                                             )))
                     );
             context.getSource().sendSuccess(component, false);

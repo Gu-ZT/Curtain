@@ -88,32 +88,69 @@ public class FakePlayerInventoryMenu implements IInventory {
 
     public Pair<NonNullList<ItemStack>, Integer> getItemSlot(int slot) {
         switch (slot) {
-            case 0 -> {
+            case (0):
                 return new Pair<>(Buttons, 0);
-            }
-            case 1, 2, 3, 4 -> {
+            case (1):
+            case (2):
+            case (3):
+            case (4):
                 return new Pair<>(Armor, 4 - slot);
-            }
-            case 5, 6 -> {
+            case (5):
+            case (6):
                 return new Pair<>(Buttons, slot - 4);
-            }
-            case 7 -> {
+            case (7):
                 return new Pair<>(Offhand, 0);
-            }
-            case 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 -> {
+            case (8):
+            case (9):
+            case (10):
+            case (11):
+            case (12):
+            case (13):
+            case (14):
+            case (15):
+            case (16):
+            case (17):
                 return new Pair<>(Buttons, slot - 5);
-            }
-            case 18, 19, 20, 21, 22, 23, 24, 25, 26,
-                    27, 28, 29, 30, 31, 32, 33, 34, 35,
-                    36, 37, 38, 39, 40, 41, 42, 43, 44 -> {
+            case (18):
+            case (19):
+            case (20):
+            case (21):
+            case (22):
+            case (23):
+            case (24):
+            case (25):
+            case (26):
+            case (27):
+            case (28):
+            case (29):
+            case (30):
+            case (31):
+            case (32):
+            case (33):
+            case (34):
+            case (35):
+            case (36):
+            case (37):
+            case (38):
+            case (39):
+            case (40):
+            case (41):
+            case (42):
+            case (43):
+            case (44):
                 return new Pair<>(PlayerItems, slot - 9);
-            }
-            case 45, 46, 47, 48, 49, 50, 51, 52, 53 -> {
+            case (45):
+            case (46):
+            case (47):
+            case (48):
+            case (49):
+            case (50):
+            case (51):
+            case (52):
+            case (53):
                 return new Pair<>(PlayerItems, slot - 45);
-            }
-            default -> {
+            default:
                 return null;
-            }
         }
     }
 
@@ -173,8 +210,7 @@ public class FakePlayerInventoryMenu implements IInventory {
 
     @Override
     public void clearContent() {
-        for (var list :
-                this.Components) {
+        for (NonNullList<ItemStack> list : this.Components) {
             list.clear();
         }
     }
@@ -293,8 +329,7 @@ public class FakePlayerInventoryMenu implements IInventory {
     }
 
     private void checkButton() {
-        for (var button :
-                ButtonList) {
+        for (Button button : ButtonList) {
             button.onCheck();
         }
     }
