@@ -122,5 +122,8 @@
   "curtain.rules.fake_player_name_prefix.desc": "为/player指令召唤出来的假人名称添加指定前缀",
 
   "curtain.rules.fake_player_name_suffix.name": "假人名称后缀",
-  "curtain.rules.fake_player_name_suffix.desc": "为/player指令召唤出来的假人名称添加指定后缀"
+  "curtain.rules.fake_player_name_suffix.desc": "为/player指令召唤出来的假人名称添加指定后缀",
+
+  "curtain.rules.scaffolding_distance.name": "脚手架距离上限",
+  "curtain.rules.scaffolding_distance.desc": "脚手架水平拓展的距离上限"
 }
