@@ -335,4 +335,20 @@ public class CurtainRules {
             suggestions = {"true", "false"}
     )
     public static boolean openFakePlayerEnderChest = false;
+
+    public static class ScaffoldingDistanceValidator implements IValidator<Integer>{
+
+        @Override
+        public boolean validate(CommandSourceStack source, CurtainRule<Integer> rule, String newValue) {
+            int value = Integer.parseInt(newValue);
+            return value >= 0 && value <= 7;
+        }
+    }
+
+    @Rule(
+            validators = ScaffoldingDistanceValidator.class,
+            categories = {CREATIVE},
+            suggestions = {"2","3","5","7"}
+    )
+    public static int scaffoldingDistance = 7;
 }

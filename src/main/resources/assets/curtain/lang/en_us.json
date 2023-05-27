@@ -122,5 +122,8 @@
   "curtain.rules.fake_player_name_prefix.desc": "Add the specified prefix to the name of the fake player summoned by the /player command",
 
   "curtain.rules.fake_player_name_suffix.name": "fakePlayerNameSuffix",
-  "curtain.rules.fake_player_name_suffix.desc": "Add the specified prefix to the name of the fake player summoned by the /player command"
+  "curtain.rules.fake_player_name_suffix.desc": "Add the specified prefix to the name of the fake player summoned by the /player command",
+
+  "curtain.rules.scaffolding_distance.name": "scaffoldingDistance",
+  "curtain.rules.scaffolding_distance.desc": "Max distance for scaffolding."
 }

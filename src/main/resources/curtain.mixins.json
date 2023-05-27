@@ -34,6 +34,8 @@
     "rules.open_fake_player_inventory.AbstractContainerMenuMixin",
     "rules.optimized_tnt.ExplosionMixin",
     "rules.quick_leaf_decay.LeavesBlockMixin",
+    "rules.scaffoldingDistance.ScaffoldingBlockItemMixin",
+    "rules.scaffoldingDistance.ScaffoldingBlockMixin",
     "rules.stackable_shulker_boxes.ItemEntityMixin",
     "rules.super_lead.AbstractVillagerMixin",
     "rules.super_lead.MobMixin",
