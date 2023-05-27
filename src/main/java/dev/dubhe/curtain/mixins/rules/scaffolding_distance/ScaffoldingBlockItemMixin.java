@@ -1,4 +1,4 @@
-package dev.dubhe.curtain.mixins.rules.scaffoldingDistance;
+package dev.dubhe.curtain.mixins.rules.scaffolding_distance;
 
 import dev.dubhe.curtain.CurtainRules;
 import net.minecraft.world.item.ScaffoldingBlockItem;

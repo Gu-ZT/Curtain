@@ -12,14 +12,7 @@ import net.minecraft.server.ServerInterface;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
-import static dev.dubhe.curtain.api.rules.Categories.BUGFIX;
-import static dev.dubhe.curtain.api.rules.Categories.CLIENT;
-import static dev.dubhe.curtain.api.rules.Categories.COMMAND;
-import static dev.dubhe.curtain.api.rules.Categories.CREATIVE;
-import static dev.dubhe.curtain.api.rules.Categories.DISPENSER;
-import static dev.dubhe.curtain.api.rules.Categories.FEATURE;
-import static dev.dubhe.curtain.api.rules.Categories.SURVIVAL;
-import static dev.dubhe.curtain.api.rules.Categories.TNT;
+import static dev.dubhe.curtain.api.rules.Categories.*;
 
 
 public class CurtainRules {
@@ -193,14 +186,14 @@ public class CurtainRules {
     }
 
     @Rule(
-            categories = COMMAND,
+            categories = {COMMAND, BOT},
             suggestions = {"none", "bot_"},
             validators = FakePlayerNameValidator.class
     )
     public static String fakePlayerNamePrefix = "none";
 
     @Rule(
-            categories = COMMAND,
+            categories = {COMMAND, BOT},
             suggestions = {"none", "_fake"},
             validators = FakePlayerNameValidator.class
     )
@@ -325,18 +318,18 @@ public class CurtainRules {
 
 
     @Rule(
-            categories = {CREATIVE, SURVIVAL},
+            categories = {CREATIVE, SURVIVAL, BOT},
             suggestions = {"true", "false"}
     )
     public static boolean openFakePlayerInventory = false;
 
     @Rule(
-            categories = {CREATIVE, SURVIVAL},
+            categories = {CREATIVE, SURVIVAL, BOT},
             suggestions = {"true", "false"}
     )
     public static boolean openFakePlayerEnderChest = false;
 
-    public static class ScaffoldingDistanceValidator implements IValidator<Integer>{
+    public static class ScaffoldingDistanceValidator implements IValidator<Integer> {
 
         @Override
         public boolean validate(CommandSourceStack source, CurtainRule<Integer> rule, String newValue) {
@@ -348,7 +341,13 @@ public class CurtainRules {
     @Rule(
             validators = ScaffoldingDistanceValidator.class,
             categories = {CREATIVE},
-            suggestions = {"2","3","5","7"}
+            suggestions = {"2", "3", "5", "7"}
     )
     public static int scaffoldingDistance = 7;
+
+    @Rule(
+            categories = {CREATIVE},
+            suggestions = {"true", "false"}
+    )
+    public static boolean fakePlayerAutoFish;
 }
