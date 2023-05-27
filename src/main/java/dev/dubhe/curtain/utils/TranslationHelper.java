@@ -4,8 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import dev.dubhe.curtain.CurtainRules;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import org.apache.commons.io.IOUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,6 +25,18 @@ public class TranslationHelper {
 
     static {
         TRANS_MAP.put("zh_cn", new HashMap<>());
+    }
+
+    /**
+     * 获取翻译后的文本
+     *
+     * @param key  翻译键
+     * @param args 参数
+     * @return 翻译后的聊天组件
+     */
+    public static @NotNull MutableComponent translate(String key, ChatFormatting formatting, Style style, Object... args) {
+        Map<String, String> trans = TRANS_MAP.getOrDefault(CurtainRules.language, new HashMap<>());
+        return Component.literal(trans.getOrDefault(key, key).formatted(args));
     }
 
     /**
