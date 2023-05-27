@@ -9,7 +9,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import static dev.dubhe.curtain.features.player.menu.MenuHashMap.FAKE_PLAYER_INVENTORY_MENU_MAP;
 
-public class entityInteractHandler {
+public class EntityInteractHandler {
     @SubscribeEvent
     public void onInteractWithFakePlayer(PlayerInteractEvent.EntityInteract entityInteract) {
         if (entityInteract.getTarget() instanceof EntityPlayerMPFake fakeplayer) {
