@@ -30,7 +30,6 @@
     "rules.custom_motd.ServerStatusMixin",
     "rules.desert_shrubs.SaplingBlockMixin",
     "rules.farmland_trampled_disabled.FarmBlockMixin",
-    "rules.missing_tools.PickaxeItemMixin",
     "rules.open_fake_player_inventory.AbstractContainerMenuMixin",
     "rules.optimized_tnt.ExplosionMixin",
     "rules.quick_leaf_decay.LeavesBlockMixin",
