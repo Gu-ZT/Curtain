@@ -15,6 +15,7 @@
   "curtain.categories.bugfix": "BUGFIX",
   "curtain.categories.client": "CLIENT",
   "curtain.categories.tnt": "TNT",
+  "curtain.categories.bot": "BOT",
 
   "curtain.rules.language.name": "Language",
   "curtain.rules.language.desc": "The Language of Curtain.",
@@ -129,13 +130,13 @@
 
   "curtain.rules.fake_player_auto_fish.name": "fakePlayerAutoFish",
   "curtain.rules.fake_player_auto_fish.desc": "Make fake player to auto fish.",
-  
-  "curtain.rules.fake_player_name_suffix.name": "Fake Player Name Suffix",
-  "curtain.rules.fake_player_name_suffix.desc": "Add the specified prefix to the name of the fake player summoned by the /player command",
 
   "curtain.rules.better_sign_interaction.name": "Better Sign Interaction",
   "curtain.rules.better_sign_interaction.desc": "Only the axe with \"Strip\" in its name is allowed to peel logs",
 
   "curtain.rules.better_wood_strip.name": "Better Wood Strip",
-  "curtain.rules.better_wood_strip.desc": "Make the block attached to the sign interact when you right-click it"
+  "curtain.rules.better_wood_strip.desc": "Make the block attached to the sign interact when you right-click it",
+
+  "curtain.rules.better_fence_gate_placement.name": "Better Fence Gate Placement",
+  "curtain.rules.better_fence_gate_placement.desc": "Make the placed fence gate have the same block status as the fence gate you clicked"
 }
