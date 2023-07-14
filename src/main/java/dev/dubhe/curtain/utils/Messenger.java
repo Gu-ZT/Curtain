@@ -3,12 +3,7 @@ package dev.dubhe.curtain.utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.ClickEvent;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.HoverEvent;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextColor;
+import net.minecraft.network.chat.*;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.player.Player;
@@ -229,7 +224,7 @@ public class Messenger {
     //message source
     public static void m(CommandSourceStack source, Object... fields) {
         if (source != null)
-            source.sendSuccess(Messenger.c(fields), source.getServer() != null && source.getServer().getLevel(Level.OVERWORLD) != null); //OW
+            source.sendSuccess(() -> Messenger.c(fields), source.getServer() != null && source.getServer().getLevel(Level.OVERWORLD) != null); //OW
     }
 
     public static void m(Player player, Object... fields) {
@@ -274,7 +269,7 @@ public class Messenger {
     }
 
     public static void send(CommandSourceStack source, Collection<Component> lines) {
-        lines.stream().forEachOrdered((s) -> source.sendSuccess(s, false));
+        lines.stream().forEachOrdered((s) -> source.sendSuccess(() -> s, false));
     }
 
 

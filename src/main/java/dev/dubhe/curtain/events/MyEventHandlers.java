@@ -4,6 +4,8 @@ import dev.dubhe.curtain.events.rules.fake_player_auto_fish.FishingHookEventHand
 import dev.dubhe.curtain.events.rules.open_fake_player_inventory.EntityInteractHandler;
 import dev.dubhe.curtain.events.rules.open_fake_player_inventory.PlayerLoggedEventHandler;
 import dev.dubhe.curtain.events.rules.open_fake_player_inventory.PlayerTickEventHandler;
+import dev.dubhe.curtain.events.rules.PlayerBreakEventHandler;
+import dev.dubhe.curtain.events.rules.EntityInteractHandler;
 import dev.dubhe.curtain.events.utils.LevelEventHandler;
 import dev.dubhe.curtain.events.utils.ServerEventHandler;
 import dev.dubhe.curtain.events.utils.ServerLifecycleEventHandler;
@@ -20,5 +22,7 @@ public class MyEventHandlers {
         MinecraftForge.EVENT_BUS.register(new PlayerTickEventHandler());
 
         MinecraftForge.EVENT_BUS.register(new FishingHookEventHandler());
+      
+        MinecraftForge.EVENT_BUS.register(new PlayerBreakEventHandler());
     }
 }

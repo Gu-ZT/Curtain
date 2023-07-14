@@ -15,6 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import static dev.dubhe.curtain.api.rules.Categories.*;
 
 
+@SuppressWarnings("unused")
 public class CurtainRules {
     public static final ThreadLocal<Boolean> impendingFillSkipUpdates = ThreadLocal.withInitial(() -> false);
 
@@ -350,4 +351,16 @@ public class CurtainRules {
             suggestions = {"true", "false"}
     )
     public static boolean fakePlayerAutoFish;
+  
+    @Rule(
+            categories = {SURVIVAL},
+            suggestions = {"true", "false"}
+    )
+    public static boolean betterSignInteraction = false;
+
+    @Rule(
+            categories = {SURVIVAL},
+            suggestions = {"true", "false"}
+    )
+    public static boolean betterWoodStrip = false;
 }
