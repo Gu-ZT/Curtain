@@ -125,5 +125,8 @@
   "curtain.rules.fake_player_name_suffix.desc": "Add the specified prefix to the name of the fake player summoned by the /player command",
 
   "curtain.rules.better_sign_interaction.name": "Better Sign Interaction",
-  "curtain.rules.better_sign_interaction.desc": "Make the block attached to the sign interact when you right-click it"
+  "curtain.rules.better_sign_interaction.desc": "Only the axe with \"Strip\" in its name is allowed to peel logs",
+
+  "curtain.rules.better_wood_strip.name": "Better Wood Strip",
+  "curtain.rules.better_wood_strip.desc": "Make the block attached to the sign interact when you right-click it"
 }

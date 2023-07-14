@@ -17,6 +17,7 @@
     "ServerPlayerMixin",
     "event.player.PickaxeItemMixin",
     "rules.better_sign_interaction.SignBlockMixin",
+    "rules.better_wood_strip.AxeItemMixin",
     "rules.cactus.DispenserBlockMixin",
     "rules.cactus.HopperBlockMixin",
     "rules.cactus.LevelMixin",

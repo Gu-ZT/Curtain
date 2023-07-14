@@ -125,5 +125,8 @@
   "curtain.rules.fake_player_name_suffix.desc": "为/player指令召唤出来的假人名称添加指定后缀",
 
   "curtain.rules.better_sign_interaction.name": "更好的告示牌交互",
-  "curtain.rules.better_sign_interaction.desc": "右键涂蜡的告示牌时与之附着的方块产生交互"
+  "curtain.rules.better_sign_interaction.desc": "右键涂蜡的告示牌时与之附着的方块产生交互",
+
+  "curtain.rules.better_wood_strip.name": "更好的原木去皮",
+  "curtain.rules.better_wood_strip.desc": "仅允许名称中包含“去皮”的斧头对原木去皮"
 }
