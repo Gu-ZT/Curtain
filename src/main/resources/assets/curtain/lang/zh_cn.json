@@ -122,5 +122,8 @@
   "curtain.rules.fake_player_name_prefix.desc": "为/player指令召唤出来的假人名称添加指定前缀",
 
   "curtain.rules.fake_player_name_suffix.name": "假人名称后缀",
-  "curtain.rules.fake_player_name_suffix.desc": "为/player指令召唤出来的假人名称添加指定后缀"
+  "curtain.rules.fake_player_name_suffix.desc": "为/player指令召唤出来的假人名称添加指定后缀",
+
+  "curtain.rules.better_sign_interaction.name": "更好的告示牌交互",
+  "curtain.rules.better_sign_interaction.desc": "右键涂蜡的告示牌时与之附着的方块产生交互"
 }
