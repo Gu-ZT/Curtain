@@ -347,7 +347,7 @@ public class CurtainRules {
     public static int scaffoldingDistance = 7;
 
     @Rule(
-            categories = {CREATIVE},
+            categories = {CREATIVE, BOT},
             suggestions = {"true", "false"}
     )
     public static boolean fakePlayerAutoFish;
@@ -363,4 +363,10 @@ public class CurtainRules {
             suggestions = {"true", "false"}
     )
     public static boolean betterWoodStrip = false;
+
+    @Rule(
+            categories = {SURVIVAL},
+            suggestions = {"true", "false"}
+    )
+    public static boolean betterFenceGatePlacement = false;
 }

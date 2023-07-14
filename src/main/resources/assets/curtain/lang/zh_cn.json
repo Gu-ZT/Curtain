@@ -15,6 +15,7 @@
   "curtain.categories.bugfix": "修复",
   "curtain.categories.client": "客户端",
   "curtain.categories.tnt": "TNT",
+  "curtain.categories.bot": "假人",
 
   "curtain.rules.language.name": "语言",
   "curtain.rules.language.desc": "窗帘输出文本的本地化语言",
@@ -134,6 +135,9 @@
   "curtain.rules.better_sign_interaction.desc": "右键涂蜡的告示牌时与之附着的方块产生交互",
 
   "curtain.rules.better_wood_strip.name": "更好的原木去皮",
-  "curtain.rules.better_wood_strip.desc": "仅允许名称中包含“去皮”的斧头对原木去皮"
+  "curtain.rules.better_wood_strip.desc": "仅允许名称中包含“去皮”的斧头对原木去皮",
+
+  "curtain.rules.better_fence_gate_placement.name": "更好的栅栏门放置",
+  "curtain.rules.better_fence_gate_placement.desc": "让放置的栅栏门与你点击的栅栏门拥有相同的方块状态"
  
 }
