@@ -15,6 +15,7 @@
     "PrimedTntMixin",
     "ServerChunkCacheMixin",
     "ServerPlayerMixin",
+    "event.player.PickaxeItemMixin",
     "rules.cactus.DispenserBlockMixin",
     "rules.cactus.HopperBlockMixin",
     "rules.cactus.LevelMixin",

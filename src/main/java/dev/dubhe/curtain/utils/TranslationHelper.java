@@ -34,7 +34,7 @@ public class TranslationHelper {
      */
     public static @NotNull MutableComponent translate(String key, Object... args) {
         Map<String, String> trans = TRANS_MAP.getOrDefault(CurtainRules.language, new HashMap<>());
-        return Component.literal(trans.getOrDefault(key, key).formatted(args));
+        return Component.translatableWithFallback(key, trans.getOrDefault(key, key).formatted(args), args);
     }
 
     /**
