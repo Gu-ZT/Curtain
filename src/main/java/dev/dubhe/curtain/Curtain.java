@@ -1,5 +1,6 @@
 package dev.dubhe.curtain;
 
+import dev.dubhe.curtain.api.PlanExecution;
 import dev.dubhe.curtain.api.rules.RuleManager;
 import dev.dubhe.curtain.events.MyEventHandlers;
 import dev.dubhe.curtain.features.logging.LoggerManager;
@@ -22,9 +23,9 @@ public class Curtain implements ICurtain {
     public static final String MODID = "curtain";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
     public static final List<ICurtain> subMods = new ArrayList<>();
+    public static PlanExecution planExecution = null;
     public static RuleManager rules = null;
-
-    public static MinecraftServer minecraftServer;
+    public static MinecraftServer minecraftServer = null;
 
     public Curtain() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();

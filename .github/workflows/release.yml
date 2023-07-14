@@ -22,7 +22,7 @@ jobs:
         with:
           commit_message: update Changelog
           file_pattern: "CHANGELOG.MD"
-          branch: 1.19.2-dev
+          branch: 1.19.2
           repository: .
 
       - name: Set up Python
@@ -100,7 +100,7 @@ jobs:
       - name: publish mc mod
         uses: Kir-Antipov/mc-publish@v3.2
         with:
-          name: ${{ run-name }} - mc${{ matrix.branch }}
+          name: ${{ steps.find-jar.outputs.jarname }}
           game-versions: |
             ${{ matrix.branch }}
           java: |
