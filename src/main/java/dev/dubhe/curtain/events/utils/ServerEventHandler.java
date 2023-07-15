@@ -2,7 +2,7 @@ package dev.dubhe.curtain.events.utils;
 
 import dev.dubhe.curtain.CurtainRules;
 import dev.dubhe.curtain.features.logging.LoggerManager;
-import dev.dubhe.curtain.features.player.resident.FakePlayerResident;
+import dev.dubhe.curtain.features.player.helpers.FakePlayerResident;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;

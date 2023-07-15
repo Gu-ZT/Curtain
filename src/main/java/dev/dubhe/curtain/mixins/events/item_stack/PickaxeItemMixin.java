@@ -1,4 +1,4 @@
-package dev.dubhe.curtain.mixins.event.player;
+package dev.dubhe.curtain.mixins.events.item_stack;
 
 import dev.dubhe.curtain.events.events.ItemStackEvent;
 import net.minecraft.tags.TagKey;

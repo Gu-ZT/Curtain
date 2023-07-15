@@ -141,5 +141,11 @@
   "curtain.rules.better_fence_gate_placement.desc": "Make the placed fence gate have the same block status as the fence gate you clicked",
 
   "curtain.rules.fake_player_resident.name": "Fake Player Resident",
-  "curtain.rules.fake_player_resident.desc": "Keep the fake player when exiting the level"
+  "curtain.rules.fake_player_resident.desc": "Keep the fake player when exiting the level",
+
+  "curtain.rules.fake_player_auto_replenishment.name": "Fake Player Auto Replenishment",
+  "curtain.rules.fake_player_auto_replenishment.desc": "Make fake player to auto replenishment",
+
+  "curtain.rules.fake_player_auto_replace_tool.name": "Fake Player Auto Replace Tool",
+  "curtain.rules.fake_player_auto_replace_tool.desc": "Make fake player to auto replace almost damaged tool"
 }
