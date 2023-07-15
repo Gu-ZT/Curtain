@@ -69,14 +69,12 @@ public class CurtainRules {
     public static int viewDistance = 0;
 
     @Rule(
-            categories = CREATIVE,
-            suggestions = {"true", "false"}
+            categories = CREATIVE
     )
     public static boolean xpNoCooldown = false;
 
     @Rule(
-            categories = COMMAND,
-            suggestions = {"true", "false"}
+            categories = COMMAND
     )
     public static boolean allowSpawningOfflinePlayers = false;
 
@@ -95,26 +93,22 @@ public class CurtainRules {
     public static String commandLog = "true";
 
     @Rule(
-            categories = SURVIVAL,
-            suggestions = {"true", "false"}
+            categories = SURVIVAL
     )
     public static boolean missingTools = false;
 
     @Rule(
-            categories = {CREATIVE, SURVIVAL, FEATURE},
-            suggestions = {"true", "false"}
+            categories = {CREATIVE, SURVIVAL, FEATURE}
     )
     public static boolean flippingCactus = false;
 
     @Rule(
-            categories = {FEATURE, DISPENSER},
-            suggestions = {"true", "false"}
+            categories = {FEATURE, DISPENSER}
     )
     public static boolean rotatorBlock = false;
 
     @Rule(
-            categories = BUGFIX,
-            suggestions = {"true", "false"}
+            categories = BUGFIX
     )
     public static boolean placementRotationFix = false;
 
@@ -170,8 +164,7 @@ public class CurtainRules {
     public static int shulkerBoxStackSize = 1;
 
     @Rule(
-            categories = {CREATIVE, CLIENT},
-            suggestions = {"true", "false"}
+            categories = {CREATIVE, CLIENT}
     )
     public static boolean creativeNoClip = false;
 
@@ -201,52 +194,44 @@ public class CurtainRules {
     public static String fakePlayerNameSuffix = "none";
 
     @Rule(
-            categories = SURVIVAL,
-            suggestions = {"true", "false"}
+            categories = SURVIVAL
     )
     public static boolean quickLeafDecay = false;
 
     @Rule(
-            categories = {FEATURE, CLIENT},
-            suggestions = {"true", "false"}
+            categories = {FEATURE, CLIENT}
     )
     public static boolean superLead = false;
 
     @Rule(
-            categories = FEATURE,
-            suggestions = {"true", "false"}
+            categories = FEATURE
     )
     public static boolean desertShrubs = false;
 
     @Rule(
-            categories = CREATIVE,
-            suggestions = {"true", "false"}
+            categories = CREATIVE
     )
     public static boolean turtleEggTrampledDisabled = false;
 
     @Rule(
-            categories = CREATIVE,
-            suggestions = {"true", "false"}
+            categories = CREATIVE
     )
     public static boolean farmlandTrampledDisabled = false;
 
 
     @Rule(
-            categories = {CREATIVE, TNT},
-            suggestions = {"true", "false"}
+            categories = {CREATIVE, TNT}
     )
     public static boolean explosionNoBlockDamage = false;
 
     @Rule(
             categories = TNT,
-            suggestions = {"true", "false"},
             serializedName = "optimized_tnt"
     )
     public static boolean optimizedTNT = false;
 
     @Rule(
-            categories = {SURVIVAL, FEATURE},
-            suggestions = {"true", "false"}
+            categories = {SURVIVAL, FEATURE}
     )
     public static boolean xpFromExplosions = false;
 
@@ -279,8 +264,7 @@ public class CurtainRules {
     public static double tntRandomRange = -1;
 
     @Rule(
-            categories = {TNT, CREATIVE},
-            suggestions = {"true", "false"}
+            categories = {TNT, CREATIVE}
     )
     public static boolean tntPrimerMomentumRemoved = false;
 
@@ -306,27 +290,23 @@ public class CurtainRules {
     public static double hardcodeTNTAngle = -1.0D;
     @Rule(
             categories = TNT,
-            suggestions = {"true", "false"},
             serializedName = "merge_tnt"
     )
     public static boolean mergeTNT = false;
 
     @Rule(
-            categories = {BUGFIX, SURVIVAL},
-            suggestions = {"true", "false"}
+            categories = {BUGFIX, SURVIVAL}
     )
     public static boolean ctrlQCraftingFix = false;
 
 
     @Rule(
-            categories = {CREATIVE, SURVIVAL, BOT},
-            suggestions = {"true", "false"}
+            categories = {CREATIVE, SURVIVAL, BOT}
     )
     public static boolean openFakePlayerInventory = false;
 
     @Rule(
-            categories = {CREATIVE, SURVIVAL, BOT},
-            suggestions = {"true", "false"}
+            categories = {CREATIVE, SURVIVAL, BOT}
     )
     public static boolean openFakePlayerEnderChest = false;
 
@@ -347,26 +327,27 @@ public class CurtainRules {
     public static int scaffoldingDistance = 7;
 
     @Rule(
-            categories = {CREATIVE, BOT},
-            suggestions = {"true", "false"}
+            categories = {CREATIVE, BOT}
     )
     public static boolean fakePlayerAutoFish;
   
     @Rule(
-            categories = {SURVIVAL},
-            suggestions = {"true", "false"}
+            categories = {SURVIVAL}
     )
     public static boolean betterSignInteraction = false;
 
     @Rule(
-            categories = {SURVIVAL},
-            suggestions = {"true", "false"}
+            categories = {SURVIVAL}
     )
     public static boolean betterWoodStrip = false;
 
     @Rule(
-            categories = {SURVIVAL},
-            suggestions = {"true", "false"}
+            categories = {SURVIVAL}
     )
     public static boolean betterFenceGatePlacement = false;
+
+    @Rule(
+            categories = {CREATIVE, SURVIVAL, BOT}
+    )
+    public static boolean fakePlayerResident = false;
 }
