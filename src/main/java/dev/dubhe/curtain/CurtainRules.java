@@ -330,7 +330,7 @@ public class CurtainRules {
             categories = {CREATIVE, BOT}
     )
     public static boolean fakePlayerAutoFish;
-  
+
     @Rule(
             categories = {SURVIVAL}
     )
@@ -350,4 +350,14 @@ public class CurtainRules {
             categories = {CREATIVE, SURVIVAL, BOT}
     )
     public static boolean fakePlayerResident = false;
+
+    @Rule(
+            categories = {CREATIVE, SURVIVAL, BOT}
+    )
+    public static boolean fakePlayerAutoReplenishment = false;
+
+    @Rule(
+            categories = {CREATIVE, SURVIVAL, BOT}
+    )
+    public static boolean fakePlayerAutoReplaceTool = false;
 }

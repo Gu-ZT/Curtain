@@ -141,5 +141,11 @@
   "curtain.rules.better_fence_gate_placement.desc": "让放置的栅栏门与你点击的栅栏门拥有相同的方块状态",
 
   "curtain.rules.fake_player_resident.name": "假人驻留",
-  "curtain.rules.fake_player_resident.desc": "退出存档时保留假人"
+  "curtain.rules.fake_player_resident.desc": "退出存档时保留假人",
+
+  "curtain.rules.fake_player_auto_replenishment.name": "假人补货",
+  "curtain.rules.fake_player_auto_replenishment.desc": "让假人自动补货",
+
+  "curtain.rules.fake_player_auto_replace_tool.name": "假人切换工具",
+  "curtain.rules.fake_player_auto_replace_tool.desc": "让假人自动切换快损坏的工具"
 }
