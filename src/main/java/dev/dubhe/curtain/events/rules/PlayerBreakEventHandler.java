@@ -1,7 +1,7 @@
 package dev.dubhe.curtain.events.rules;
 
 import dev.dubhe.curtain.CurtainRules;
-import dev.dubhe.curtain.events.impls.CurtainEvent;
+import dev.dubhe.curtain.events.events.ItemStackEvent;
 import dev.dubhe.curtain.features.player.menu.FakePlayerInventoryMenu;
 import dev.dubhe.curtain.features.player.patches.EntityPlayerMPFake;
 import net.minecraft.server.level.ServerPlayer;
@@ -38,7 +38,7 @@ public class PlayerBreakEventHandler {
 
     // 工具缺失修复(missingTools)
     @SubscribeEvent
-    public void onBreak(CurtainEvent.BreakSpeed event) {
+    public void onBreak(ItemStackEvent.BreakSpeed event) {
         BlockState state = event.getState();
         event.setSpeed(
                 CurtainRules.missingTools && state.getBlock().getSoundType(state) == SoundType.GLASS ? event.getSpeed() : event.getOriginalSpeed()

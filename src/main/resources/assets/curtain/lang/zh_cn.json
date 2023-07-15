@@ -138,6 +138,8 @@
   "curtain.rules.better_wood_strip.desc": "仅允许名称中包含“去皮”的斧头对原木去皮",
 
   "curtain.rules.better_fence_gate_placement.name": "更好的栅栏门放置",
-  "curtain.rules.better_fence_gate_placement.desc": "让放置的栅栏门与你点击的栅栏门拥有相同的方块状态"
- 
+  "curtain.rules.better_fence_gate_placement.desc": "让放置的栅栏门与你点击的栅栏门拥有相同的方块状态",
+
+  "curtain.rules.fake_player_resident.name": "假人驻留",
+  "curtain.rules.fake_player_resident.desc": "退出存档时保留假人"
 }

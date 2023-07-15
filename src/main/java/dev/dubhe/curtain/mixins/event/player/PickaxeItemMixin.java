@@ -1,6 +1,6 @@
 package dev.dubhe.curtain.mixins.event.player;
 
-import dev.dubhe.curtain.events.impls.CurtainEvent;
+import dev.dubhe.curtain.events.events.ItemStackEvent;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
@@ -20,7 +20,7 @@ public abstract class PickaxeItemMixin extends DiggerItem {
 
     @Override
     public float getDestroySpeed(@NotNull ItemStack stack, @NotNull BlockState state) {
-        CurtainEvent.BreakSpeed event = new CurtainEvent.BreakSpeed(stack, state, super.getDestroySpeed(stack, state), this.speed);
+        ItemStackEvent.BreakSpeed event = new ItemStackEvent.BreakSpeed(stack, state, super.getDestroySpeed(stack, state), this.speed);
         MinecraftForge.EVENT_BUS.post(event);
         return event.getSpeed();
     }
