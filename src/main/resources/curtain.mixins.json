@@ -13,7 +13,6 @@
     "PistonBaseBlockMixin",
     "PrimedTntMixin",
     "ServerChunkCacheMixin",
-<<<<<<< HEAD
     "ServerPlayerMixin",
     "events.fishing_hook.FishingHookMixin",
     "events.item_stack.ItemStackMixin",
@@ -21,25 +20,21 @@
     "events.world_tick.ServerLevelMixin",
     "rules.anti_cheat_disabled.PlayerMixin",
     "rules.anti_cheat_disabled.ServerGamePacketListenerImplMixin",
+    "rules.better_sign_editing.SignBlockMixin",
     "rules.better_sign_interaction.SignBlockMixin",
     "rules.better_wood_strip.AxeItemMixin",
     "rules.block_placement_ignore_entity.BlockItemMixin",
-=======
->>>>>>> a627c718d1289379cb1bdfcbd950f41dca3e016b
     "rules.cactus.DispenserBlockMixin",
     "rules.cactus.HopperBlockMixin",
     "rules.cactus.LevelMixin",
     "rules.cactus.ServerPlayerGameModeMixin",
     "rules.cactus.UseOnContextMixin",
-<<<<<<< HEAD
     "rules.chicken_shearing.ChickenEntityMixin",
-=======
     "rules.command_player.EntityMixin",
     "rules.command_player.PlayerListMixin",
     "rules.command_player.PlayerMixin",
     "rules.command_player.ServerPlayerMixin",
     "rules.command_player.ThrownEnderpearlMixin",
->>>>>>> a627c718d1289379cb1bdfcbd950f41dca3e016b
     "rules.creative_no_clip.BlockItemMixin",
     "rules.creative_no_clip.PistonMovingBlockEntityMixin",
     "rules.creative_no_clip.PlayerMixin",

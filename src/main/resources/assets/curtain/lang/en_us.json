@@ -156,5 +156,8 @@
   "curtain.rules.chicken_shearing.desc": "Chickens can be sheared to get feathers. Beware! every time u shear a chicken, it gets damaged!",
 
   "curtain.rules.anti_cheat_disabled.name": "AntiCheatDisabled",
-  "curtain.rules.anti_cheat_disabled.desc": "Prevents players from rubberbanding when moving too fast"
+  "curtain.rules.anti_cheat_disabled.desc": "Prevents players from rubberbanding when moving too fast",
+
+  "curtain.rules.better_sign_editing.name": "Better Sign Editing",
+  "curtain.rules.better_sign_editing.desc": "Possible to use feather editing sign with \"pen\" in the name"
 }
