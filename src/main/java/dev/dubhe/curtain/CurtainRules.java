@@ -375,4 +375,9 @@ public class CurtainRules {
             categories = {FEATURE}
     )
     public static boolean chickenShearing = false;
+
+    @Rule(
+            categories = {CREATIVE, SURVIVAL}
+    )
+    public static boolean antiCheatDisabled = false;
 }
