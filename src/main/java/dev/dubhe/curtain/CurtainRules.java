@@ -360,4 +360,9 @@ public class CurtainRules {
             categories = {CREATIVE, SURVIVAL, BOT}
     )
     public static boolean fakePlayerAutoReplaceTool = false;
+
+    @Rule(
+            categories = {CREATIVE, SURVIVAL}
+    )
+    public static boolean blockPlacementIgnoreEntity = false;
 }
