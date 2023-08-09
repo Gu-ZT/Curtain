@@ -13,7 +13,6 @@
     "PistonBaseBlockMixin",
     "PrimedTntMixin",
     "ServerChunkCacheMixin",
-    "ServerPlayerMixin",
     "events.fishing_hook.FishingHookMixin",
     "events.item_stack.ItemStackMixin",
     "events.item_stack.PickaxeItemMixin",
