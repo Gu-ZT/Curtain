@@ -156,5 +156,8 @@
   "curtain.rules.empty_shulker_box_stack_always.desc": "Empty Shulker Boxes will always stack, even inside inventories.",
 
   "curtain.rules.chicken_shearing.name": "Chicken Shearing",
-  "curtain.rules.chicken_shearing.desc": "Chickens can be sheared to get feathers. Beware! every time u shear a chicken, it gets damaged!"
+  "curtain.rules.chicken_shearing.desc": "Chickens can be sheared to get feathers. Beware! every time u shear a chicken, it gets damaged!",
+
+  "curtain.rules.anti_cheat_disabled.name": "AntiCheatDisabled",
+  "curtain.rules.anti_cheat_disabled.desc": "Prevents players from rubberbanding when moving too fast"
 }

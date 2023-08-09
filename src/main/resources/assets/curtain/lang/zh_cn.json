@@ -156,5 +156,8 @@
   "curtain.rules.empty_shulker_box_stack_always.desc": "让空潜影盒总能堆叠起来，包括在物品栏中",
 
   "curtain.rules.chicken_shearing.name": "剪鸡毛",
-  "curtain.rules.chicken_shearing.desc": "你可以用剪刀从鸡的身上剪下羽毛。注意！每次你剪鸡毛时鸡都会受伤！\n未成年的鸡不能被剪下羽毛"
+  "curtain.rules.chicken_shearing.desc": "你可以用剪刀从鸡的身上剪下羽毛。注意！每次你剪鸡毛时鸡都会受伤！\n未成年的鸡不能被剪下羽毛",
+
+  "curtain.rules.anti_cheat_disabled.name": "禁用反作弊移动监测",
+  "curtain.rules.anti_cheat_disabled.desc": "防止玩家因为“本服务器未启用飞行”，“移动过快”等原因被踢出"
 }
