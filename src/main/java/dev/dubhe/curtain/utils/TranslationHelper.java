@@ -4,10 +4,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import dev.dubhe.curtain.CurtainRules;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextFormatting;
 import org.apache.commons.io.IOUtils;
 
+import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -31,9 +34,21 @@ public class TranslationHelper {
      * @param args 参数
      * @return 翻译后的聊天组件
      */
-    public static TextComponent translate(String key, Object... args) {
+    public static @Nonnull IFormattableTextComponent translate(String key, TextFormatting formatting, Style style, Object... args) {
         Map<String, String> trans = TRANS_MAP.getOrDefault(CurtainRules.language, new HashMap<>());
-        return new StringTextComponent(String.format(trans.getOrDefault(key, key),args));
+        return new StringTextComponent(String.format(trans.getOrDefault(key, key), args)).withStyle(style).withStyle(formatting);
+    }
+
+    /**
+     * 获取翻译后的文本
+     *
+     * @param key  翻译键
+     * @param args 参数
+     * @return 翻译后的聊天组件
+     */
+    public static @Nonnull IFormattableTextComponent translate(String key, Object... args) {
+        Map<String, String> trans = TRANS_MAP.getOrDefault(CurtainRules.language, new HashMap<>());
+        return new StringTextComponent(String.format(trans.getOrDefault(key, key), args));
     }
 
     /**

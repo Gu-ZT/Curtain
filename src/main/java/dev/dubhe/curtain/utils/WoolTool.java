@@ -1,9 +1,9 @@
 package dev.dubhe.curtain.utils;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.item.DyeColor;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -55,7 +55,7 @@ public class WoolTool {
      */
     public static DyeColor getWoolColorAtPosition(World worldIn, BlockPos pos) {
         BlockState state = worldIn.getBlockState(pos);
-        if (state.getMaterial() != Material.WOOL || !state.isRedstoneConductor(worldIn, pos)) //isSimpleFullBlock
+        if (state.is(BlockTags.WOOL) || !state.isRedstoneConductor(worldIn, pos)) //isSimpleFullBlock
             return null;
         return Material2Dye.get(state.getMapColor(worldIn, pos));
     }

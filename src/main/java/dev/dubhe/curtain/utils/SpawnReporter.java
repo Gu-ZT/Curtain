@@ -198,12 +198,20 @@ public class SpawnReporter {
     }
 
     public static EntityClassification get_type_code_from_wool_code(DyeColor color) {
-        if(color==DyeColor.RED) return MONSTER;
-        else if(color==DyeColor.GREEN) return CREATURE;
-        else if(color==DyeColor.BLUE) return WATER_CREATURE;
-        else if(color==DyeColor.BROWN) return AMBIENT;
-        else if(color==DyeColor.CYAN) return WATER_AMBIENT;
-        else return null;
+        switch (color) {
+            case RED:
+                return MONSTER;
+            case GREEN:
+                return CREATURE;
+            case BLUE:
+                return WATER_CREATURE;
+            case BROWN:
+                return AMBIENT;
+            case CYAN:
+                return WATER_AMBIENT;
+            default:
+                return null;
+        }
     }
 
     public static List<ITextComponent> printEntitiesByType(EntityClassification cat, World worldIn, boolean all) //Class<?> entityType)

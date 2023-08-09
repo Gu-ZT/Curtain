@@ -165,7 +165,6 @@ public class OptimizedExplosion {
 
                         if (entity instanceof PlayerEntity) {
                             PlayerEntity player = (PlayerEntity) entity;
-
                             if (!player.isSpectator()
                                     && (!player.isCreative() || !player.abilities.flying)) {  //getAbilities
                                 e.getHitPlayers().put(player, new Vector3d(d5 * d10, d7 * d10, d9 * d10));

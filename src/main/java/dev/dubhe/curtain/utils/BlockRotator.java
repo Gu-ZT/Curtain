@@ -180,23 +180,46 @@ public class BlockRotator {
                 newState = state.setValue(StairsBlock.HALF, state.getValue(StairsBlock.HALF) == Half.TOP ? Half.BOTTOM : Half.TOP);
             } else {
                 boolean turnCounterClockwise;
-                if (facing == Direction.NORTH)
-                    turnCounterClockwise = (hitVec.x <= 0.5);
-                else if (facing == Direction.SOUTH)
-                    turnCounterClockwise = !(hitVec.x <= 0.5);
-                else if (facing == Direction.EAST)
-                    turnCounterClockwise = (hitVec.z <= 0.5);
-                else if (facing == Direction.WEST)
-                    turnCounterClockwise = !(hitVec.z <= 0.5);
-                else
-                    turnCounterClockwise = false;
+                switch (facing) {
+                    case NORTH: {
+                        turnCounterClockwise = hitVec.x <= 0.5;
+                        break;
+                    }
+                    case SOUTH: {
+                        turnCounterClockwise = !(hitVec.x <= 0.5);
+                        break;
+                    }
+                    case EAST: {
+                        turnCounterClockwise = hitVec.z <= 0.5;
+                        break;
+                    }
+                    case WEST: {
+                        turnCounterClockwise = !(hitVec.z <= 0.5);
+                        break;
+                    }
+                    default: {
+                        turnCounterClockwise = false;
+                        break;
+                    }
+                }
                 newState = state.rotate(turnCounterClockwise ? Rotation.COUNTERCLOCKWISE_90 : Rotation.CLOCKWISE_90);
             }
         } else if (block instanceof RotatedPillarBlock) {
             Direction.Axis axis;
-            if (state.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.X) axis = Direction.Axis.Z;
-            else if (state.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y) axis = Direction.Axis.X;
-            else axis = Direction.Axis.Y;
+            switch (state.getValue(RotatedPillarBlock.AXIS)) {
+                case X: {
+                    axis = Direction.Axis.Z;
+                    break;
+                }
+                case Y: {
+                    axis = Direction.Axis.X;
+                    break;
+                }
+                default: {
+                    axis = Direction.Axis.Y;
+                    break;
+                }
+            }
             newState = state.setValue(RotatedPillarBlock.AXIS, axis);
         }
         if (newState != null) {

@@ -57,9 +57,9 @@ public class MenuHelper {
      * @param name 分类名
      * @return 分类聊天组件
      */
-    public static TextComponent category(String name) {
-        TextComponent main = new StringTextComponent("");
-        TextComponent display = new StringTextComponent(name);
+    public static IFormattableTextComponent category(String name) {
+        IFormattableTextComponent main = new StringTextComponent("");
+        IFormattableTextComponent display = new StringTextComponent(name);
         if (RuleManager.CATEGORIES_RULES.containsKey(name)) {
             display = TranslationHelper.translate(String.format(CATEGORIES, Curtain.MODID, name));
         }
@@ -100,12 +100,12 @@ public class MenuHelper {
         for (String s : suggestion) {
             if (s.equals(value)) continue;
             main.append(" ");
-            IFormattableTextComponent x = new StringTextComponent(String.format("[%s]",replaceQuotation(s)))
+            IFormattableTextComponent x = new StringTextComponent(String.format("[%s]", replaceQuotation(s)))
                     .withStyle(style -> style
                             .withColor(rule.isDefault(replaceQuotation(s)) ? TextFormatting.DARK_GREEN : TextFormatting.YELLOW)
                             .withClickEvent(new ClickEvent(
                                     ClickEvent.Action.SUGGEST_COMMAND,
-                                    String.format("/curtain setValue %s %s",rule.getNormalName(), s)
+                                    String.format("/curtain setValue %s %s", rule.getNormalName(), s)
                             ))
                             .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new StringTextComponent("单击来快速填充"))));
             main.append(x);

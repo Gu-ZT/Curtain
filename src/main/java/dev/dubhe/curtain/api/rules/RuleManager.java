@@ -83,23 +83,31 @@ public class RuleManager {
         for (String name : defaultRuleMap.keySet()) {
             CurtainRule<?> rule = defaultRuleMap.get(name);
             Object value = rule.getValue();
-            if (value instanceof String)
-                object.addProperty(name, (String) value);
-            else if (value instanceof Boolean)
-                object.addProperty(name, (Boolean) value);
-            else if (value instanceof Byte)
-                object.addProperty(name, (Byte) value);
-            else if (value instanceof Short)
-                object.addProperty(name, (Short) value);
-            else if (value instanceof Integer)
-                object.addProperty(name, (Integer) value);
-            else if (value instanceof Long)
-                object.addProperty(name, (Long) value);
-            else if (value instanceof Float)
-                object.addProperty(name, (Float) value);
-            else if (value instanceof Double)
-                object.addProperty(name, (Double) value);
-            else
+            if (value instanceof String) {
+                String str = (String) value;
+                object.addProperty(name, str);
+            } else if (value instanceof Boolean) {
+                Boolean bool = (Boolean) value;
+                object.addProperty(name, bool);
+            } else if (value instanceof Byte) {
+                Byte num = (Byte) value;
+                object.addProperty(name, num);
+            } else if (value instanceof Short) {
+                Short num = (Short) value;
+                object.addProperty(name, num);
+            } else if (value instanceof Integer) {
+                Integer num = (Integer) value;
+                object.addProperty(name, num);
+            } else if (value instanceof Long) {
+                Long num = (Long) value;
+                object.addProperty(name, num);
+            } else if (value instanceof Float) {
+                Float num = (Float) value;
+                object.addProperty(name, num);
+            } else if (value instanceof Double) {
+                Double num = (Double) value;
+                object.addProperty(name, num);
+            } else
                 throw RuleException.type();
         }
         try (FileWriter writer = new FileWriter(this.getFile())) {
