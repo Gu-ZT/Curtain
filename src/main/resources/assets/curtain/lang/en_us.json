@@ -159,5 +159,8 @@
   "curtain.rules.anti_cheat_disabled.desc": "Prevents players from rubberbanding when moving too fast",
 
   "curtain.rules.players_sleeping_percentage.name": "Players Sleeping Percentage",
-  "curtain.rules.players_sleeping_percentage.desc": "Set the percentage of players who need to skip sleeping at night."
+  "curtain.rules.players_sleeping_percentage.desc": "Set the percentage of players who need to skip sleeping at night.",
+
+  "curtain.rules.better_sign_editing.name": "Better Sign Editing",
+  "curtain.rules.better_sign_editing.desc": "Possible to use feather editing sign with \"pen\" in the name"
 }

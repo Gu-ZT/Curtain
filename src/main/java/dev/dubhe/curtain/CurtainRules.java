@@ -375,4 +375,9 @@ public class CurtainRules {
             suggestions = {"0", "50", "100"}
     )
     public static int playersSleepingPercentage = 100;
+
+    @Rule(
+            categories = SURVIVAL
+    )
+    public static boolean betterSignEditing = false;
 }
