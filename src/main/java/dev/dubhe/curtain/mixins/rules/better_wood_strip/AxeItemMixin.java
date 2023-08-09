@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @Mixin(AxeItem.class)
 public abstract class AxeItemMixin {
-    @Inject(method = "useOn", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getToolModifiedState(Lnet/minecraft/world/item/context/UseOnContext;Lnet/minecraftforge/common/ToolAction;Z)Lnet/minecraft/world/level/block/state/BlockState;", ordinal = 0), cancellable = true)
+    @Inject(method = "useOn", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getToolModifiedState(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;Lnet/minecraftforge/common/ToolAction;)Lnet/minecraft/world/level/block/state/BlockState;", ordinal = 0), cancellable = true)
     private void stripped(UseOnContext context, CallbackInfoReturnable<InteractionResult> cir) {
         ItemStack itemStack = context.getItemInHand();
         String name = itemStack.getHoverName().getString();
