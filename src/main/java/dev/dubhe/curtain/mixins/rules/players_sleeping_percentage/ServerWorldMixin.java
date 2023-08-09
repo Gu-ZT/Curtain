@@ -35,8 +35,6 @@ public class ServerWorldMixin {
                     playerNumber++;
                     if (p.isSleeping()) {
                         sleepingPlayerNumber++;
-                        ci.cancel();
-                        return;
                     }
                 }
             }
