@@ -1,5 +1,49 @@
 # Changelog
 
+## [1.3.0](https://github.com/Gu-ZT/Curtain/tree/1.3.0) (2023-08-09)
+
+[Full Changelog](https://github.com/Gu-ZT/Curtain/compare/1.2.2...1.3.0)
+
+**Implemented enhancements:**
+
+- \[TODO\] 更好的告示牌交互 [\#95](https://github.com/Gu-ZT/Curtain/issues/95)
+- \[TODO\] 更好的原木去皮 [\#94](https://github.com/Gu-ZT/Curtain/issues/94)
+- \[TODO\] 更好的栅栏门放置 [\#93](https://github.com/Gu-ZT/Curtain/issues/93)
+- \[TODO\] 假人切换工具 [\#92](https://github.com/Gu-ZT/Curtain/issues/92)
+- \[TODO\] 假人钓鱼 [\#91](https://github.com/Gu-ZT/Curtain/issues/91)
+- \[TODO\] 假人补货 [\#90](https://github.com/Gu-ZT/Curtain/issues/90)
+- \[TODO\] 假人驻留 [\#89](https://github.com/Gu-ZT/Curtain/issues/89)
+- \[TODO\] 方块放置忽略实体 [\#88](https://github.com/Gu-ZT/Curtain/issues/88)
+- \[TODO\] 空潜影盒总能堆叠 [\#87](https://github.com/Gu-ZT/Curtain/issues/87)
+- \[TODO\] 剪鸡毛 [\#86](https://github.com/Gu-ZT/Curtain/issues/86)
+- \[TODO\] 脚手架距离上限 [\#85](https://github.com/Gu-ZT/Curtain/issues/85)
+- \[TODO\] 禁用反作弊移动监测 [\#84](https://github.com/Gu-ZT/Curtain/issues/84)
+- \[TODO\] 1.16.5添加设置跳过夜晚所需的入睡玩家所占百分比 [\#80](https://github.com/Gu-ZT/Curtain/issues/80)
+
+**Fixed bugs:**
+
+- \[Bug\] 服务器上安装后，挖掘方块会导致崩服，放置假人后会造成延迟 [\#110](https://github.com/Gu-ZT/Curtain/issues/110)
+- \[Bug\] 安装mod后mc在启动时崩溃 [\#82](https://github.com/Gu-ZT/Curtain/issues/82)
+- \[Bug\] 进末地后服务器重启 [\#76](https://github.com/Gu-ZT/Curtain/issues/76)
+- \[Bug\] 游戏崩溃 [\#75](https://github.com/Gu-ZT/Curtain/issues/75)
+- \[Bug\] 和机械动力兼容性不好 [\#62](https://github.com/Gu-ZT/Curtain/issues/62)
+
+**Merged pull requests:**
+
+- feat\(antiCheatDisabled\): 添加`禁用反作弊移动监测`功能 [\#119](https://github.com/Gu-ZT/Curtain/pull/119) ([Gu-ZT](https://github.com/Gu-ZT))
+- feat\(chickenShearing\): 添加`剪鸡毛`功能 [\#118](https://github.com/Gu-ZT/Curtain/pull/118) ([Gu-ZT](https://github.com/Gu-ZT))
+- feat\(blockPlacementIgnoreEntity\): 添加`方块放置忽略实体`功能 [\#117](https://github.com/Gu-ZT/Curtain/pull/117) ([Gu-ZT](https://github.com/Gu-ZT))
+- feat\(fakePlayerResidentAndAutoReplaceTool\): 添加`假人补货`、`假人切换工具`功能 [\#116](https://github.com/Gu-ZT/Curtain/pull/116) ([Gu-ZT](https://github.com/Gu-ZT))
+- feat\(fakePlayerResident\): 添加`假人驻留`功能 [\#115](https://github.com/Gu-ZT/Curtain/pull/115) ([Gu-ZT](https://github.com/Gu-ZT))
+- feat\(betterFenceGatePlacement\): 添加`更好的栅栏门放置`功能 [\#114](https://github.com/Gu-ZT/Curtain/pull/114) ([Gu-ZT](https://github.com/Gu-ZT))
+- many functions [\#113](https://github.com/Gu-ZT/Curtain/pull/113) ([Gu-ZT](https://github.com/Gu-ZT))
+- feat\(betterWoodStrip\): 添加`更好的原木去皮`功能 [\#112](https://github.com/Gu-ZT/Curtain/pull/112) ([Gu-ZT](https://github.com/Gu-ZT))
+- 添加`更好的告示牌交互`功能 [\#111](https://github.com/Gu-ZT/Curtain/pull/111) ([Gu-ZT](https://github.com/Gu-ZT))
+- feat\(fakePlayerAutoFish\): 添加`假人自动钓鱼`功能 [\#103](https://github.com/Gu-ZT/Curtain/pull/103) ([Gu-ZT](https://github.com/Gu-ZT))
+- feature\(scaffoldingDistance\): 添加`脚手架距离上限`功能 [\#101](https://github.com/Gu-ZT/Curtain/pull/101) ([Gu-ZT](https://github.com/Gu-ZT))
+- 1.19.4updateTo1.2.1 [\#73](https://github.com/Gu-ZT/Curtain/pull/73) ([DancingSnow0517](https://github.com/DancingSnow0517))
+- Update to 1.19.4 [\#58](https://github.com/Gu-ZT/Curtain/pull/58) ([DancingSnow0517](https://github.com/DancingSnow0517))
+
 ## [1.2.2](https://github.com/Gu-ZT/Curtain/tree/1.2.2) (2023-04-10)
 
 [Full Changelog](https://github.com/Gu-ZT/Curtain/compare/1.2.1...1.2.2)
