@@ -12,7 +12,7 @@
         * 类型：`Boolean`
         * 默认：`false`
         * 建议：`true`, `false`
-        * 分类：`创造`, `生存`
+        * 分类：`创造`, `生存`, `假人`
     * commandLog
         * 名称：`游戏数据监视器`
         * 描述：`启用/log命令以在聊天栏或Tab栏监视游戏部分数据`
@@ -55,6 +55,27 @@
         * 默认：`false`
         * 建议：`true`, `false`
         * 分类：`修复`, `生存`
+    * fakePlayerAutoReplenishment
+        * 名称：`假人补货`
+        * 描述：`让假人自动补货`
+        * 类型：`Boolean`
+        * 默认：`false`
+        * 建议：`true`, `false`
+        * 分类：`创造`, `生存`, `假人`
+    * blockPlacementIgnoreEntity
+        * 名称：`方块放置忽略实体`
+        * 描述：`方块可放置时无视实体碰撞检测，也就是你可以将方块放在实体内`
+        * 类型：`Boolean`
+        * 默认：`false`
+        * 建议：`true`, `false`
+        * 分类：`创造`, `生存`
+    * fakePlayerAutoFish
+        * 名称：`假人自动钓鱼`
+        * 描述：`让假人自动钓鱼`
+        * 类型：`Boolean`
+        * 默认：`false`
+        * 建议：`true`, `false`
+        * 分类：`创造`, `假人`
     * superLead
         * 名称：`超级拴绳`
         * 描述：`村民和怪物可以被拴绳拴住（拴怪物需要客户端也安装窗帘）`
@@ -68,7 +89,7 @@
         * 类型：`Boolean`
         * 默认：`false`
         * 建议：`true`, `false`
-        * 分类：`特性`, `自动`
+        * 分类：`特性`
     * commandPlayer
         * 名称：`玩家控制`
         * 描述：`启用/player命令以控制/召唤玩家`
@@ -90,6 +111,13 @@
         * 默认：`false`
         * 建议：`true`, `false`
         * 分类：`特性`
+    * antiCheatDisabled
+        * 名称：`禁用反作弊移动监测`
+        * 描述：`防止玩家因为“本服务器未启用飞行”，“移动过快”等原因被踢出`
+        * 类型：`Boolean`
+        * 默认：`false`
+        * 建议：`true`, `false`
+        * 分类：`创造`, `生存`
     * missingTools
         * 名称：`工具缺失修复`
         * 描述：`活塞，玻璃和海绵可以用合适的工具更快地破坏`
@@ -97,6 +125,13 @@
         * 默认：`false`
         * 建议：`true`, `false`
         * 分类：`生存`
+    * emptyShulkerBoxStackAlways
+        * 名称：`空潜影盒总能堆叠`
+        * 描述：`让空潜影盒总能堆叠起来，包括在物品栏中`
+        * 类型：`Boolean`
+        * 默认：`false`
+        * 建议：`true`, `false`
+        * 分类：`特性`
     * stackableShulkerBoxes
         * 名称：`潜影盒堆叠`
         * 描述：`空潜影盒可在地上堆叠到 64
@@ -111,7 +146,7 @@
         * 类型：`String`
         * 默认：`none`
         * 建议：`none`, `bot_`
-        * 分类：`命令`
+        * 分类：`命令`, `假人`
     * tntRandomRange
         * 名称：`TNT爆炸范围设置`
         * 描述：`设置TNT随机爆炸范围为一个固定的值，设为-1以禁用
@@ -120,13 +155,27 @@
         * 默认：`-1.0`
         * 建议：`-1`
         * 分类：`TNT`
+    * scaffoldingDistance
+        * 名称：`脚手架距离上限`
+        * 描述：`脚手架水平拓展的距离上限`
+        * 类型：`Integer`
+        * 默认：`7`
+        * 建议：`2`, `3`, `5`, `7`
+        * 分类：`创造`
     * openFakePlayerEnderChest
         * 名称：`假人末影箱`
         * 描述：`允许玩家打开假人末影箱`
         * 类型：`Boolean`
         * 默认：`false`
         * 建议：`true`, `false`
-        * 分类：`创造`, `生存`
+        * 分类：`创造`, `生存`, `假人`
+    * fakePlayerResident
+        * 名称：`假人驻留`
+        * 描述：`退出存档时保留假人`
+        * 类型：`Boolean`
+        * 默认：`false`
+        * 建议：`true`, `false`
+        * 分类：`创造`, `生存`, `假人`
     * quickLeafDecay
         * 名称：`快速叶子腐烂`
         * 描述：`在砍树后树叶会快速掉落`
@@ -147,7 +196,7 @@
         * 类型：`String`
         * 默认：`none`
         * 建议：`none`, `_fake`
-        * 分类：`命令`
+        * 分类：`命令`, `假人`
     * creativeNoClip
         * 名称：`创造玩家无碰撞检测`
         * 描述：`创造玩家可以穿过方块
@@ -158,6 +207,13 @@
         * 默认：`false`
         * 建议：`true`, `false`
         * 分类：`创造`, `客户端`
+    * betterWoodStrip
+        * 名称：`更好的原木去皮`
+        * 描述：`仅允许名称中包含“去皮”的斧头对原木去皮`
+        * 类型：`Boolean`
+        * 默认：`false`
+        * 建议：`true`, `false`
+        * 分类：`生存`
     * allowSpawningOfflinePlayers
         * 名称：`允许离线模式假人生成`
         * 描述：`是否允许通过/player命令生成离线模式的假人`
@@ -179,6 +235,27 @@
         * 默认：`false`
         * 建议：`true`, `false`
         * 分类：`创造`, `TNT`
+    * betterSignInteraction
+        * 名称：`更好的告示牌交互`
+        * 描述：`右键涂蜡的告示牌时与之附着的方块产生交互`
+        * 类型：`Boolean`
+        * 默认：`false`
+        * 建议：`true`, `false`
+        * 分类：`生存`
+    * fakePlayerAutoReplaceTool
+        * 名称：`假人切换工具`
+        * 描述：`让假人自动切换快损坏的工具`
+        * 类型：`Boolean`
+        * 默认：`false`
+        * 建议：`true`, `false`
+        * 分类：`创造`, `生存`, `假人`
+    * betterFenceGatePlacement
+        * 名称：`更好的栅栏门放置`
+        * 描述：`让放置的栅栏门与你点击的栅栏门拥有相同的方块状态`
+        * 类型：`Boolean`
+        * 默认：`false`
+        * 建议：`true`, `false`
+        * 分类：`生存`
     * customMOTD
         * 名称：`自定义MOTD`
         * 描述：`在试图连接到服务器的客户端上设置一个不同的MOTD信息
@@ -223,6 +300,14 @@
         * 默认：`false`
         * 建议：`true`, `false`
         * 分类：`TNT`
+    * chickenShearing
+        * 名称：`剪鸡毛`
+        * 描述：`你可以用剪刀从鸡的身上剪下羽毛。注意！每次你剪鸡毛时鸡都会受伤！
+未成年的鸡不能被剪下羽毛`
+        * 类型：`Boolean`
+        * 默认：`false`
+        * 建议：`true`, `false`
+        * 分类：`特性`
     * viewDistance
         * 名称：`自定义视距`
         * 描述：`改变服务器视距，设为0以使用默认值`
