@@ -5,7 +5,7 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class LevelEventHandler {
+public class WorldEventHandler {
     @SubscribeEvent
     public void onLevelSave(@NotNull WorldEvent.Save event) {
         Curtain.rules.saveToFile();

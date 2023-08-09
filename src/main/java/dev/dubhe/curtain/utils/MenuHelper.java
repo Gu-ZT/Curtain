@@ -4,7 +4,12 @@ import dev.dubhe.curtain.Curtain;
 import dev.dubhe.curtain.api.rules.CurtainRule;
 import dev.dubhe.curtain.api.rules.RuleManager;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.*;
+import net.minecraft.network.chat.ClickEvent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.HoverEvent;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.NotNull;
 
@@ -102,6 +107,7 @@ public class MenuHelper {
             main.append(" ");
             MutableComponent x = new TextComponent("[%s]".formatted(replaceQuotation(s)))
                     .withStyle(rule.isDefault(replaceQuotation(s)) ? ChatFormatting.DARK_GREEN : ChatFormatting.YELLOW);
+
             x.withStyle(Style.EMPTY.withClickEvent(new ClickEvent(
                     ClickEvent.Action.SUGGEST_COMMAND,
                     "/curtain setValue %s %s".formatted(rule.getNormalName(), s)

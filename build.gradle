@@ -136,7 +136,6 @@ minecraft {
 
 mixin {
     add sourceSets.main, "curtain.refmap.json"
-
     config "curtain.mixins.json"
 }
 
@@ -171,7 +170,7 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
-    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    annotationProcessor 'org.spongepowered:mixin:0.8.4:processor'
 }
 
 // Example for how to get properties into the manifest for reading at runtime.

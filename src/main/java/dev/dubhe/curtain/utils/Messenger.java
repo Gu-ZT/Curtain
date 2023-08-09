@@ -4,8 +4,16 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.*;
+import net.minecraft.network.chat.ChatType;
+import net.minecraft.network.chat.ClickEvent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.HoverEvent;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -279,8 +287,8 @@ public class Messenger {
             LOG.error("Message not delivered: " + message);
         server.sendMessage(new TextComponent(message), Util.NIL_UUID);
         Component txt = c("gi " + message);
-        for (Player entityplayer : server.getPlayerList().getPlayers()) {
-            entityplayer.sendMessage(txt, Util.NIL_UUID);
+        for (ServerPlayer entityplayer : server.getPlayerList().getPlayers()) {
+            entityplayer.sendMessage(txt, ChatType.SYSTEM, Util.NIL_UUID);
         }
     }
 
@@ -288,8 +296,8 @@ public class Messenger {
         if (server == null)
             LOG.error("Message not delivered: " + message.getString());
         server.sendMessage(message, Util.NIL_UUID);
-        for (Player entityplayer : server.getPlayerList().getPlayers()) {
-            entityplayer.sendMessage(message, Util.NIL_UUID);
+        for (ServerPlayer entityplayer : server.getPlayerList().getPlayers()) {
+            entityplayer.sendMessage(message, ChatType.SYSTEM, Util.NIL_UUID);
         }
     }
 }

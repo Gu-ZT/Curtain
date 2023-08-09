@@ -22,9 +22,6 @@ public class LogCommand {
                         .executes(context -> {
                             String loggerName = StringArgumentType.getString(context, "loggerName");
                             ServerPlayer player = context.getSource().getPlayerOrException();
-                            if (player == null) {
-                                return 0;
-                            }
                             if (LoggerManager.isSubscribedLogger(player.getName().getString(), loggerName)) {
                                 LoggerManager.unsubscribeLogger(player.getName().getString(), loggerName);
                             } else {

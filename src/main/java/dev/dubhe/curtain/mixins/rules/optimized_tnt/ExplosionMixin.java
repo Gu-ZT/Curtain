@@ -3,7 +3,6 @@ package dev.dubhe.curtain.mixins.rules.optimized_tnt;
 import dev.dubhe.curtain.CurtainRules;
 import dev.dubhe.curtain.features.logging.helper.ExplosionLogHelper;
 import dev.dubhe.curtain.utils.OptimizedExplosion;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -21,14 +20,16 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.List;
+
 @Mixin(Explosion.class)
 public class ExplosionMixin {
     @Shadow
     @Final
-    private ObjectArrayList<BlockPos> toBlow;
+    private Level level;
     @Shadow
     @Final
-    private Level level;
+    private List<BlockPos> toBlow;
     private ExplosionLogHelper eLogger;
 
     @Inject(method = "explode", at = @At("HEAD"), cancellable = true)

@@ -10,6 +10,7 @@ import io.netty.buffer.Unpooled;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TextComponent;
@@ -41,7 +42,7 @@ public class LoggerManager {
             ServerPlayer player = Curtain.minecraftServer.getPlayerList().getPlayerByName(entry.getKey());
             if (player != null) {
                 Component msg = logger.display(player);
-                player.sendMessage(msg, Util.NIL_UUID);
+                player.sendMessage(msg, ChatType.SYSTEM, Util.NIL_UUID);
             }
         }
     }
@@ -61,9 +62,7 @@ public class LoggerManager {
                 }
             }
 
-            FriendlyByteBuf packetData = new FriendlyByteBuf(Unpooled.buffer()).writeComponent(msg);
-            ClientboundTabListPacket packet = new ClientboundTabListPacket(packetData);
-
+            ClientboundTabListPacket packet = new ClientboundTabListPacket(new TextComponent(""), msg);
             player.connection.send(packet);
         }
     }
@@ -88,8 +87,8 @@ public class LoggerManager {
 
         ServerPlayer player = Curtain.minecraftServer.getPlayerList().getPlayerByName(playerName);
         if (player != null) {
-            player.sendMessage(new TextComponent("%s subscribed logger %s".formatted(playerName, loggerName))
-                    .withStyle(style -> style.withColor(ChatFormatting.GRAY)), Util.NIL_UUID);
+            player.sendMessage((new TextComponent("%s subscribed logger %s".formatted(playerName, loggerName))
+                    .withStyle(ChatFormatting.GRAY)), ChatType.SYSTEM, Util.NIL_UUID);
         }
     }
 
@@ -121,7 +120,7 @@ public class LoggerManager {
         ServerPlayer player = Curtain.minecraftServer.getPlayerList().getPlayerByName(playerName);
         if (player != null) {
             player.sendMessage(new TextComponent("%s unsubscribed logger %s".formatted(playerName, loggerName))
-                    .withStyle(style -> style.withColor(ChatFormatting.GRAY)), Util.NIL_UUID);
+                    .withStyle(ChatFormatting.GRAY), ChatType.SYSTEM, Util.NIL_UUID);
         }
     }
 

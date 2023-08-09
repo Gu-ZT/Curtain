@@ -7,7 +7,7 @@ import dev.dubhe.curtain.CurtainRules;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.TextComponent;
 import org.apache.commons.io.IOUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -36,7 +36,7 @@ public class TranslationHelper {
      */
     public static @NotNull MutableComponent translate(String key, ChatFormatting formatting, Style style, Object... args) {
         Map<String, String> trans = TRANS_MAP.getOrDefault(CurtainRules.language, new HashMap<>());
-        return new TranslatableComponent(key, trans.getOrDefault(key, key).formatted(args), args);
+        return new TextComponent(trans.getOrDefault(key, key).formatted(args)).withStyle(style).withStyle(formatting);
     }
 
     /**
@@ -48,7 +48,7 @@ public class TranslationHelper {
      */
     public static @NotNull MutableComponent translate(String key, Object... args) {
         Map<String, String> trans = TRANS_MAP.getOrDefault(CurtainRules.language, new HashMap<>());
-        return new TranslatableComponent(key, trans.getOrDefault(key, key).formatted(args), args);
+        return new TextComponent(trans.getOrDefault(key, key).formatted(args));
     }
 
     /**

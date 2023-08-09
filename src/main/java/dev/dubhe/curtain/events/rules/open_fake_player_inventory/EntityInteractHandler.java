@@ -37,8 +37,7 @@ public class EntityInteractHandler {
                 );
             }
             if (provider != null)
-                if (entityInteract.getEntity() instanceof Player player)
-                    player.openMenu(provider);
+                entityInteract.getPlayer().openMenu(provider);
         }
 
     }

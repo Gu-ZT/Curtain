@@ -13,12 +13,11 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 public class Tracer {
+    @SuppressWarnings("ConstantConditions")
     public static HitResult rayTrace(Entity source, float partialTicks, double reach, boolean fluids) {
         BlockHitResult blockHit = rayTraceBlocks(source, partialTicks, reach, fluids);
         double maxSqDist = reach * reach;
-        if (blockHit != null) {
-            maxSqDist = blockHit.getLocation().distanceToSqr(source.getEyePosition(partialTicks));
-        }
+        if (blockHit != null) maxSqDist = blockHit.getLocation().distanceToSqr(source.getEyePosition(partialTicks));
         EntityHitResult entityHit = rayTraceEntities(source, partialTicks, reach, maxSqDist);
         return entityHit == null ? blockHit : entityHit;
     }
@@ -27,15 +26,14 @@ public class Tracer {
         Vec3 pos = source.getEyePosition(partialTicks);
         Vec3 rotation = source.getViewVector(partialTicks);
         Vec3 reachEnd = pos.add(rotation.x * reach, rotation.y * reach, rotation.z * reach);
-        return source.level.clip(new ClipContext(pos, reachEnd, ClipContext.Block.OUTLINE, fluids ?
-                ClipContext.Fluid.ANY : ClipContext.Fluid.NONE, source));
+        return source.level.clip(new ClipContext(pos, reachEnd, ClipContext.Block.OUTLINE, fluids ? ClipContext.Fluid.ANY : ClipContext.Fluid.NONE, source));
     }
 
     public static EntityHitResult rayTraceEntities(Entity source, float partialTicks, double reach, double maxSqDist) {
         Vec3 pos = source.getEyePosition(partialTicks);
         Vec3 reachVec = source.getViewVector(partialTicks).scale(reach);
         AABB box = source.getBoundingBox().expandTowards(reachVec).inflate(1);
-        return rayTraceEntities(source, pos, pos.add(reachVec), box, e -> !e.isSpectator() && e.isPickable(), maxSqDist);
+        return rayTraceEntities(source, pos, pos.add(reachVec), box, e -> !e.isSpectator() && e.canBeCollidedWith(), maxSqDist);
     }
 
     public static EntityHitResult rayTraceEntities(Entity source, Vec3 start, Vec3 end, AABB box, Predicate<Entity> predicate, double maxSqDistance) {
@@ -69,6 +67,7 @@ public class Tracer {
                 }
             }
         }
-        return target == null ? null : new EntityHitResult(target, targetHitPos);
+        if (target == null) return null;
+        return new EntityHitResult(target, targetHitPos);
     }
 }
