@@ -6,8 +6,10 @@ import dev.dubhe.curtain.features.logging.builtin.MobcapsLogger;
 import dev.dubhe.curtain.features.logging.builtin.TPSLogger;
 import dev.dubhe.curtain.features.logging.helper.ExplosionLogHelper;
 import dev.dubhe.curtain.features.logging.helper.TNTLogHelper;
+import io.netty.buffer.Unpooled;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -15,12 +17,7 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.protocol.game.ClientboundTabListPacket;
 import net.minecraft.server.level.ServerPlayer;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class LoggerManager {
     private static final Map<String, AbstractLogger> registeredLogger = new HashMap<>();
@@ -64,6 +61,7 @@ public class LoggerManager {
                     if (iterator.hasNext()) msg.append("\n");
                 }
             }
+
             ClientboundTabListPacket packet = new ClientboundTabListPacket(new TextComponent(""), msg);
             player.connection.send(packet);
         }

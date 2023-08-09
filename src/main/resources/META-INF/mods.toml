@@ -6,7 +6,11 @@
 # The name of the mod loader type to load - for regular FML @Mod mods it should be javafml
 modLoader = "javafml" #mandatory
 # A version range to match for said mod loader - for regular FML @Mod it will be the forge version
+<<<<<<< HEAD
+loaderVersion = "[47,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
+=======
 loaderVersion = "[40,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
+>>>>>>> a627c718d1289379cb1bdfcbd950f41dca3e016b
 # The license for you mod. This is mandatory metadata and allows for easier comprehension of your redistributive properties.
 # Review your options at https://choosealicense.com/. All rights reserved is the default copyright stance, and is thus the default here.
 license = "GNU LGPL 2.1"
@@ -51,7 +55,11 @@ modId = "forge" #mandatory
 # Does this dependency have to exist - if not, ordering below must be specified
 mandatory = true #mandatory
 # The version range of the dependency
+<<<<<<< HEAD
+versionRange = "[47,)" #mandatory
+=======
 versionRange = "[40,)" #mandatory
+>>>>>>> a627c718d1289379cb1bdfcbd950f41dca3e016b
 # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
 ordering = "NONE"
 # Side this dependency is applied on - BOTH, CLIENT or SERVER
@@ -62,6 +70,10 @@ logoFile="assets/curtain/icon.png"
 modId = "minecraft"
 mandatory = true
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
+<<<<<<< HEAD
+versionRange = "[1.20,1.21)"
+=======
 versionRange = "[1.18,1.19)"
+>>>>>>> a627c718d1289379cb1bdfcbd950f41dca3e016b
 ordering = "NONE"
 side = "BOTH"

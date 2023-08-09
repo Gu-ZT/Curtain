@@ -23,9 +23,9 @@ public abstract class SaplingBlockMixin {
     @Inject(method = "advanceTree", at = @At(value = "INVOKE", shift = At.Shift.BEFORE,
             target = "Lnet/minecraft/world/level/block/grower/AbstractTreeGrower;growTree(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/level/chunk/ChunkGenerator;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Ljava/util/Random;)Z"),
             cancellable = true)
-    private void onGenerate(ServerLevel level, BlockPos pos, BlockState blockState, Random random, CallbackInfo ci) {
-        if (CurtainRules.desertShrubs && level.getBiome(pos).is(BiomeTags.HAS_DESERT_PYRAMID) && !nearWater(level, pos)) {
-            level.setBlock(pos, Blocks.DEAD_BUSH.defaultBlockState(), Block.UPDATE_ALL);
+    private void onGenerate(ServerLevel pLevel, BlockPos pPos, BlockState pState, Random pRand, CallbackInfo ci) {
+        if (CurtainRules.desertShrubs && pLevel.getBiome(pPos).is(BiomeTags.HAS_DESERT_PYRAMID) && !nearWater(pLevel, pPos)) {
+            pLevel.setBlock(pPos, Blocks.DEAD_BUSH.defaultBlockState(), Block.UPDATE_ALL);
             ci.cancel();
         }
     }

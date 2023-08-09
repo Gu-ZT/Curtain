@@ -105,7 +105,6 @@ public class MenuHelper {
         for (String s : suggestion) {
             if (replaceQuotation(s).equals(value)) continue;
             main.append(" ");
-
             MutableComponent x = new TextComponent("[%s]".formatted(replaceQuotation(s)))
                     .withStyle(rule.isDefault(replaceQuotation(s)) ? ChatFormatting.DARK_GREEN : ChatFormatting.YELLOW);
 
