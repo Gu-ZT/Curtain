@@ -25,7 +25,7 @@ public abstract class ChickenEntityMixin extends Animal {
     public @NotNull InteractionResult interactAt(@NotNull Player pPlayer, @NotNull Vec3 pVec, @NotNull InteractionHand pHand) {
         ItemStack stack = pPlayer.getItemInHand(pHand);
         if (CurtainRules.chickenShearing && stack.getItem() == Items.SHEARS && !this.isBaby()) {
-            boolean tookDamage = this.hurt(pPlayer.level().damageSources().generic(), 1);
+            boolean tookDamage = this.hurt(pPlayer.level.damageSources().generic(), 1);
             if (tookDamage) {
                 this.spawnAtLocation(Items.FEATHER, 1);
                 stack.hurtAndBreak(1, (LivingEntity) pPlayer, ((entity) -> pPlayer.broadcastBreakEvent(pHand)));

@@ -38,13 +38,13 @@ public class RuleCommand {
 
     private static int showMenu(@NotNull CommandContext<CommandSourceStack> context) {
         Component component = MenuHelper.main();
-        context.getSource().sendSuccess(() -> component, false);
+        context.getSource().sendSuccess(component, false);
         return 1;
     }
 
     private static int showCategory(@NotNull CommandContext<CommandSourceStack> context) {
         Component component = MenuHelper.category(context.getArgument("name", String.class));
-        context.getSource().sendSuccess(() -> component, false);
+        context.getSource().sendSuccess(component, false);
         return 1;
     }
 
@@ -88,7 +88,7 @@ public class RuleCommand {
     }
 
     private static int getValue(@NotNull CommandContext<CommandSourceStack> context, CurtainRule<?> rule) {
-        context.getSource().sendSuccess(() -> MenuHelper.rule(rule), false);
+        context.getSource().sendSuccess(MenuHelper.rule(rule), false);
         return 1;
     }
 
@@ -103,7 +103,7 @@ public class RuleCommand {
             Curtain.rules.setDefault(rule.getNormalName());
             Curtain.rules.saveToFile();
             context.getSource().sendSuccess(
-                    () -> TranslationHelper.translate(CHANGE_DEFAULT, ruleName, obj).withStyle(ChatFormatting.GRAY),
+                    TranslationHelper.translate(CHANGE_DEFAULT, ruleName, obj).withStyle(ChatFormatting.GRAY),
                     false
             );
         } else {
@@ -119,7 +119,7 @@ public class RuleCommand {
                                     .withStyle(ChatFormatting.DARK_GREEN)
                                     .withStyle(style)
                     );
-            context.getSource().sendSuccess(() -> component, false);
+            context.getSource().sendSuccess(component, false);
             return 0;
         }
         return 1;

@@ -75,7 +75,7 @@ public class FakePlayerResident {
         double pos_z = player.getZ();
         double yaw = player.getYRot();
         double pitch = player.getXRot();
-        String dimension = player.level().dimension().location().getPath();
+        String dimension = player.level.dimension().location().getPath();
         String gamemode = ((ServerPlayer) player).gameMode.getGameModeForPlayer().getName();
         boolean flying = player.getAbilities().flying;
         JsonObject fakePlayer = new JsonObject();

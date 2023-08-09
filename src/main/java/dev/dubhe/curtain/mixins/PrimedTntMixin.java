@@ -60,11 +60,11 @@ public abstract class PrimedTntMixin extends Entity implements TntEntityInterfac
     @Inject(method = "explode", at = @At(value = "HEAD"))
     private void onExplode(CallbackInfo ci) {
         if (logHelper != null) {
-            logHelper.onExploded(getX(), getY(), getZ(), this.level().getGameTime());
+            logHelper.onExploded(getX(), getY(), getZ(), this.level.getGameTime());
         }
         if (mergedTNT > 1) {
             for (int i = 0; i < mergedTNT - 1; i++) {
-                this.level().explode(this, this.getX(), this.getY() + (double) (this.getBbHeight() / 16.0F),
+                this.level.explode(this, this.getX(), this.getY() + (double) (this.getBbHeight() / 16.0F),
                         this.getZ(),
                         4.0F,
                         Level.ExplosionInteraction.TNT);
@@ -84,9 +84,9 @@ public abstract class PrimedTntMixin extends Entity implements TntEntityInterfac
         // Merge code for combining tnt into a single entity if they happen to exist in the same spot, same fuse, no motion CARPET-XCOM
         if (CurtainRules.mergeTNT) {
             Vec3 velocity = getDeltaMovement();
-            if (!level().isClientSide && mergeBool && velocity.x == 0 && velocity.y == 0 && velocity.z == 0) {
+            if (!level.isClientSide && mergeBool && velocity.x == 0 && velocity.y == 0 && velocity.z == 0) {
                 mergeBool = false;
-                for (Entity entity : level().getEntities(this, this.getBoundingBox())) {
+                for (Entity entity : level.getEntities(this, this.getBoundingBox())) {
                     if (entity instanceof PrimedTnt && !entity.isRemoved()) {
                         PrimedTnt entityTNTPrimed = (PrimedTnt) entity;
                         Vec3 tntVelocity = entityTNTPrimed.getDeltaMovement();
@@ -106,7 +106,7 @@ public abstract class PrimedTntMixin extends Entity implements TntEntityInterfac
     private void setMergeable(CallbackInfo ci) {
         // Merge code, merge only tnt that have had a chance to move CARPET-XCOM
         Vec3 velocity = getDeltaMovement();
-        if (!level().isClientSide && (velocity.y != 0 || velocity.x != 0 || velocity.z != 0)) {
+        if (!level.isClientSide && (velocity.y != 0 || velocity.x != 0 || velocity.z != 0)) {
             mergeBool = true;
         }
     }

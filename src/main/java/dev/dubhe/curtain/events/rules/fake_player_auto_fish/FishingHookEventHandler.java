@@ -19,7 +19,7 @@ public class FishingHookEventHandler {
         Player player = event.getOwner();
         if (CurtainRules.fakePlayerAutoFish && player instanceof EntityPlayerMPFake fake) {
             EntityPlayerActionPack ap = ((IServerPlayer) fake).getActionPack();
-            long time = player.level().getGameTime();
+            long time = player.level.getGameTime();
             PlanExecution plans = Curtain.planExecution;
             if (null != plans) {
                 plans.post(time + 5, time1 -> ap.start(ActionType.USE, Action.once()));

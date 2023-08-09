@@ -33,7 +33,7 @@ public abstract class FenceGateBlockMixin {
     @Inject(method = "getStateForPlacement", at = @At(value = "RETURN"), cancellable = true)
     private void getStateForPlacement(BlockPlaceContext context, CallbackInfoReturnable<BlockState> cir) {
         Level level = context.getLevel();
-        BlockPos blockPos = context.hitResult.getBlockPos();
+        BlockPos blockPos = context.getClickedPos();
         BlockState blockState = level.getBlockState(blockPos);
         if (CurtainRules.betterFenceGatePlacement && level.getBlockState(blockPos).getBlock() instanceof FenceGateBlock) {
             boolean bl = level.hasNeighborSignal(blockPos) || blockState.getValue(OPEN);
