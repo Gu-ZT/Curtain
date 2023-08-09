@@ -48,7 +48,7 @@ jobs:
       matrix:
         java: [ 17 ]
         os: [ ubuntu-latest ]
-        branch: [ 1.20.1, 1.19.4, 1.19.2, 1.18.2, 1.16.5, 1.18-NetEase, 1.16-NetEase ]
+        branch: [ 1.20.1, 1.19.4, 1.19.2, 1.18.2, 1.16.5]
     runs-on: ${{ matrix.os }}
 
     steps:
