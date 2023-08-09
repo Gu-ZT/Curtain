@@ -2,7 +2,6 @@ package dev.dubhe.curtain.events.rules.open_fake_player_inventory;
 
 import dev.dubhe.curtain.CurtainRules;
 import dev.dubhe.curtain.features.player.patches.EntityPlayerMPFake;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.ChestContainer;
 import net.minecraft.inventory.container.SimpleNamedContainerProvider;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;

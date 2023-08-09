@@ -10,7 +10,9 @@ import dev.dubhe.curtain.features.player.fakes.IServerPlayer;
 import dev.dubhe.curtain.features.player.helpers.EntityPlayerActionPack;
 import dev.dubhe.curtain.utils.TranslationHelper;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.Style;
@@ -44,6 +46,7 @@ public class FakePlayerInventoryMenu extends CustomMenu {
     public int getContainerSize() {
         return this.items.size() + this.armor.size() + this.offhand.size() + this.buttons.size();
     }
+
 
     @Override
     public boolean isEmpty() {
@@ -118,14 +121,9 @@ public class FakePlayerInventoryMenu extends CustomMenu {
             slot = pair.getSecond();
         }
         if (list != null && !list.get(slot).isEmpty()) {
-            return removeItem(list, slot, amount);
+            return ItemStackHelper.removeItem(list, slot, amount);
         }
         return ItemStack.EMPTY;
-    }
-
-
-    public static ItemStack removeItem(List<ItemStack> pStacks, int pIndex, int pAmount) {
-        return pIndex >= 0 && pIndex < pStacks.size() && !pStacks.get(pIndex).isEmpty() && pAmount > 0 ? pStacks.get(pIndex).split(pAmount) : ItemStack.EMPTY;
     }
 
     @Override

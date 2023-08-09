@@ -176,7 +176,6 @@ public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
     public String[] getCategories() {
         return categories;
     }
-
     public IFormattableTextComponent getNameComponent() {
         return TranslationHelper.translate(this.getNameTranslationKey());
     }
