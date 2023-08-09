@@ -371,7 +371,8 @@ public class CurtainRules {
     public static boolean chickenShearing = false;
 
     @Rule(
-            categories = {CREATIVE, SURVIVAL}
+            categories = {SURVIVAL},
+            suggestions = {"0", "50", "100"}
     )
-    public static boolean antiCheatDisabled = false;
+    public static int playersSleepingPercentage = 100;
 }
