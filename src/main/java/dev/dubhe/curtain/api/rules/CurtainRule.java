@@ -14,11 +14,11 @@ import net.minecraft.command.CommandSource;
 import net.minecraft.command.ISuggestionProvider;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextComponent;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -46,8 +46,8 @@ public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
         this.validators = validators;
         this.suggestions = field.getType() == boolean.class || field.getType() == Boolean.class ? new String[]{"true", "false"} : suggestions;
         this.field = field;
-        nameTranslationKey = RULE_NAME.formatted(Curtain.MODID, serializedName);
-        descTranslationKey = RULE_DESC.formatted(Curtain.MODID, serializedName);
+        nameTranslationKey = String.format(RULE_NAME, Curtain.MODID, serializedName);
+        descTranslationKey = String.format(RULE_DESC, Curtain.MODID, serializedName);
         try {
             this.defaultValue = (T) field.get(null);
         } catch (IllegalAccessException e) {
@@ -152,7 +152,7 @@ public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
             return (T) (Float) Float.parseFloat(str);
         else if (this.field.getType() == Double.class)
             return (T) (Double) Double.parseDouble(str);
-        else throw new CommandSyntaxException(this, new StringTextComponent("%s is not a legal value".formatted(str)));
+        else throw new CommandSyntaxException(this, new StringTextComponent(str + " is not a legal value"));
     }
 
     @Override
@@ -165,17 +165,18 @@ public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
         if (this.getType() == String.class) {
             ArrayList<String> rt = new ArrayList<>();
             for (String s : this.suggestions) {
-                rt.add("\"%s\"".formatted(s));
+                rt.add("\"" + s + "\"");
             }
             return rt;
         } else {
-            return List.of(this.suggestions);
+            return Arrays.asList(this.suggestions);
         }
     }
 
     public String[] getCategories() {
         return categories;
     }
+
     public IFormattableTextComponent getNameComponent() {
         return TranslationHelper.translate(this.getNameTranslationKey());
     }

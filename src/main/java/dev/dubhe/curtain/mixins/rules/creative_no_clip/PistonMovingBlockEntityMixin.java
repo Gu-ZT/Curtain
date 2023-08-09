@@ -27,15 +27,21 @@ public abstract class PistonMovingBlockEntityMixin {
 
     @Inject(method = "moveEntityByPiston", at = @At("HEAD"), cancellable = true)
     private static void dontPushSpectators(Direction direction, Entity entity, double d, Direction direction2, CallbackInfo ci) {
-        if (CurtainRules.creativeNoClip && entity instanceof PlayerEntity player && player.isCreative() && player.abilities.flying) {
-            ci.cancel();
+        if (entity instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) entity;
+            if (CurtainRules.creativeNoClip && player.isCreative() && player.abilities.flying) {
+                ci.cancel();
+            }
         }
     }
 
     @Redirect(method = "moveCollidedEntities", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;setDeltaMovement(DDD)V"))
     private void ignoreAccel(Entity entity, double x, double y, double z) {
-        if (CurtainRules.creativeNoClip && entity instanceof PlayerEntity player && player.isCreative() && player.abilities.flying) {
-            return;
+        if (entity instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) entity;
+            if (CurtainRules.creativeNoClip && player.isCreative() && player.abilities.flying) {
+                return;
+            }
         }
         entity.setDeltaMovement(x, y, z);
     }
@@ -55,9 +61,18 @@ public abstract class PistonMovingBlockEntityMixin {
             double z = vec3d.z;
             Direction direction = getMovementDirection();
             switch (direction.getAxis()) {
-                case X -> x = direction.getStepX();
-                case Y -> y = direction.getStepY();
-                case Z -> z = direction.getStepZ();
+                case X : {
+                    x = direction.getStepX();
+                    break;
+                }
+                case Y : {
+                    y = direction.getStepY();
+                    break;
+                }
+                case Z : {
+                    z = direction.getStepZ();
+                    break;
+                }
             }
 
             entity.setDeltaMovement(x, y, z);

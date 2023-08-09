@@ -163,8 +163,8 @@ public class OptimizedExplosion {
 
                         entity.setDeltaMovement(entity.getDeltaMovement().add(d5 * d11, d7 * d11, d9 * d11));
 
-                        if (entity instanceof PlayerEntity player) {
-
+                        if (entity instanceof PlayerEntity) {
+                            PlayerEntity player = (PlayerEntity) entity;
                             if (!player.isSpectator()
                                     && (!player.isCreative() || !player.abilities.flying)) {  //getAbilities
                                 e.getHitPlayers().put(player, new Vector3d(d5 * d10, d7 * d10, d9 * d10));

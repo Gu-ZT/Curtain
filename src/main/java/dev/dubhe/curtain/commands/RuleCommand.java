@@ -17,9 +17,8 @@ import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.TextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.ClickEvent;
-import static dev.dubhe.curtain.utils.TranslationKeys.AS_DEFAULT;
-import static dev.dubhe.curtain.utils.TranslationKeys.CHANGE;
-import static dev.dubhe.curtain.utils.TranslationKeys.CHANGE_DEFAULT;
+
+import static dev.dubhe.curtain.utils.TranslationKeys.*;
 import static net.minecraft.command.ISuggestionProvider.suggest;
 
 public class RuleCommand {
@@ -109,7 +108,7 @@ public class RuleCommand {
                                             .withColor(TextFormatting.DARK_GREEN)
                                             .withClickEvent(new ClickEvent(
                                                     ClickEvent.Action.SUGGEST_COMMAND,
-                                                    "/curtain setDefault %s %s".formatted(name, obj)
+                                                    String.format("/curtain setDefault %s %s", name, obj)
                                             )))
                     );
             context.getSource().sendSuccess(component, false);

@@ -19,7 +19,8 @@ public abstract class ShulkerBoxBlockEntityMixin {
             )
     )
     private PushReaction getPistonBehaviourOfNoClipPlayers(Entity entity) {
-        if (CurtainRules.creativeNoClip && entity instanceof PlayerEntity player && player.isCreative() && player.abilities.flying) {
+        if (CurtainRules.creativeNoClip && entity instanceof PlayerEntity && ((PlayerEntity) entity).isCreative() && ((PlayerEntity) entity).abilities.flying) {
+            PlayerEntity player = (PlayerEntity) entity;
             return PushReaction.IGNORE;
         }
         return entity.getPistonPushReaction();

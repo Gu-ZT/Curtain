@@ -25,7 +25,8 @@ public class ServerLifecycleEventHandler {
 
     @SubscribeEvent
     public void onServerTick(WorldTickEvent event) {
-        if (event.getWorld() instanceof ServerWorld level) {
+        if (event.getWorld() instanceof ServerWorld) {
+            ServerWorld level = (ServerWorld) event.getWorld();
             long time = level.getGameTime();
             if (Curtain.planExecution != null) {
                 Curtain.planExecution.execute(time);

@@ -103,14 +103,20 @@ public class Messenger {
     }
 
     public static String creatureTypeColor(EntityClassification type) {
-        return switch (type) {
-            case MONSTER -> "n";
-            case CREATURE -> "e";
-            case AMBIENT -> "f";
-            case WATER_CREATURE -> "v";
-            case WATER_AMBIENT -> "q";
-            default -> "w";
-        };
+        switch (type) {
+            case MONSTER:
+                return "n";
+            case CREATURE:
+                return "e";
+            case AMBIENT:
+                return "f";
+            case WATER_CREATURE:
+                return "v";
+            case WATER_AMBIENT:
+                return "q";
+            default:
+                return "w";
+        }
     }
 
     private static TextComponent _getChatComponentFromDesc(String message, TextComponent previous_message) {

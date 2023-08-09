@@ -35,7 +35,7 @@ public class CurtainRulesGenerator {
             String[] categories = rule.getCategories();
             StringBuilder category = new StringBuilder();
             for (String s : categories) {
-                category.append("`").append(TranslationHelper.translate("%s.categories.%s".formatted("curtain", s)).getString()).append("`").append(", ");
+                category.append("`").append(TranslationHelper.translate("curtain.categories." + s).getString()).append("`").append(", ");
             }
             str = category.toString();
             sb.append("        * 分类：").append(str, 0, str.length() - 2).append("\n");

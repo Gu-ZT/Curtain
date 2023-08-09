@@ -19,10 +19,10 @@ public class MemoryLogger extends AbstractHudLogger {
         long freeMemory = Runtime.getRuntime().freeMemory();
         long usedMemory = totalMemory - freeMemory;
         IFormattableTextComponent msg = new StringTextComponent("");
-        msg.append(new StringTextComponent("%.1f".formatted(usedMemory / 1024 / 1024f) + " M")
+        msg.append(new StringTextComponent(String.format("%.1f", usedMemory / 1024 / 1024f) + " M")
                 .withStyle(TextFormatting.GRAY));
         msg.append(new StringTextComponent(" / ").withStyle(TextFormatting.WHITE));
-        msg.append(new StringTextComponent("%.1f".formatted(totalMemory / 1024 / 1024f) + " M")
+        msg.append(new StringTextComponent(String.format("%.1f", totalMemory / 1024 / 1024f) + " M")
                 .withStyle(TextFormatting.GRAY));
         return msg;
     }

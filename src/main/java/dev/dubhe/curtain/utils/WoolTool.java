@@ -22,7 +22,7 @@ public class WoolTool {
      * to get the colour of wool at a position.
      */
     private static final Map<MaterialColor, DyeColor> Material2Dye = Arrays.stream(DyeColor.values())
-            .collect(Collectors.toUnmodifiableMap(DyeColor::getMaterialColor, Function.identity()));
+            .collect(Collectors.toMap(DyeColor::getMaterialColor, Function.identity()));
 
     /**
      * Gets the colour of wool at the position, for hoppers to be able to decide whether to add their items to the global counter.

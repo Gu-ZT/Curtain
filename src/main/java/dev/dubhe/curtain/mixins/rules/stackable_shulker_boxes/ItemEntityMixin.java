@@ -38,10 +38,11 @@ public abstract class ItemEntityMixin extends Entity implements ItemEntityInterf
 
     @Inject(method = "<init>(Lnet/minecraft/world/World;DDDLnet/minecraft/item/ItemStack;)V", at = @At("RETURN"))
     private void removeEmptyShulkerBoxTags(World worldIn, double x, double y, double z, ItemStack stack, CallbackInfo ci) {
-        if (CurtainRules.shulkerBoxStackSize > 1
-                && stack.getItem() instanceof BlockItem blockItem
-                && blockItem.getBlock() instanceof ShulkerBoxBlock) {
-            InventoryHelper.cleanUpShulkerBoxTag(stack);
+        if (stack.getItem() instanceof BlockItem) {
+            BlockItem blockItem = (BlockItem) stack.getItem();
+            if (CurtainRules.shulkerBoxStackSize > 1 && blockItem.getBlock() instanceof ShulkerBoxBlock) {
+                InventoryHelper.cleanUpShulkerBoxTag(stack);
+            }
         }
     }
 
@@ -53,10 +54,11 @@ public abstract class ItemEntityMixin extends Entity implements ItemEntityInterf
             )
     )
     private int getItemStackMaxAmount(ItemStack stack) {
-        if (CurtainRules.shulkerBoxStackSize > 1
-                && stack.getItem() instanceof BlockItem blockItem
-                && blockItem.getBlock() instanceof ShulkerBoxBlock) {
-            return CurtainRules.shulkerBoxStackSize;
+        if (stack.getItem() instanceof BlockItem) {
+            BlockItem blockItem = (BlockItem) stack.getItem();
+            if (CurtainRules.shulkerBoxStackSize > 1 && blockItem.getBlock() instanceof ShulkerBoxBlock) {
+                return CurtainRules.shulkerBoxStackSize;
+            }
         }
         return stack.getMaxStackSize();
     }
@@ -69,10 +71,11 @@ public abstract class ItemEntityMixin extends Entity implements ItemEntityInterf
     private void tryStackShulkerBoxes(ItemEntity other, CallbackInfo ci) {
         ItemEntity self = (ItemEntity) (Object) this;
         ItemStack selfStack = self.getItem();
-        if (CurtainRules.shulkerBoxStackSize == 1
-                || !(selfStack.getItem() instanceof BlockItem blockItem)
-                || !(blockItem.getBlock() instanceof ShulkerBoxBlock)) {
-            return;
+        if (selfStack.getItem() instanceof BlockItem) {
+            BlockItem blockItem = (BlockItem) selfStack.getItem();
+            if (CurtainRules.shulkerBoxStackSize == 1 || !(blockItem.getBlock() instanceof ShulkerBoxBlock)) {
+                return;
+            }
         }
 
         ItemStack otherStack = other.getItem();

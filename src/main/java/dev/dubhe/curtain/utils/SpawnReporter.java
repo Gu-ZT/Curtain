@@ -198,14 +198,20 @@ public class SpawnReporter {
     }
 
     public static EntityClassification get_type_code_from_wool_code(DyeColor color) {
-        return switch (color) {
-            case RED -> MONSTER;
-            case GREEN -> CREATURE;
-            case BLUE -> WATER_CREATURE;
-            case BROWN -> AMBIENT;
-            case CYAN -> WATER_AMBIENT;
-            default -> null;
-        };
+        switch (color) {
+            case RED:
+                return MONSTER;
+            case GREEN:
+                return CREATURE;
+            case BLUE:
+                return WATER_CREATURE;
+            case BROWN:
+                return AMBIENT;
+            case CYAN:
+                return WATER_AMBIENT;
+            default:
+                return null;
+        }
     }
 
     public static List<ITextComponent> printEntitiesByType(EntityClassification cat, World worldIn, boolean all) //Class<?> entityType)

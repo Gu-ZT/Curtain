@@ -87,23 +87,31 @@ public class RuleManager {
         for (String name : defaultRuleMap.keySet()) {
             CurtainRule<?> rule = defaultRuleMap.get(name);
             Object value = rule.getValue();
-            if (value instanceof String str)
+            if (value instanceof String) {
+                String str = (String) value;
                 object.addProperty(name, str);
-            else if (value instanceof Boolean bool)
+            } else if (value instanceof Boolean) {
+                Boolean bool = (Boolean) value;
                 object.addProperty(name, bool);
-            else if (value instanceof Byte num)
+            } else if (value instanceof Byte) {
+                Byte num = (Byte) value;
                 object.addProperty(name, num);
-            else if (value instanceof Short num)
+            } else if (value instanceof Short) {
+                Short num = (Short) value;
                 object.addProperty(name, num);
-            else if (value instanceof Integer num)
+            } else if (value instanceof Integer) {
+                Integer num = (Integer) value;
                 object.addProperty(name, num);
-            else if (value instanceof Long num)
+            } else if (value instanceof Long) {
+                Long num = (Long) value;
                 object.addProperty(name, num);
-            else if (value instanceof Float num)
+            } else if (value instanceof Float) {
+                Float num = (Float) value;
                 object.addProperty(name, num);
-            else if (value instanceof Double num)
+            } else if (value instanceof Double) {
+                Double num = (Double) value;
                 object.addProperty(name, num);
-            else
+            } else
                 throw RuleException.type();
         }
         try (FileWriter writer = new FileWriter(this.getFile())) {

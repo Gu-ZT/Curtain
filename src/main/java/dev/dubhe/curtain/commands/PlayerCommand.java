@@ -39,6 +39,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import static net.minecraft.command.Commands.argument;
 import static net.minecraft.command.Commands.literal;
@@ -49,7 +50,7 @@ public class PlayerCommand {
     public static void register(CommandDispatcher<CommandSource> dispatcher) {
         final String[] gamemodes = Arrays.stream(GameType.values())
                 .map(GameType::getName)
-                .toList()
+                .collect(Collectors.toList())
                 .toArray(new String[]{});
         LiteralArgumentBuilder<CommandSource> builder = literal("player")
                 .requires((player) -> CommandHelper.canUseCommand(player, CurtainRules.commandPlayer))
