@@ -35,6 +35,7 @@
     "rules.ctrl_q_crafting_fix.AbstractContainerMenuMixin",
     "rules.custom_motd.ServerStatusMixin",
     "rules.desert_shrubs.SaplingBlockMixin",
+    "rules.empty_shulker_box_stack_always.ItemStackMixin",
     "rules.farmland_trampled_disabled.FarmBlockMixin",
     "rules.open_fake_player_inventory.AbstractContainerMenuMixin",
     "rules.optimized_tnt.ExplosionMixin",

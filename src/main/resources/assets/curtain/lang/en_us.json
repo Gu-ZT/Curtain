@@ -147,5 +147,11 @@
   "curtain.rules.fake_player_auto_replenishment.desc": "Make fake player to auto replenishment",
 
   "curtain.rules.fake_player_auto_replace_tool.name": "Fake Player Auto Replace Tool",
-  "curtain.rules.fake_player_auto_replace_tool.desc": "Make fake player to auto replace almost damaged tool"
+  "curtain.rules.fake_player_auto_replace_tool.desc": "Make fake player to auto replace almost damaged tool",
+
+  "curtain.rules.block_placement_ignore_entity.name": "Block Placement Ignore Entity",
+  "curtain.rules.block_placement_ignore_entity.desc": "Disable entity collision check before block placement, aka you can place blocks inside entities",
+
+  "curtain.rules.empty_shulker_box_stack_always.name": "Empty Shulker Box Stack Always",
+  "curtain.rules.empty_shulker_box_stack_always.desc": "Empty Shulker Boxes will always stack, even inside inventories."
 }

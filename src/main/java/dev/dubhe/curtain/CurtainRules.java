@@ -365,4 +365,9 @@ public class CurtainRules {
             categories = {CREATIVE, SURVIVAL}
     )
     public static boolean blockPlacementIgnoreEntity = false;
+
+    @Rule(
+            categories = FEATURE
+    )
+    public static boolean emptyShulkerBoxStackAlways = false;
 }
