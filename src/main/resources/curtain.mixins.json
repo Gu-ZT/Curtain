@@ -26,6 +26,7 @@
     "rules.cactus.LevelMixin",
     "rules.cactus.ServerPlayerGameModeMixin",
     "rules.cactus.UseOnContextMixin",
+    "rules.chicken_shearing.ChickenEntityMixin",
     "rules.creative_no_clip.BlockItemMixin",
     "rules.creative_no_clip.PistonMovingBlockEntityMixin",
     "rules.creative_no_clip.PlayerMixin",

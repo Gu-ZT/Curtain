@@ -153,5 +153,8 @@
   "curtain.rules.block_placement_ignore_entity.desc": "Disable entity collision check before block placement, aka you can place blocks inside entities",
 
   "curtain.rules.empty_shulker_box_stack_always.name": "Empty Shulker Box Stack Always",
-  "curtain.rules.empty_shulker_box_stack_always.desc": "Empty Shulker Boxes will always stack, even inside inventories."
+  "curtain.rules.empty_shulker_box_stack_always.desc": "Empty Shulker Boxes will always stack, even inside inventories.",
+
+  "curtain.rules.chicken_shearing.name": "Chicken Shearing",
+  "curtain.rules.chicken_shearing.desc": "Chickens can be sheared to get feathers. Beware! every time u shear a chicken, it gets damaged!"
 }
