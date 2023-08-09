@@ -380,4 +380,9 @@ public class CurtainRules {
             categories = {CREATIVE, SURVIVAL}
     )
     public static boolean antiCheatDisabled = false;
+
+    @Rule(
+            categories = SURVIVAL
+    )
+    public static boolean betterSignEditing = false;
 }

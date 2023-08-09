@@ -20,6 +20,7 @@
     "events.item_stack.PickaxeItemMixin",
     "rules.anti_cheat_disabled.PlayerMixin",
     "rules.anti_cheat_disabled.ServerGamePacketListenerImplMixin",
+    "rules.better_sign_editing.SignBlockMixin",
     "rules.better_sign_interaction.SignBlockMixin",
     "rules.better_wood_strip.AxeItemMixin",
     "rules.block_placement_ignore_entity.BlockItemMixin",
