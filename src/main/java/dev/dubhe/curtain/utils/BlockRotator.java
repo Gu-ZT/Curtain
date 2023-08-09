@@ -236,12 +236,7 @@ public class BlockRotator {
     }
 
     public static boolean flippinEligibility(Entity entity) {
-        if (CurtainRules.flippingCactus)
-            if (entity instanceof PlayerEntity) {
-                PlayerEntity p = (PlayerEntity) entity;
-                return p.getOffhandItem().getItem() == Items.CACTUS;
-            }
-        return false;
+        return CurtainRules.flippingCactus && entity instanceof PlayerEntity && ((PlayerEntity) entity).getOffhandItem().getItem() == Items.CACTUS;
     }
 
     public static class CactusDispenserBehaviour extends OptionalDispenseBehavior implements IDispenseItemBehavior {

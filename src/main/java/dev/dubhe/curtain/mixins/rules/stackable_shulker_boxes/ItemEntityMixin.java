@@ -72,6 +72,7 @@ public abstract class ItemEntityMixin extends Entity implements ItemEntityInterf
         if (CurtainRules.shulkerBoxStackSize == 1
                 || !(selfStack.getItem() instanceof BlockItem)
                 || !(((BlockItem) selfStack.getItem()).getBlock() instanceof ShulkerBoxBlock)) {
+            return;
         }
 
         ItemStack otherStack = other.getItem();

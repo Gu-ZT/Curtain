@@ -254,7 +254,6 @@ public class FakePlayerInventoryMenu extends CustomMenu {
             attackContinuous.turnOffWithoutFunction();
         });
         attackInterval14.addTurnOffFunction(() -> ap.start(EntityPlayerActionPack.ActionType.ATTACK, EntityPlayerActionPack.Action.once()));
-
         attackContinuous.addTurnOnFunction(() -> {
             ap.start(EntityPlayerActionPack.ActionType.ATTACK, EntityPlayerActionPack.Action.continuous());
             attackInterval14.turnOffWithoutFunction();
