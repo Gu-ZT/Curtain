@@ -7,7 +7,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.PrimedTnt;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
@@ -68,7 +67,7 @@ public abstract class PrimedTntMixin extends Entity implements TntEntityInterfac
                 this.level.explode(this, this.getX(), this.getY() + (double) (this.getBbHeight() / 16.0F),
                         this.getZ(),
                         4.0F,
-                        Explosion.BlockInteraction.DESTROY);
+                        Level.ExplosionInteraction.TNT);
             }
         }
     }

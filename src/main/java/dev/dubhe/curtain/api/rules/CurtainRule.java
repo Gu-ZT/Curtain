@@ -37,7 +37,6 @@ public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
     private final String descTranslationKey;
 
     private CurtainRule(String[] categories, List<IValidator<T>> validators, String[] suggestions, Field field) {
-
         this(categories, validators, suggestions, field, CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, field.getName()));
     }
 
@@ -45,7 +44,7 @@ public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
     private CurtainRule(String[] categories, List<IValidator<T>> validators, String[] suggestions, Field field, String serializedName) {
         this.categories = categories;
         this.validators = validators;
-        this.suggestions = suggestions;
+        this.suggestions = field.getType() == boolean.class || field.getType() == Boolean.class ? new String[]{"true", "false"} : suggestions;
         this.field = field;
         nameTranslationKey = RULE_NAME.formatted(Curtain.MODID, serializedName);
         descTranslationKey = RULE_DESC.formatted(Curtain.MODID, serializedName);

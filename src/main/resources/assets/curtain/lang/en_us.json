@@ -15,6 +15,7 @@
   "curtain.categories.bugfix": "BUGFIX",
   "curtain.categories.client": "CLIENT",
   "curtain.categories.tnt": "TNT",
+  "curtain.categories.bot": "BOT",
 
   "curtain.rules.language.name": "Language",
   "curtain.rules.language.desc": "The Language of Curtain.",
@@ -88,45 +89,75 @@
   "curtain.rules.creative_no_clip.name": "Creative No Clip",
   "curtain.rules.creative_no_clip.desc": "On servers it needs to be set on both\nclient and server to function properly.\nHas no effect when set on the server only\nCan allow to phase through walls\nif only set on the carpet client side\nbut requires some trapdoor magic to\nallow the player to enter blocks",
 
-  "curtain.rules.optimized_tnt.name": "optimizedTNT",
+  "curtain.rules.optimized_tnt.name": "Optimized TNT",
   "curtain.rules.optimized_tnt.desc": "TNT causes less lag when exploding in the same spot and in liquids",
 
   "curtain.rules.tnt_random_range.name": "TNT Random Range",
   "curtain.rules.tnt_random_range.desc": "Sets the tnt random explosion range to a fixed value\nSet to -1 for default behavior",
 
-  "curtain.rules.tnt_primer_momentum_removed.name": "tntPrimerMomentumRemoved",
+  "curtain.rules.tnt_primer_momentum_removed.name": "TNT Primer Momentum Removed",
   "curtain.rules.tnt_primer_momentum_removed.desc": "Removes random TNT momentum when primed",
 
-  "curtain.rules.hardcode_tnt_angle.name": "hardcodeTNTangle",
+  "curtain.rules.hardcode_tnt_angle.name": "Hardcode TNT angle",
   "curtain.rules.hardcode_tnt_angle.desc": "Sets the horizontal random angle on TNT for debugging of TNT contraptions\nSet to -1 for default behavior",
 
-  "curtain.rules.merge_tnt.name": "mergeTNT",
+  "curtain.rules.merge_tnt.name": "Merge TNT",
   "curtain.rules.merge_tnt.desc": "Merges stationary primed TNT entities",
 
-  "curtain.rules.ctrl_q_crafting_fix.name": "ctrlQCraftingFix",
+  "curtain.rules.ctrl_q_crafting_fix.name": "Ctrl+Q Crafting Fix",
   "curtain.rules.ctrl_q_crafting_fix.desc": "Dropping entire stacks works also from on the crafting UI result slot",
 
-  "curtain.rules.quick_leaf_decay.name": "quickLeafDecay",
+  "curtain.rules.quick_leaf_decay.name": "Quick Leaf Decay",
   "curtain.rules.quick_leaf_decay.desc": "Leaves fall off quickly after cutting down a tree",
 
-  "curtain.rules.custom_motd.name": "customMOTD",
+  "curtain.rules.custom_motd.name": "Custom MOTD",
   "curtain.rules.custom_motd.desc": "Sets a different motd message on client trying to connect to the server\nuse '_' to use the startup setting from server.properties",
 
-  "curtain.rules.turtle_egg_trampled_disabled.name": "turtleEggTrampledDisabled",
+  "curtain.rules.turtle_egg_trampled_disabled.name": "Turtle Egg Trampled Disabled",
   "curtain.rules.turtle_egg_trampled_disabled.desc": "Stopping turtle eggs from being destroyed by physical trampling",
 
-  "curtain.rules.farmland_trampled_disabled.name": "FarmlandTrampledDisabled",
+  "curtain.rules.farmland_trampled_disabled.name": "Farmland Trampled Disabled",
   "curtain.rules.farmland_trampled_disabled.desc": "Stopping farmlands from being destroyed by physical trampling",
 
-  "curtain.rules.fake_player_name_prefix.name": "fakePlayerNamePrefix",
+  "curtain.rules.fake_player_name_prefix.name": "Fake Player Name Prefix",
   "curtain.rules.fake_player_name_prefix.desc": "Add the specified prefix to the name of the fake player summoned by the /player command",
 
-  "curtain.rules.fake_player_name_suffix.name": "fakePlayerNameSuffix",
+  "curtain.rules.fake_player_name_suffix.name": "Fake Player Name Suffix",
   "curtain.rules.fake_player_name_suffix.desc": "Add the specified prefix to the name of the fake player summoned by the /player command",
 
-  "curtain.rules.scaffolding_distance.name": "scaffoldingDistance",
+  "curtain.rules.scaffolding_distance.name": "Scaffolding Distance",
   "curtain.rules.scaffolding_distance.desc": "Max distance for scaffolding.",
 
   "curtain.rules.fake_player_auto_fish.name": "fakePlayerAutoFish",
-  "curtain.rules.fake_player_auto_fish.desc": "Make fake player to auto fish."
+  "curtain.rules.fake_player_auto_fish.desc": "Make fake player to auto fish.",
+
+  "curtain.rules.better_sign_interaction.name": "Better Sign Interaction",
+  "curtain.rules.better_sign_interaction.desc": "Only the axe with \"Strip\" in its name is allowed to peel logs",
+
+  "curtain.rules.better_wood_strip.name": "Better Wood Strip",
+  "curtain.rules.better_wood_strip.desc": "Make the block attached to the sign interact when you right-click it",
+
+  "curtain.rules.better_fence_gate_placement.name": "Better Fence Gate Placement",
+  "curtain.rules.better_fence_gate_placement.desc": "Make the placed fence gate have the same block status as the fence gate you clicked",
+
+  "curtain.rules.fake_player_resident.name": "Fake Player Resident",
+  "curtain.rules.fake_player_resident.desc": "Keep the fake player when exiting the level",
+
+  "curtain.rules.fake_player_auto_replenishment.name": "Fake Player Auto Replenishment",
+  "curtain.rules.fake_player_auto_replenishment.desc": "Make fake player to auto replenishment",
+
+  "curtain.rules.fake_player_auto_replace_tool.name": "Fake Player Auto Replace Tool",
+  "curtain.rules.fake_player_auto_replace_tool.desc": "Make fake player to auto replace almost damaged tool",
+
+  "curtain.rules.block_placement_ignore_entity.name": "Block Placement Ignore Entity",
+  "curtain.rules.block_placement_ignore_entity.desc": "Disable entity collision check before block placement, aka you can place blocks inside entities",
+
+  "curtain.rules.empty_shulker_box_stack_always.name": "Empty Shulker Box Stack Always",
+  "curtain.rules.empty_shulker_box_stack_always.desc": "Empty Shulker Boxes will always stack, even inside inventories.",
+
+  "curtain.rules.chicken_shearing.name": "Chicken Shearing",
+  "curtain.rules.chicken_shearing.desc": "Chickens can be sheared to get feathers. Beware! every time u shear a chicken, it gets damaged!",
+
+  "curtain.rules.anti_cheat_disabled.name": "AntiCheatDisabled",
+  "curtain.rules.anti_cheat_disabled.desc": "Prevents players from rubberbanding when moving too fast"
 }
