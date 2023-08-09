@@ -5,7 +5,6 @@ import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2LongMap;
 import it.unimi.dsi.fastutil.objects.Object2LongOpenHashMap;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
@@ -333,8 +332,8 @@ public class SpawnReporter {
         entity.discard();
     }
 
-    private static List<MobSpawnSettings.SpawnerData> getSpawnEntries(ServerLevel serverLevel, StructureFeatureManager structureManager, ChunkGenerator chunkGenerator, MobCategory mobCategory, BlockPos blockPos, @Nullable Holder<Biome> holder) {
-        return NaturalSpawner.isInNetherFortressBounds(blockPos, serverLevel, mobCategory, structureManager) ? NetherFortressFeature.FORTRESS_ENEMIES.unwrap() : chunkGenerator.getMobsAt(holder != null ? holder : serverLevel.getBiome(blockPos), structureManager, mobCategory, blockPos).unwrap();
+    private static List<MobSpawnSettings.SpawnerData> getSpawnEntries(ServerLevel serverLevel, StructureFeatureManager structureManager, ChunkGenerator chunkGenerator, MobCategory mobCategory, BlockPos blockPos, @Nullable Biome biome) {
+        return NaturalSpawner.isInNetherFortressBounds(blockPos, serverLevel, mobCategory, structureManager) ? NetherFortressFeature.FORTRESS_ENEMIES.unwrap() : chunkGenerator.getMobsAt(biome != null ? biome : serverLevel.getBiome(blockPos), structureManager, mobCategory, blockPos).unwrap();
     }
 
     public static List<Component> report(BlockPos pos, ServerLevel worldIn) {

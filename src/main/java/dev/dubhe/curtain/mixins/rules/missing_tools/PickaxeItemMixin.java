@@ -1,7 +1,7 @@
 package dev.dubhe.curtain.mixins.rules.missing_tools;
 
 import dev.dubhe.curtain.CurtainRules;
-import net.minecraft.tags.TagKey;
+import net.minecraft.tags.Tag;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(PickaxeItem.class)
 public abstract class PickaxeItemMixin extends DiggerItem {
-    protected PickaxeItemMixin(float attackDamage, float attackSpeed, Tier material, TagKey<Block> tag, Item.Properties settings) {
+    protected PickaxeItemMixin(float attackDamage, float attackSpeed, Tier material, Tag<Block> tag, Item.Properties settings) {
         super(attackDamage, attackSpeed, material, tag, settings);
     }
 

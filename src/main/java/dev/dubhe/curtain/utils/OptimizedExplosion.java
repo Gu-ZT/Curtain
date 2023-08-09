@@ -8,6 +8,7 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -462,16 +463,16 @@ public class OptimizedExplosion {
 
     private static void blastCalc(Explosion e) {
         ExplosionAccessor eAccess = (ExplosionAccessor) e;
-        if (blastChanceLocation == null || blastChanceLocation.distToLowCornerSqr(eAccess.getX(), eAccess.getY(), eAccess.getZ()) > 200)
+        if (blastChanceLocation == null || blastChanceLocation.distSqr(new Vec3i(eAccess.getX(), eAccess.getY(), eAccess.getZ())) > 200)
             return;
         chances.clear();
         for (int j = 0; j < 16; ++j) {
             for (int k = 0; k < 16; ++k) {
                 for (int l = 0; l < 16; ++l) {
                     if (j == 0 || j == 15 || k == 0 || k == 15 || l == 0 || l == 15) {
-                        double d0 = (double) ((float) j / 15.0F * 2.0F - 1.0F);
-                        double d1 = (double) ((float) k / 15.0F * 2.0F - 1.0F);
-                        double d2 = (double) ((float) l / 15.0F * 2.0F - 1.0F);
+                        double d0 = (float) j / 15.0F * 2.0F - 1.0F;
+                        double d1 = (float) k / 15.0F * 2.0F - 1.0F;
+                        double d2 = (float) l / 15.0F * 2.0F - 1.0F;
                         double d3 = Math.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
                         d0 = d0 / d3;
                         d1 = d1 / d3;
