@@ -2,18 +2,13 @@ package dev.dubhe.curtain.mixins;
 
 import dev.dubhe.curtain.utils.SpawnReporter;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.NaturalSpawner;
-import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.LevelChunk;
 import org.apache.commons.lang3.tuple.Pair;
@@ -51,26 +46,19 @@ public abstract class NaturalSpawnerMixin {
             world.addFreshEntityWithPassengers(entity_1);
         }
     }
-
-    @Redirect(method = "spawnCategoryForPosition(Lnet/minecraft/world/entity/MobCategory;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/level/chunk/ChunkAccess;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/NaturalSpawner$SpawnPredicate;Lnet/minecraft/world/level/NaturalSpawner$AfterSpawnCallback;)V",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/world/entity/Mob;finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/MobSpawnType;Lnet/minecraft/world/entity/SpawnGroupData;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/entity/SpawnGroupData;"
-            )
-    )
-    private static SpawnGroupData spawnEntity(
-            Mob mobEntity,
-            ServerLevelAccessor serverWorldAccess,
-            DifficultyInstance difficulty,
-            MobSpawnType spawnReason,
-            SpawnGroupData entityData,
-            CompoundTag entityTag
-    ) {
-        if (!SpawnReporter.mock_spawns) {
-            return mobEntity.finalizeSpawn(serverWorldAccess, difficulty, spawnReason, entityData, entityTag);
-        }
-        return null;
-    }
+    // TODO：Mixin 失效，不会修
+//    @Redirect(
+//            method = "spawnCategoryForPosition(Lnet/minecraft/world/entity/MobCategory;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/level/chunk/ChunkAccess;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/NaturalSpawner$SpawnPredicate;Lnet/minecraft/world/level/NaturalSpawner$AfterSpawnCallback;)V",
+//            at = @At(
+//                    value = "INVOKE",
+//                    target = "Lnet/minecraft/world/entity/Mob;finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/MobSpawnType;Lnet/minecraft/world/entity/SpawnGroupData;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/entity/SpawnGroupData;"
+//            )
+//    )
+//    private static SpawnGroupData spawnEntity(Mob mobEntity, ServerLevelAccessor serverWorldAccess, DifficultyInstance difficulty, MobSpawnType spawnReason, SpawnGroupData entityData, CompoundTag entityTag) {
+//        if (!SpawnReporter.mock_spawns) // WorldAccess
+//            return mobEntity.finalizeSpawn(serverWorldAccess, difficulty, spawnReason, entityData, entityTag);
+//        return null;
+//    }
 
     @Redirect(method = "spawnForChunk",
             at = @At(

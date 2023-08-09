@@ -1,12 +1,7 @@
 package dev.dubhe.curtain.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.ArgumentType;
-import com.mojang.brigadier.arguments.BoolArgumentType;
-import com.mojang.brigadier.arguments.DoubleArgumentType;
-import com.mojang.brigadier.arguments.FloatArgumentType;
-import com.mojang.brigadier.arguments.IntegerArgumentType;
-import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.arguments.*;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import dev.dubhe.curtain.Curtain;
@@ -24,9 +19,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import org.jetbrains.annotations.NotNull;
 
-import static dev.dubhe.curtain.utils.TranslationKeys.AS_DEFAULT;
-import static dev.dubhe.curtain.utils.TranslationKeys.CHANGE;
-import static dev.dubhe.curtain.utils.TranslationKeys.CHANGE_DEFAULT;
+import static dev.dubhe.curtain.utils.TranslationKeys.*;
 import static net.minecraft.commands.SharedSuggestionProvider.suggest;
 
 public class RuleCommand {

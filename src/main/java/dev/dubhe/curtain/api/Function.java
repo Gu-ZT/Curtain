@@ -1,6 +1,7 @@
-package dev.dubhe.curtain.features.player.menu.component;
+package dev.dubhe.curtain.api;
 
 @FunctionalInterface
 public interface Function {
     void accept();
+
 }

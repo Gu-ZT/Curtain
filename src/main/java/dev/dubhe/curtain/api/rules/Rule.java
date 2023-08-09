@@ -14,7 +14,7 @@ public @interface Rule {
 
     Class<? extends IValidator<?>>[] validators() default {};
 
-    String[] suggestions();
+    String[] suggestions() default {};
 
     String serializedName() default "";
 }

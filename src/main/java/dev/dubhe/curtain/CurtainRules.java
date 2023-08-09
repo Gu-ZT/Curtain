@@ -12,16 +12,10 @@ import net.minecraft.server.ServerInterface;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
-import static dev.dubhe.curtain.api.rules.Categories.BUGFIX;
-import static dev.dubhe.curtain.api.rules.Categories.CLIENT;
-import static dev.dubhe.curtain.api.rules.Categories.COMMAND;
-import static dev.dubhe.curtain.api.rules.Categories.CREATIVE;
-import static dev.dubhe.curtain.api.rules.Categories.DISPENSER;
-import static dev.dubhe.curtain.api.rules.Categories.FEATURE;
-import static dev.dubhe.curtain.api.rules.Categories.SURVIVAL;
-import static dev.dubhe.curtain.api.rules.Categories.TNT;
+import static dev.dubhe.curtain.api.rules.Categories.*;
 
 
+@SuppressWarnings("unused")
 public class CurtainRules {
     public static final ThreadLocal<Boolean> impendingFillSkipUpdates = ThreadLocal.withInitial(() -> false);
 
@@ -75,14 +69,12 @@ public class CurtainRules {
     public static int viewDistance = 0;
 
     @Rule(
-            categories = CREATIVE,
-            suggestions = {"true", "false"}
+            categories = CREATIVE
     )
     public static boolean xpNoCooldown = false;
 
     @Rule(
-            categories = COMMAND,
-            suggestions = {"true", "false"}
+            categories = COMMAND
     )
     public static boolean allowSpawningOfflinePlayers = false;
 
@@ -101,26 +93,22 @@ public class CurtainRules {
     public static String commandLog = "true";
 
     @Rule(
-            categories = SURVIVAL,
-            suggestions = {"true", "false"}
+            categories = SURVIVAL
     )
     public static boolean missingTools = false;
 
     @Rule(
-            categories = {CREATIVE, SURVIVAL, FEATURE},
-            suggestions = {"true", "false"}
+            categories = {CREATIVE, SURVIVAL, FEATURE}
     )
     public static boolean flippingCactus = false;
 
     @Rule(
-            categories = {FEATURE, DISPENSER},
-            suggestions = {"true", "false"}
+            categories = {FEATURE}
     )
     public static boolean rotatorBlock = false;
 
     @Rule(
-            categories = BUGFIX,
-            suggestions = {"true", "false"}
+            categories = BUGFIX
     )
     public static boolean placementRotationFix = false;
 
@@ -176,8 +164,7 @@ public class CurtainRules {
     public static int shulkerBoxStackSize = 1;
 
     @Rule(
-            categories = {CREATIVE, CLIENT},
-            suggestions = {"true", "false"}
+            categories = {CREATIVE, CLIENT}
     )
     public static boolean creativeNoClip = false;
 
@@ -193,59 +180,52 @@ public class CurtainRules {
     }
 
     @Rule(
-            categories = COMMAND,
+            categories = {COMMAND, BOT},
             suggestions = {"none", "bot_"},
             validators = FakePlayerNameValidator.class
     )
     public static String fakePlayerNamePrefix = "none";
 
     @Rule(
-            categories = COMMAND,
+            categories = {COMMAND, BOT},
             suggestions = {"none", "_fake"},
             validators = FakePlayerNameValidator.class
     )
     public static String fakePlayerNameSuffix = "none";
 
     @Rule(
-            categories = SURVIVAL,
-            suggestions = {"true", "false"}
+            categories = SURVIVAL
     )
     public static boolean quickLeafDecay = false;
 
     @Rule(
-            categories = {FEATURE, CLIENT},
-            suggestions = {"true", "false"}
+            categories = {FEATURE, CLIENT}
     )
     public static boolean superLead = false;
 
     @Rule(
-            categories = FEATURE,
-            suggestions = {"true", "false"}
+            categories = FEATURE
     )
     public static boolean desertShrubs = false;
 
     @Rule(
-            categories = CREATIVE,
-            suggestions = {"true", "false"}
+            categories = CREATIVE
     )
     public static boolean turtleEggTrampledDisabled = false;
 
     @Rule(
-            categories = CREATIVE,
-            suggestions = {"true", "false"}
+            categories = CREATIVE
     )
     public static boolean farmlandTrampledDisabled = false;
 
 
     @Rule(
-            categories = {CREATIVE, TNT},
-            suggestions = {"true", "false"}
+            categories = {CREATIVE, TNT}
     )
     public static boolean explosionNoBlockDamage = false;
 
     @Rule(
             categories = TNT,
-            suggestions = {"true", "false"},
             serializedName = "optimized_tnt"
     )
     public static boolean optimizedTNT = false;
@@ -279,8 +259,7 @@ public class CurtainRules {
     public static double tntRandomRange = -1;
 
     @Rule(
-            categories = {TNT, CREATIVE},
-            suggestions = {"true", "false"}
+            categories = {TNT, CREATIVE}
     )
     public static boolean tntPrimerMomentumRemoved = false;
 
@@ -306,27 +285,94 @@ public class CurtainRules {
     public static double hardcodeTNTAngle = -1.0D;
     @Rule(
             categories = TNT,
-            suggestions = {"true", "false"},
             serializedName = "merge_tnt"
     )
     public static boolean mergeTNT = false;
 
     @Rule(
-            categories = {BUGFIX, SURVIVAL},
-            suggestions = {"true", "false"}
+            categories = {BUGFIX, SURVIVAL}
     )
     public static boolean ctrlQCraftingFix = false;
 
 
     @Rule(
-            categories = {CREATIVE, SURVIVAL},
-            suggestions = {"true", "false"}
+            categories = {CREATIVE, SURVIVAL, BOT}
     )
     public static boolean openFakePlayerInventory = false;
 
     @Rule(
-            categories = {CREATIVE, SURVIVAL},
-            suggestions = {"true", "false"}
+            categories = {CREATIVE, SURVIVAL, BOT}
     )
     public static boolean openFakePlayerEnderChest = false;
+
+    public static class ScaffoldingDistanceValidator implements IValidator<Integer> {
+
+        @Override
+        public boolean validate(CommandSourceStack source, CurtainRule<Integer> rule, String newValue) {
+            int value = Integer.parseInt(newValue);
+            return value >= 0 && value <= 7;
+        }
+    }
+
+    @Rule(
+            validators = ScaffoldingDistanceValidator.class,
+            categories = {CREATIVE},
+            suggestions = {"2", "3", "5", "7"}
+    )
+    public static int scaffoldingDistance = 7;
+
+    @Rule(
+            categories = {CREATIVE, BOT}
+    )
+    public static boolean fakePlayerAutoFish;
+
+    @Rule(
+            categories = {SURVIVAL}
+    )
+    public static boolean betterSignInteraction = false;
+
+    @Rule(
+            categories = {SURVIVAL}
+    )
+    public static boolean betterWoodStrip = false;
+
+    @Rule(
+            categories = {SURVIVAL}
+    )
+    public static boolean betterFenceGatePlacement = false;
+
+    @Rule(
+            categories = {CREATIVE, SURVIVAL, BOT}
+    )
+    public static boolean fakePlayerResident = false;
+
+    @Rule(
+            categories = {CREATIVE, SURVIVAL, BOT}
+    )
+    public static boolean fakePlayerAutoReplenishment = false;
+
+    @Rule(
+            categories = {CREATIVE, SURVIVAL, BOT}
+    )
+    public static boolean fakePlayerAutoReplaceTool = false;
+
+    @Rule(
+            categories = {CREATIVE, SURVIVAL}
+    )
+    public static boolean blockPlacementIgnoreEntity = false;
+
+    @Rule(
+            categories = FEATURE
+    )
+    public static boolean emptyShulkerBoxStackAlways = false;
+
+    @Rule(
+            categories = {FEATURE}
+    )
+    public static boolean chickenShearing = false;
+
+    @Rule(
+            categories = {CREATIVE, SURVIVAL}
+    )
+    public static boolean antiCheatDisabled = false;
 }

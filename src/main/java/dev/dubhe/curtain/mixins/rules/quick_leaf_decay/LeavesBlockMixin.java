@@ -16,12 +16,12 @@ import java.util.Random;
 @Mixin(LeavesBlock.class)
 public abstract class LeavesBlockMixin {
     @Shadow
-    public abstract void randomTick(BlockState p_221379_, ServerLevel p_221380_, BlockPos p_221381_, Random p_221382_);
+    public abstract void randomTick(BlockState par1, ServerLevel par2, BlockPos par3, Random par4);
 
     @Inject(method = "tick", at = @At("RETURN"))
-    private void tick(BlockState state, ServerLevel level, BlockPos pos, Random random, CallbackInfo ci) {
+    private void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, Random pRandom, CallbackInfo ci) {
         if (CurtainRules.quickLeafDecay) {
-            this.randomTick(state, level, pos, random);
+            this.randomTick(pState, pLevel, pPos, pRandom);
         }
     }
 }

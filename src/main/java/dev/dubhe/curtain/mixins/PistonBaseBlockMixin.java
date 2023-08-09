@@ -10,8 +10,8 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(PistonBaseBlock.class)
 public abstract class PistonBaseBlockMixin implements IPistonBlock {
-    @Shadow
-    protected abstract boolean getNeighborSignal(Level p_60178_, BlockPos p_60179_, Direction p_60180_);
+
+    @Shadow protected abstract boolean getNeighborSignal(Level pLevel, BlockPos pPos, Direction pFacing);
 
     @Override
     public boolean publicShouldExtend(Level world, BlockPos blockPos, Direction direction) {
