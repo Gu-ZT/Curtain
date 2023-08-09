@@ -5,7 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import dev.dubhe.curtain.CurtainRules;
 import dev.dubhe.curtain.features.player.patches.EntityPlayerMPFake;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
@@ -102,7 +102,7 @@ public class FakePlayerResident {
         String gamemode = fakePlayer.get("gamemode").getAsString();
         boolean flying = fakePlayer.get("flying").getAsBoolean();
         EntityPlayerMPFake.createFakePlayer(username, server, pos_x, pos_y, pos_z, yaw, pitch,
-                ResourceKey.create(Registries.DIMENSION, new ResourceLocation(dimension)),
+                ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(dimension)),
                 GameType.byName(gamemode), flying);
     }
 }

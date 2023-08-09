@@ -3,6 +3,7 @@ package dev.dubhe.curtain.mixins.rules.chicken_shearing;
 import dev.dubhe.curtain.CurtainRules;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Animal;
@@ -25,7 +26,7 @@ public abstract class ChickenEntityMixin extends Animal {
     public @NotNull InteractionResult interactAt(@NotNull Player pPlayer, @NotNull Vec3 pVec, @NotNull InteractionHand pHand) {
         ItemStack stack = pPlayer.getItemInHand(pHand);
         if (CurtainRules.chickenShearing && stack.getItem() == Items.SHEARS && !this.isBaby()) {
-            boolean tookDamage = this.hurt(pPlayer.level.damageSources().generic(), 1);
+            boolean tookDamage = this.hurt(DamageSource.GENERIC, 1);
             if (tookDamage) {
                 this.spawnAtLocation(Items.FEATHER, 1);
                 stack.hurtAndBreak(1, (LivingEntity) pPlayer, ((entity) -> pPlayer.broadcastBreakEvent(pHand)));

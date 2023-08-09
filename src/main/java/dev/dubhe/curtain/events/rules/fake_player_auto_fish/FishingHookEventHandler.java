@@ -2,7 +2,7 @@ package dev.dubhe.curtain.events.rules.fake_player_auto_fish;
 
 import dev.dubhe.curtain.Curtain;
 import dev.dubhe.curtain.CurtainRules;
-import dev.dubhe.curtain.api.PlanExecution;
+import dev.dubhe.curtain.utils.PlanExecution;
 import dev.dubhe.curtain.events.events.FishingHookEvent;
 import dev.dubhe.curtain.features.player.fakes.IServerPlayer;
 import dev.dubhe.curtain.features.player.helpers.EntityPlayerActionPack;

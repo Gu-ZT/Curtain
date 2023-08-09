@@ -1,4 +1,4 @@
-package dev.dubhe.curtain.api;
+package dev.dubhe.curtain.utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;

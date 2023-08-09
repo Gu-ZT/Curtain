@@ -1,6 +1,6 @@
 package dev.dubhe.curtain;
 
-import dev.dubhe.curtain.api.PlanExecution;
+import dev.dubhe.curtain.utils.PlanExecution;
 import dev.dubhe.curtain.api.rules.RuleManager;
 import dev.dubhe.curtain.events.MyEventHandlers;
 import dev.dubhe.curtain.features.logging.LoggerManager;
