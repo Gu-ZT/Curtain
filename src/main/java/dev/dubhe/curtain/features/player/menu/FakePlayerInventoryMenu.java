@@ -18,6 +18,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
@@ -164,10 +165,7 @@ public class FakePlayerInventoryMenu extends CustomMenu {
 
     @Override
     public boolean stillValid(@Nonnull Player player) {
-        if (this.player.isRemoved()) {
-            return false;
-        }
-        return !(player.distanceToSqr(this.player) > 64.0);
+        return this.player.isAlive() && !(player.distanceToSqr(this.player) > 64.0);
     }
 
     @Override
