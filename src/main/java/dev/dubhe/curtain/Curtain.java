@@ -5,14 +5,14 @@ import dev.dubhe.curtain.api.rules.RuleManager;
 import dev.dubhe.curtain.events.MyEventHandlers;
 import dev.dubhe.curtain.features.logging.LoggerManager;
 import dev.dubhe.curtain.utils.TranslationHelper;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import java.util.List;
 @Mod(Curtain.MODID)
 public class Curtain implements ICurtain {
     public static final String MODID = "curtain";
-    public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
+    public static final Logger LOGGER = LogManager.getLogger(MODID);
     public static final List<ICurtain> SUB_MODS = new ArrayList<>();
     public static PlanExecution planExecution = null;
     public static RuleManager rules = null;

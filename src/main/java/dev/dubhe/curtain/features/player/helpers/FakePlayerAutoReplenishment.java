@@ -1,13 +1,13 @@
 package dev.dubhe.curtain.features.player.helpers;
 
-import net.minecraft.core.NonNullList;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 
 public class FakePlayerAutoReplenishment {
 
-    public static void autoReplenishment(Player fakePlayer) {
-        NonNullList<ItemStack> itemStackList = fakePlayer.getInventory().items;
+    public static void autoReplenishment(PlayerEntity fakePlayer) {
+        NonNullList<ItemStack> itemStackList = fakePlayer.inventory.items;
         replenishment(fakePlayer.getMainHandItem(), itemStackList);
         replenishment(fakePlayer.getOffhandItem(), itemStackList);
     }
@@ -17,7 +17,7 @@ public class FakePlayerAutoReplenishment {
         if (itemStack.getCount() <= 8 && count > 8) {
             for (ItemStack itemStack1 : itemStackList) {
                 if (itemStack1 == ItemStack.EMPTY || itemStack1 == itemStack) continue;
-                if (ItemStack.isSameItemSameTags(itemStack1, itemStack)) {
+                if (ItemStack.isSame(itemStack1, itemStack)) {
                     if (itemStack1.getCount() > count) {
                         itemStack.setCount(itemStack.getCount() + count);
                         itemStack1.setCount(itemStack1.getCount() - count);

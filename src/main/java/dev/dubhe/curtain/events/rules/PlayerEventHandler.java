@@ -6,10 +6,10 @@ import dev.dubhe.curtain.features.player.helpers.FakePlayerAutoReplaceTool;
 import dev.dubhe.curtain.features.player.helpers.FakePlayerAutoReplenishment;
 import dev.dubhe.curtain.features.player.menu.FakePlayerInventoryMenu;
 import dev.dubhe.curtain.features.player.patches.EntityPlayerMPFake;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.SoundType;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -21,7 +21,7 @@ public class PlayerEventHandler {
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent playerTickEvent) {
         if (CurtainRules.openFakePlayerInventory &&
-                playerTickEvent.player instanceof ServerPlayer serverPlayer &&
+                playerTickEvent.player instanceof ServerPlayerEntity serverPlayer &&
                 serverPlayer instanceof EntityPlayerMPFake &&
                 serverPlayer.isAlive()
         ) {
@@ -31,13 +31,13 @@ public class PlayerEventHandler {
 
     @SubscribeEvent
     public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
-        if (event.getEntity() instanceof Player player)
+        if (event.getEntity() instanceof PlayerEntity player)
             FAKE_PLAYER_INVENTORY_MENU_MAP.put(player, new FakePlayerInventoryMenu(player));
     }
 
     @SubscribeEvent
     public void onPlayerLeave(PlayerEvent.PlayerLoggedOutEvent event) {
-        if (event.getEntity() instanceof Player player) FAKE_PLAYER_INVENTORY_MENU_MAP.remove(player);
+        if (event.getEntity() instanceof PlayerEntity player) FAKE_PLAYER_INVENTORY_MENU_MAP.remove(player);
     }
 
     // 工具缺失修复(missingTools)

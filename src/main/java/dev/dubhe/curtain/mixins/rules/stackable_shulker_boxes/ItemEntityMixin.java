@@ -3,13 +3,13 @@ package dev.dubhe.curtain.mixins.rules.stackable_shulker_boxes;
 import dev.dubhe.curtain.CurtainRules;
 import dev.dubhe.curtain.features.rules.fakes.ItemEntityInterface;
 import dev.dubhe.curtain.utils.InventoryHelper;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.ShulkerBoxBlock;
+import net.minecraft.block.ShulkerBoxBlock;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -27,7 +27,7 @@ public abstract class ItemEntityMixin extends Entity implements ItemEntityInterf
     @Shadow
     private int age;
 
-    public ItemEntityMixin(EntityType<?> entityType, Level world) {
+    public ItemEntityMixin(EntityType<?> entityType, World world) {
         super(entityType, world);
     }
 
@@ -36,8 +36,8 @@ public abstract class ItemEntityMixin extends Entity implements ItemEntityInterf
         return this.pickupDelay;
     }
 
-    @Inject(method = "<init>(Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/item/ItemStack;)V", at = @At("RETURN"))
-    private void removeEmptyShulkerBoxTags(Level worldIn, double x, double y, double z, ItemStack stack, CallbackInfo ci) {
+    @Inject(method = "<init>(Lnet/minecraft/world/World;DDDLnet/minecraft/item/ItemStack;)V", at = @At("RETURN"))
+    private void removeEmptyShulkerBoxTags(World worldIn, double x, double y, double z, ItemStack stack, CallbackInfo ci) {
         if (CurtainRules.shulkerBoxStackSize > 1
                 && stack.getItem() instanceof BlockItem blockItem
                 && blockItem.getBlock() instanceof ShulkerBoxBlock) {
@@ -49,7 +49,7 @@ public abstract class ItemEntityMixin extends Entity implements ItemEntityInterf
             method = "isMergable()Z",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/world/item/ItemStack;getMaxStackSize()I"
+                    target = "Lnet/minecraft/item/ItemStack;getMaxStackSize()I"
             )
     )
     private int getItemStackMaxAmount(ItemStack stack) {
@@ -62,7 +62,7 @@ public abstract class ItemEntityMixin extends Entity implements ItemEntityInterf
     }
 
     @Inject(
-            method = "tryToMerge(Lnet/minecraft/world/entity/item/ItemEntity;)V",
+            method = "tryToMerge",
             at = @At("HEAD"),
             cancellable = true
     )
@@ -91,7 +91,7 @@ public abstract class ItemEntityMixin extends Entity implements ItemEntityInterf
 
             otherStack.shrink(amount);
             if (otherStack.isEmpty()) {
-                other.discard();
+                other.remove();
             } else {
                 other.setItem(otherStack);
             }

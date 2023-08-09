@@ -2,11 +2,11 @@ package dev.dubhe.curtain.features.logging.builtin;
 
 import dev.dubhe.curtain.Curtain;
 import dev.dubhe.curtain.features.logging.AbstractHudLogger;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 
 import java.util.Arrays;
 import java.util.OptionalDouble;
@@ -19,31 +19,31 @@ public class TPSLogger extends AbstractHudLogger {
     }
 
     @Override
-    public Component display(ServerPlayer player) {
+    public ITextComponent display(ServerPlayerEntity player) {
         MinecraftServer server = Curtain.minecraftServer;
         final OptionalDouble averageTPS = Arrays.stream(server.tickTimes).average();
         if (averageTPS.isEmpty()) {
-            return new TextComponent("No TPS data available").withStyle(style -> style.withColor(ChatFormatting.RED));
+            return new StringTextComponent("No TPS data available").withStyle(TextFormatting.RED);
         }
         double MSPT = Arrays.stream(server.tickTimes).average().getAsDouble() * 1.0E-6D;
         double TPS = Math.min(1000.0D / MSPT, MAX_TPS);
-        ChatFormatting color = ChatFormatting.GREEN;
+        TextFormatting color = TextFormatting.GREEN;
         if (MSPT >= 0.0D) {
-            color = ChatFormatting.DARK_GREEN;
+            color = TextFormatting.DARK_GREEN;
         }
         if (MSPT >= 20D) {
-            color = ChatFormatting.GREEN;
+            color = TextFormatting.GREEN;
         }
         if (MSPT >= 35) {
-            color = ChatFormatting.YELLOW;
+            color = TextFormatting.YELLOW;
         }
         if (MSPT >= 45) {
-            color = ChatFormatting.RED;
+            color = TextFormatting.RED;
         }
-        ChatFormatting finalColor = color;
-        return new TextComponent("TPS: ").withStyle(style -> style.withColor(ChatFormatting.GRAY))
-                .append(new TextComponent("%.1f".formatted(TPS)).withStyle(style -> style.withColor(finalColor)))
-                .append(new TextComponent(" MSPT: ").withStyle(style -> style.withColor(ChatFormatting.GRAY)))
-                .append(new TextComponent("%.1f".formatted(MSPT)).withStyle(style -> style.withColor(finalColor)));
+        TextFormatting finalColor = color;
+        return new StringTextComponent("TPS: ").withStyle(TextFormatting.GRAY)
+                .append(new StringTextComponent("%.1f".formatted(TPS)).withStyle(finalColor))
+                .append(new StringTextComponent(" MSPT: ").withStyle(TextFormatting.GRAY))
+                .append(new StringTextComponent("%.1f".formatted(MSPT)).withStyle(finalColor));
     }
 }

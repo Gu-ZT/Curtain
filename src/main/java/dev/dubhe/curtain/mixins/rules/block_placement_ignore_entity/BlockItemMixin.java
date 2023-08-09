@@ -1,10 +1,10 @@
 package dev.dubhe.curtain.mixins.rules.block_placement_ignore_entity;
 
 import dev.dubhe.curtain.CurtainRules;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.BlockItemUseContext;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -18,11 +18,11 @@ public abstract class BlockItemMixin {
     protected abstract boolean mustSurvive();
 
     @Inject(method = "canPlace", at = @At(value = "HEAD"), cancellable = true)
-    private void skipCollisionCheck(BlockPlaceContext context, BlockState state, CallbackInfoReturnable<Boolean> cir) {
+    private void skipCollisionCheck(BlockItemUseContext pContext, BlockState pState, CallbackInfoReturnable<Boolean> cir) {
         if (CurtainRules.blockPlacementIgnoreEntity) {
-            Player player = context.getPlayer();
+            PlayerEntity player = pContext.getPlayer();
             if (player != null && player.isCreative()) {
-                cir.setReturnValue(!this.mustSurvive() || state.canSurvive(context.getLevel(), context.getClickedPos()));
+                cir.setReturnValue(!this.mustSurvive() || pState.canSurvive(pContext.getLevel(), pContext.getClickedPos()));
             }
         }
     }

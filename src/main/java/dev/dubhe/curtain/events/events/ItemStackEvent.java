@@ -1,15 +1,12 @@
 package dev.dubhe.curtain.events.events;
 
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Hand;
+import net.minecraft.world.World;
 import net.minecraftforge.eventbus.api.Cancelable;
 import net.minecraftforge.eventbus.api.Event;
-
-import java.util.function.Consumer;
 
 public class ItemStackEvent extends Event {
     private final ItemStack stack;
@@ -24,26 +21,26 @@ public class ItemStackEvent extends Event {
 
     @Cancelable
     public static class Use extends ItemStackEvent {
-        private final Level level;
-        private final Player player;
-        private final InteractionHand usedHand;
+        private final World level;
+        private final PlayerEntity player;
+        private final Hand usedHand;
 
-        public Use(ItemStack stack, Level level, Player player, InteractionHand usedHand) {
+        public Use(ItemStack stack, World level, PlayerEntity player, Hand usedHand) {
             super(stack);
             this.level = level;
             this.player = player;
             this.usedHand = usedHand;
         }
 
-        public Level getLevel() {
+        public World getLevel() {
             return level;
         }
 
-        public Player getPlayer() {
+        public PlayerEntity getPlayer() {
             return player;
         }
 
-        public InteractionHand getUsedHand() {
+        public Hand getUsedHand() {
             return usedHand;
         }
     }
@@ -51,9 +48,9 @@ public class ItemStackEvent extends Event {
     @Cancelable
     public static class HurtAndBreak extends ItemStackEvent {
         private final int amount;
-        private final Player player;
+        private final PlayerEntity player;
 
-        public HurtAndBreak(ItemStack stack, int amount, Player player) {
+        public HurtAndBreak(ItemStack stack, int amount, PlayerEntity player) {
             super(stack);
             this.amount = amount;
             this.player = player;
@@ -63,7 +60,7 @@ public class ItemStackEvent extends Event {
             return amount;
         }
 
-        public Player getPlayer() {
+        public PlayerEntity getPlayer() {
             return player;
         }
     }

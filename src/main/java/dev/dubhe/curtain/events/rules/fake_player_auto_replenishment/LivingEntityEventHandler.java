@@ -2,8 +2,8 @@ package dev.dubhe.curtain.events.rules.fake_player_auto_replenishment;
 
 import dev.dubhe.curtain.CurtainRules;
 import dev.dubhe.curtain.features.player.patches.EntityPlayerMPFake;
-import net.minecraft.core.NonNullList;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -12,7 +12,7 @@ public class LivingEntityEventHandler {
     public void onPlayerUsing(LivingEntityUseItemEvent.Finish event) {
         System.out.println(event.getEntity() instanceof EntityPlayerMPFake);
         if (CurtainRules.fakePlayerAutoReplenishment && event.getEntity() instanceof EntityPlayerMPFake fakePlayer) {
-            NonNullList<ItemStack> itemStackList = fakePlayer.getInventory().items;
+            NonNullList<ItemStack> itemStackList = fakePlayer.inventory.items;
             replenishment(fakePlayer.getMainHandItem(), itemStackList);
             replenishment(fakePlayer.getOffhandItem(), itemStackList);
         }
@@ -23,7 +23,7 @@ public class LivingEntityEventHandler {
         if (itemStack.getCount() <= 8 && count > 8) {
             for (ItemStack itemStack1 : itemStackList) {
                 if (itemStack1 == ItemStack.EMPTY || itemStack1 == itemStack) continue;
-                if (ItemStack.isSameItemSameTags(itemStack1, itemStack)) {
+                if (ItemStack.isSame(itemStack1, itemStack)) {
                     if (itemStack1.getCount() > count) {
                         itemStack.setCount(itemStack.getCount() + count);
                         itemStack1.setCount(itemStack1.getCount() - count);

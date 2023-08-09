@@ -9,14 +9,15 @@ import dev.dubhe.curtain.features.player.helpers.EntityPlayerActionPack;
 import dev.dubhe.curtain.features.player.helpers.EntityPlayerActionPack.Action;
 import dev.dubhe.curtain.features.player.helpers.EntityPlayerActionPack.ActionType;
 import dev.dubhe.curtain.features.player.patches.EntityPlayerMPFake;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import org.jetbrains.annotations.NotNull;
+
+import javax.annotation.Nonnull;
 
 public class FishingHookEventHandler {
     @SubscribeEvent
-    public void autoFish(@NotNull FishingHookEvent.Catching event) {
-        Player player = event.getOwner();
+    public void autoFish(@Nonnull FishingHookEvent.Catching event) {
+        PlayerEntity player = event.getOwner();
         if (CurtainRules.fakePlayerAutoFish && player instanceof EntityPlayerMPFake fake) {
             EntityPlayerActionPack ap = ((IServerPlayer) fake).getActionPack();
             long time = player.level.getGameTime();

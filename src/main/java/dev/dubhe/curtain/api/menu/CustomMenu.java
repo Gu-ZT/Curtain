@@ -3,12 +3,12 @@ package dev.dubhe.curtain.api.menu;
 import com.mojang.datafixers.util.Pair;
 import dev.dubhe.curtain.api.menu.control.Button;
 import dev.dubhe.curtain.api.menu.control.ButtonList;
-import net.minecraft.world.Container;
+import net.minecraft.inventory.IInventory;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class CustomMenu implements Container {
+public abstract class CustomMenu implements IInventory {
 
     public final List<Pair<Integer, Button>> buttons = new ArrayList<>();
     public final List<ButtonList> buttonLists = new ArrayList<>();

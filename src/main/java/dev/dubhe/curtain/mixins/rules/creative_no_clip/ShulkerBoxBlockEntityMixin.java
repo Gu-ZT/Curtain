@@ -1,25 +1,25 @@
 package dev.dubhe.curtain.mixins.rules.creative_no_clip;
 
 import dev.dubhe.curtain.CurtainRules;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.block.entity.ShulkerBoxBlockEntity;
-import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.block.material.PushReaction;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.tileentity.ShulkerBoxTileEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(ShulkerBoxBlockEntity.class)
+@Mixin(ShulkerBoxTileEntity.class)
 public abstract class ShulkerBoxBlockEntityMixin {
     @Redirect(
             method = "moveCollidedEntities",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/world/entity/Entity;getPistonPushReaction()Lnet/minecraft/world/level/material/PushReaction;"
+                    target = "Lnet/minecraft/entity/Entity;getPistonPushReaction()Lnet/minecraft/block/material/PushReaction;"
             )
     )
     private PushReaction getPistonBehaviourOfNoClipPlayers(Entity entity) {
-        if (CurtainRules.creativeNoClip && entity instanceof Player player && player.isCreative() && player.getAbilities().flying) {
+        if (CurtainRules.creativeNoClip && entity instanceof PlayerEntity player && player.isCreative() && player.abilities.flying) {
             return PushReaction.IGNORE;
         }
         return entity.getPistonPushReaction();

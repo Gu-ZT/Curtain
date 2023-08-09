@@ -2,9 +2,9 @@ package dev.dubhe.curtain.events.rules.open_fake_player_inventory;
 
 import dev.dubhe.curtain.CurtainRules;
 import dev.dubhe.curtain.features.player.patches.EntityPlayerMPFake;
-import net.minecraft.world.SimpleMenuProvider;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ChestMenu;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.container.ChestContainer;
+import net.minecraft.inventory.container.SimpleNamedContainerProvider;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -14,11 +14,11 @@ public class EntityInteractHandler {
     @SubscribeEvent
     public void onInteractWithFakePlayer(PlayerInteractEvent.EntityInteract entityInteract) {
         if (entityInteract.getTarget() instanceof EntityPlayerMPFake fakeplayer) {
-            SimpleMenuProvider provider = null;
+            SimpleNamedContainerProvider provider = null;
             if (CurtainRules.openFakePlayerEnderChest && entityInteract.getEntity().isShiftKeyDown()) {
-                provider = new SimpleMenuProvider(
+                provider = new SimpleNamedContainerProvider(
                         (i, inventory, p) ->
-                                ChestMenu.threeRows(
+                                ChestContainer.threeRows(
                                         i,
                                         inventory,
                                         fakeplayer.getEnderChestInventory()
@@ -26,9 +26,9 @@ public class EntityInteractHandler {
                         fakeplayer.getDisplayName()
                 );
             } else if (CurtainRules.openFakePlayerInventory) {
-                provider = new SimpleMenuProvider(
+                provider = new SimpleNamedContainerProvider(
                         (i, inventory, p) ->
-                                ChestMenu.sixRows(
+                                ChestContainer.sixRows(
                                         i,
                                         inventory,
                                         FAKE_PLAYER_INVENTORY_MENU_MAP.get(fakeplayer)

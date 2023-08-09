@@ -1,30 +1,30 @@
 package dev.dubhe.curtain.mixins.rules.anti_cheat_disabled;
 
 import dev.dubhe.curtain.CurtainRules;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ElytraItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ElytraItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(Player.class)
+@Mixin(PlayerEntity.class)
 public abstract class PlayerMixin {
     @Shadow
-    public abstract ItemStack getItemBySlot(EquipmentSlot equipmentSlot_1);
+    public abstract ItemStack getItemBySlot(EquipmentSlotType equipment);
 
     @Shadow
     public abstract void startFallFlying();
 
     @Inject(method = "tryToStartFallFlying", at = @At("HEAD"), cancellable = true)
     private void allowDeploys(CallbackInfoReturnable<Boolean> cir) {
-        if (CurtainRules.antiCheatDisabled && (Player) (Object) this instanceof ServerPlayer sp && sp.getServer() != null && sp.getServer().isDedicatedServer()) {
-            ItemStack itemStack_1 = getItemBySlot(EquipmentSlot.CHEST);
+        if (CurtainRules.antiCheatDisabled && (PlayerEntity) (Object) this instanceof ServerPlayerEntity sp && sp.getServer() != null && sp.getServer().isDedicatedServer()) {
+            ItemStack itemStack_1 = getItemBySlot(EquipmentSlotType.CHEST);
             if (itemStack_1.getItem() == Items.ELYTRA && ElytraItem.isFlyEnabled(itemStack_1)) {
                 startFallFlying();
                 cir.setReturnValue(true);

@@ -7,15 +7,14 @@ import dev.dubhe.curtain.commands.PlayerCommand;
 import dev.dubhe.curtain.commands.RuleCommand;
 import dev.dubhe.curtain.events.WorldTickEvent;
 import dev.dubhe.curtain.utils.PlanExecution;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraftforge.event.server.ServerAboutToStartEvent;
-import net.minecraftforge.event.server.ServerStoppedEvent;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import org.jetbrains.annotations.NotNull;
+import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
+import net.minecraftforge.fml.event.server.FMLServerStoppedEvent;
 
 public class ServerLifecycleEventHandler {
     @SubscribeEvent
-    public void onServerAboutToStart(@NotNull ServerAboutToStartEvent event) {
+    public void onServerAboutToStart(FMLServerAboutToStartEvent event) {
         Curtain.rules = new RuleManager(event.getServer(), Curtain.MODID);
         Curtain.minecraftServer = event.getServer();
         Curtain.planExecution = new PlanExecution();
@@ -26,7 +25,7 @@ public class ServerLifecycleEventHandler {
 
     @SubscribeEvent
     public void onServerTick(WorldTickEvent event) {
-        if (event.getWorld() instanceof ServerLevel level) {
+        if (event.getWorld() instanceof ServerWorld level) {
             long time = level.getGameTime();
             if (Curtain.planExecution != null) {
                 Curtain.planExecution.execute(time);
@@ -35,7 +34,7 @@ public class ServerLifecycleEventHandler {
     }
 
     @SubscribeEvent
-    public void onServerStopped(@NotNull ServerStoppedEvent event) {
+    public void onServerStopped(FMLServerStoppedEvent event) {
         Curtain.rules.saveToFile();
     }
 }

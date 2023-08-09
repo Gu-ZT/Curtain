@@ -3,15 +3,15 @@ package dev.dubhe.curtain.mixins.rules.optimized_tnt;
 import dev.dubhe.curtain.CurtainRules;
 import dev.dubhe.curtain.features.logging.helper.ExplosionLogHelper;
 import dev.dubhe.curtain.utils.OptimizedExplosion;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.Explosion;
-import net.minecraft.world.level.ExplosionDamageCalculator;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.Explosion;
+import net.minecraft.world.ExplosionContext;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -26,7 +26,7 @@ import java.util.List;
 public class ExplosionMixin {
     @Shadow
     @Final
-    private Level level;
+    private World level;
     @Shadow
     @Final
     private List<BlockPos> toBlow;
@@ -55,23 +55,23 @@ public class ExplosionMixin {
         }
     }
 
-    @Redirect(method = "explode", require = 0, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;"))
-    private BlockState noBlockCalcsWithNoBLockDamage(Level world, BlockPos pos) {
+    @Redirect(method = "explode", require = 0, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;getBlockState(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;"))
+    private BlockState noBlockCalcsWithNoBLockDamage(World world, BlockPos pos) {
         if (CurtainRules.explosionNoBlockDamage) {
             return Blocks.BEDROCK.defaultBlockState();
         }
         return world.getBlockState(pos);
     }
 
-    @Inject(method = "<init>(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;Lnet/minecraft/world/level/ExplosionDamageCalculator;DDDFZLnet/minecraft/world/level/Explosion$BlockInteraction;)V", at = @At(value = "RETURN"))
-    private void onExplosionCreated(Level world, Entity entity, DamageSource damageSource, ExplosionDamageCalculator explosionBehavior, double x, double y, double z, float power, boolean createFire, Explosion.BlockInteraction destructionType, CallbackInfo ci) {
+    @Inject(method = "<init>(Lnet/minecraft/world/World;Lnet/minecraft/entity/Entity;Lnet/minecraft/util/DamageSource;Lnet/minecraft/world/ExplosionContext;DDDFZLnet/minecraft/world/Explosion$Mode;)V", at = @At(value = "RETURN"))
+    private void onExplosionCreated(World world, Entity entity, DamageSource damageSource, ExplosionContext explosionBehavior, double x, double y, double z, float power, boolean createFire, Explosion.Mode destructionType, CallbackInfo ci) {
         if (!world.isClientSide) {
             eLogger = new ExplosionLogHelper(x, y, z, power, createFire, destructionType, level.registryAccess());
         }
     }
 
-    @Redirect(method = "explode", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;setDeltaMovement(Lnet/minecraft/world/phys/Vec3;)V"))
-    private void setVelocityAndUpdateLogging(Entity entity, Vec3 velocity) {
+    @Redirect(method = "explode", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;setDeltaMovement(Lnet/minecraft/util/math/vector/Vector3d;)V"))
+    private void setVelocityAndUpdateLogging(Entity entity, Vector3d velocity) {
         if (eLogger != null) {
             eLogger.onEntityImpacted(entity, velocity.subtract(entity.getDeltaMovement()));
         }

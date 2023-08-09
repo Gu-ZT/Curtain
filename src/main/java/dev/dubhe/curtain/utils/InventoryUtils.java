@@ -1,8 +1,8 @@
 package dev.dubhe.curtain.utils;
 
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 
 public class InventoryUtils {
     /**
@@ -12,15 +12,15 @@ public class InventoryUtils {
      */
     public static boolean shulkerBoxHasItems(ItemStack stackShulkerBox)
     {
-        CompoundTag nbt = stackShulkerBox.getTag();
+        CompoundNBT nbt = stackShulkerBox.getTag();
 
         if (nbt != null && nbt.contains("BlockEntityTag", Constants.NBT.COMPOUND_TAG))
         {
-            CompoundTag tag = nbt.getCompound("BlockEntityTag");
+            CompoundNBT tag = nbt.getCompound("BlockEntityTag");
 
             if (tag.contains("Items", Constants.NBT.LIST_TAG))
             {
-                ListTag tagList = tag.getList("Items", Constants.NBT.COMPOUND_TAG);
+                ListNBT tagList = tag.getList("Items", Constants.NBT.COMPOUND_TAG);
                 return tagList.size() > 0;
             }
         }

@@ -8,18 +8,14 @@ import dev.dubhe.curtain.api.menu.control.Button;
 import dev.dubhe.curtain.api.menu.control.RadioList;
 import dev.dubhe.curtain.features.player.fakes.IServerPlayer;
 import dev.dubhe.curtain.features.player.helpers.EntityPlayerActionPack;
-import dev.dubhe.curtain.features.player.helpers.EntityPlayerActionPack.Action;
-import dev.dubhe.curtain.features.player.helpers.EntityPlayerActionPack.ActionType;
 import dev.dubhe.curtain.utils.TranslationHelper;
-import net.minecraft.ChatFormatting;
-import net.minecraft.core.NonNullList;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
-import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextFormatting;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,14 +26,14 @@ public class FakePlayerInventoryMenu extends CustomMenu {
     public final NonNullList<ItemStack> offhand;
     private final NonNullList<ItemStack> buttons = NonNullList.withSize(13, ItemStack.EMPTY);
     private final List<NonNullList<ItemStack>> compartments;
-    private final Player player;
+    private final PlayerEntity player;
     private final EntityPlayerActionPack ap;
 
-    public FakePlayerInventoryMenu(Player player) {
+    public FakePlayerInventoryMenu(PlayerEntity player) {
         this.player = player;
-        this.items = this.player.getInventory().items;
-        this.armor = this.player.getInventory().armor;
-        this.offhand = this.player.getInventory().offhand;
+        this.items = this.player.inventory.items;
+        this.armor = this.player.inventory.armor;
+        this.offhand = this.player.inventory.offhand;
         this.ap = ((IServerPlayer) this.player).getActionPack();
         this.compartments = ImmutableList.of(this.items, this.armor, this.offhand, this.buttons);
         this.createButton();
@@ -73,7 +69,6 @@ public class FakePlayerInventoryMenu extends CustomMenu {
     }
 
     @Override
-    @Nonnull
     public ItemStack getItem(int slot) {
         Pair<NonNullList<ItemStack>, Integer> pair = getItemSlot(slot);
         if (pair != null) {
@@ -115,7 +110,6 @@ public class FakePlayerInventoryMenu extends CustomMenu {
     }
 
     @Override
-    @Nonnull
     public ItemStack removeItem(int slot, int amount) {
         Pair<NonNullList<ItemStack>, Integer> pair = getItemSlot(slot);
         NonNullList<ItemStack> list = null;
@@ -124,13 +118,17 @@ public class FakePlayerInventoryMenu extends CustomMenu {
             slot = pair.getSecond();
         }
         if (list != null && !list.get(slot).isEmpty()) {
-            return ContainerHelper.removeItem(list, slot, amount);
+            return removeItem(list, slot, amount);
         }
         return ItemStack.EMPTY;
     }
 
+
+    public static ItemStack removeItem(List<ItemStack> pStacks, int pIndex, int pAmount) {
+        return pIndex >= 0 && pIndex < pStacks.size() && !pStacks.get(pIndex).isEmpty() && pAmount > 0 ? pStacks.get(pIndex).split(pAmount) : ItemStack.EMPTY;
+    }
+
     @Override
-    @Nonnull
     public ItemStack removeItemNoUpdate(int slot) {
         Pair<NonNullList<ItemStack>, Integer> pair = getItemSlot(slot);
         NonNullList<ItemStack> list = null;
@@ -147,7 +145,7 @@ public class FakePlayerInventoryMenu extends CustomMenu {
     }
 
     @Override
-    public void setItem(int slot, @Nonnull ItemStack stack) {
+    public void setItem(int slot, ItemStack stack) {
         Pair<NonNullList<ItemStack>, Integer> pair = getItemSlot(slot);
         NonNullList<ItemStack> list = null;
         if (pair != null) {
@@ -164,8 +162,8 @@ public class FakePlayerInventoryMenu extends CustomMenu {
     }
 
     @Override
-    public boolean stillValid(@Nonnull Player player) {
-        return this.player.isAlive() && !(player.distanceToSqr(this.player) > 64.0);
+    public boolean stillValid(PlayerEntity player) {
+        return player.isAlive() && !(player.distanceToSqr(player) > 64.0);
     }
 
     @Override
@@ -178,9 +176,9 @@ public class FakePlayerInventoryMenu extends CustomMenu {
     private void createButton() {
         List<Button> hotBarList = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
-            Component hotBarComponent = TranslationHelper.translate(
-                    "curtain.rules.open_fake_player_inventory.menu.slot",
-                    ChatFormatting.WHITE,
+            IFormattableTextComponent hotBarComponent = TranslationHelper.translate(
+                    "gac.hotbar",
+                    TextFormatting.WHITE,
                     Style.EMPTY.withBold(true).withItalic(false),
                     i + 1
             );
@@ -196,10 +194,10 @@ public class FakePlayerInventoryMenu extends CustomMenu {
         }
         this.addButtonList(new RadioList(hotBarList, true));
 
-        Button stopAll = new AutoResetButton("curtain.rules.open_fake_player_inventory.menu.stop_all");
-        Button attackInterval14 = new Button(false, "curtain.rules.open_fake_player_inventory.menu.attack_interval_14");
-        Button attackContinuous = new Button(false, "curtain.rules.open_fake_player_inventory.menu.attack_continuous");
-        Button useContinuous = new Button(false, "curtain.rules.open_fake_player_inventory.menu.use_continuous");
+        Button stopAll = new AutoResetButton("action.stop_all");
+        Button attackInterval14 = new Button(false, "action.attack.interval.14");
+        Button attackContinuous = new Button(false, "action.attack.continuous");
+        Button useContinuous = new Button(false, "action.use.continuous");
 
         stopAll.addTurnOnFunction(() -> {
             attackInterval14.turnOffWithoutFunction();
@@ -209,19 +207,19 @@ public class FakePlayerInventoryMenu extends CustomMenu {
         });
 
         attackInterval14.addTurnOnFunction(() -> {
-            ap.start(ActionType.ATTACK, Action.interval(14));
+            ap.start(EntityPlayerActionPack.ActionType.ATTACK, EntityPlayerActionPack.Action.interval(14));
             attackContinuous.turnOffWithoutFunction();
         });
-        attackInterval14.addTurnOffFunction(() -> ap.start(ActionType.ATTACK, Action.once()));
+        attackInterval14.addTurnOffFunction(() -> ap.start(EntityPlayerActionPack.ActionType.ATTACK, EntityPlayerActionPack.Action.once()));
 
         attackContinuous.addTurnOnFunction(() -> {
-            ap.start(ActionType.ATTACK, Action.continuous());
+            ap.start(EntityPlayerActionPack.ActionType.ATTACK, EntityPlayerActionPack.Action.continuous());
             attackInterval14.turnOffWithoutFunction();
         });
-        attackContinuous.addTurnOffFunction(() -> ap.start(ActionType.ATTACK, Action.once()));
+        attackContinuous.addTurnOffFunction(() -> ap.start(EntityPlayerActionPack.ActionType.ATTACK, EntityPlayerActionPack.Action.once()));
 
-        useContinuous.addTurnOnFunction(() -> ap.start(ActionType.USE, Action.continuous()));
-        useContinuous.addTurnOffFunction(() -> ap.start(ActionType.USE, Action.once()));
+        useContinuous.addTurnOnFunction(() -> ap.start(EntityPlayerActionPack.ActionType.USE, EntityPlayerActionPack.Action.continuous()));
+        useContinuous.addTurnOffFunction(() -> ap.start(EntityPlayerActionPack.ActionType.USE, EntityPlayerActionPack.Action.once()));
 
         this.addButton(0, stopAll);
         this.addButton(5, attackInterval14);

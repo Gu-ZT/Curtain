@@ -1,26 +1,26 @@
 package dev.dubhe.curtain.events.events;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.FishingHook;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.FishingBobberEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.entity.EntityEvent;
 
 public class FishingHookEvent extends EntityEvent {
-    private final Player owner;
+    private final PlayerEntity owner;
 
-    public FishingHookEvent(FishingHook entity) {
+    public FishingHookEvent(FishingBobberEntity entity) {
         super(entity);
         owner = entity.getPlayerOwner();
     }
 
-    public Player getOwner() {
+    public PlayerEntity getOwner() {
         return owner;
     }
 
     public static class Catching extends FishingHookEvent {
         private final BlockPos pos;
 
-        public Catching(FishingHook entity, BlockPos pos) {
+        public Catching(FishingBobberEntity entity, BlockPos pos) {
             super(entity);
             this.pos = pos;
         }

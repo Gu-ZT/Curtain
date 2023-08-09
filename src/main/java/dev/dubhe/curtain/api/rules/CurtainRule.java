@@ -10,11 +10,11 @@ import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import dev.dubhe.curtain.Curtain;
 import dev.dubhe.curtain.utils.TranslationHelper;
-import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.commands.SharedSuggestionProvider;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.command.CommandSource;
+import net.minecraft.command.ISuggestionProvider;
+import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextComponent;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -68,7 +68,7 @@ public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
         }
     }
 
-    public boolean validate(CommandSourceStack source, String newValue) {
+    public boolean validate(CommandSource source, String newValue) {
         for (IValidator<T> validator : validators) {
             if (!validator.validate(source, this, newValue)) return false;
         }
@@ -76,7 +76,7 @@ public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> CurtainRule<T> newRule(String[] categories, Class<? extends IValidator<?>> @NotNull [] validators, String[] suggestions, Field field, String serializedName) {
+    public static <T> CurtainRule<T> newRule(String[] categories, Class<? extends IValidator<?>>[] validators, String[] suggestions, Field field, String serializedName) {
         List<IValidator<T>> validators1 = new ArrayList<>();
         for (Class<? extends IValidator<?>> validator : validators) {
             try {
@@ -90,7 +90,7 @@ public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> CurtainRule<T> newRule(String[] categories, Class<? extends IValidator<?>> @NotNull [] validators, String[] suggestions, Field field) {
+    public static <T> CurtainRule<T> newRule(String[] categories, Class<? extends IValidator<?>>[] validators, String[] suggestions, Field field) {
         List<IValidator<T>> validators1 = new ArrayList<>();
         for (Class<? extends IValidator<?>> validator : validators) {
             try {
@@ -152,12 +152,12 @@ public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
             return (T) (Float) Float.parseFloat(str);
         else if (this.field.getType() == Double.class)
             return (T) (Double) Double.parseDouble(str);
-        else throw new CommandSyntaxException(this, new TextComponent("%s is not a legal value".formatted(str)));
+        else throw new CommandSyntaxException(this, new StringTextComponent("%s is not a legal value".formatted(str)));
     }
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        return SharedSuggestionProvider.suggest(this.suggestions, builder);
+        return ISuggestionProvider.suggest(this.suggestions, builder);
     }
 
     @Override
@@ -177,11 +177,11 @@ public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
         return categories;
     }
 
-    public MutableComponent getNameComponent() {
+    public IFormattableTextComponent getNameComponent() {
         return TranslationHelper.translate(this.getNameTranslationKey());
     }
 
-    public MutableComponent getDescComponent() {
+    public IFormattableTextComponent getDescComponent() {
         return TranslationHelper.translate(this.getDescTranslationKey());
     }
 

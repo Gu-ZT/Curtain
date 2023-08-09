@@ -5,14 +5,14 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import dev.dubhe.curtain.CurtainRules;
 import dev.dubhe.curtain.features.player.patches.EntityPlayerMPFake;
-import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.GameType;
-import net.minecraft.world.level.storage.LevelResource;
+import net.minecraft.util.RegistryKey;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.world.GameType;
+import net.minecraft.world.storage.FolderName;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -33,7 +33,7 @@ public class FakePlayerResident {
                 String username = player.getName().getString();
                 fakePlayerList.add(username, FakePlayerResident.save(player));
             });
-            File file = server.getWorldPath(LevelResource.ROOT).resolve("fake_player.gca.json").toFile();
+            File file = server.getWorldPath(FolderName.ROOT).resolve("fake_player.gca.json").toFile();
             if (!file.isFile()) {
                 try {
                     file.createNewFile();
@@ -53,7 +53,7 @@ public class FakePlayerResident {
     public static void onServerStart(MinecraftServer server) {
         if (CurtainRules.fakePlayerResident) {
             JsonObject fakePlayerList = new JsonObject();
-            File file = server.getWorldPath(LevelResource.ROOT).resolve("fake_player.gca.json").toFile();
+            File file = server.getWorldPath(FolderName.ROOT).resolve("fake_player.gca.json").toFile();
             if (!file.isFile()) {
                 return;
             }
@@ -69,15 +69,15 @@ public class FakePlayerResident {
         }
     }
 
-    public static JsonObject save(Player player) {
+    public static JsonObject save(PlayerEntity player) {
         double pos_x = player.getX();
         double pos_y = player.getY();
         double pos_z = player.getZ();
-        double yaw = player.getYRot();
-        double pitch = player.getXRot();
+        double yaw = player.yRot;
+        double pitch = player.xRot;
         String dimension = player.level.dimension().location().getPath();
-        String gamemode = ((ServerPlayer) player).gameMode.getGameModeForPlayer().getName();
-        boolean flying = player.getAbilities().flying;
+        String gamemode = ((ServerPlayerEntity) player).gameMode.getGameModeForPlayer().getName();
+        boolean flying = player.abilities.flying;
         JsonObject fakePlayer = new JsonObject();
         fakePlayer.addProperty("pos_x", pos_x);
         fakePlayer.addProperty("pos_y", pos_y);
@@ -102,7 +102,7 @@ public class FakePlayerResident {
         String gamemode = fakePlayer.get("gamemode").getAsString();
         boolean flying = fakePlayer.get("flying").getAsBoolean();
         EntityPlayerMPFake.createFake(username, server, pos_x, pos_y, pos_z, yaw, pitch,
-                ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(dimension)),
+                RegistryKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(dimension)),
                 GameType.byName(gamemode), flying);
     }
 }

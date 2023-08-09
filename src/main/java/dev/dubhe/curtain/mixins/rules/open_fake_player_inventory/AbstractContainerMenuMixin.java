@@ -1,26 +1,29 @@
 package dev.dubhe.curtain.mixins.rules.open_fake_player_inventory;
 
-import net.minecraft.core.NonNullList;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ClickType;
-import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.container.ClickType;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.Slot;
+import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(AbstractContainerMenu.class)
+import java.util.List;
+
+@Mixin(Container.class)
 public abstract class AbstractContainerMenuMixin {
-    @Final
+
+
     @Shadow
-    public NonNullList<Slot> slots;
+    @Final
+    public List<Slot> slots;
 
     @Inject(method = "doClick", at = @At("HEAD"), cancellable = true)
-    private void onClick(int mouseX, int mouseY, ClickType clickType, Player player, CallbackInfo ci) {
+    private void onClick(int mouseX, int mouseY, ClickType clickType, PlayerEntity player, CallbackInfoReturnable<ItemStack> cir) {
         if (mouseX < 0) return;
         Slot slot = slots.get(mouseX);
         ItemStack itemStack = slot.getItem();
@@ -28,7 +31,8 @@ public abstract class AbstractContainerMenuMixin {
             if (itemStack.getTag().get("CurtainGUIItem") != null) {
                 if (itemStack.getTag().getBoolean("CurtainGUIItem")) {
                     itemStack.setCount(0);
-                    ci.cancel();
+                    cir.setReturnValue(itemStack);
+                    cir.cancel();
                 }
             }
         }

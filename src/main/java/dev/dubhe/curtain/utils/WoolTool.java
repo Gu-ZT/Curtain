@@ -1,11 +1,11 @@
 package dev.dubhe.curtain.utils;
 
-import net.minecraft.core.BlockPos;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.item.DyeColor;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -27,7 +27,7 @@ public class WoolTool {
     /**
      * Gets the colour of wool at the position, for hoppers to be able to decide whether to add their items to the global counter.
      */
-    public static DyeColor getWoolColorAtPosition(Level worldIn, BlockPos pos) {
+    public static DyeColor getWoolColorAtPosition(World worldIn, BlockPos pos) {
         BlockState state = worldIn.getBlockState(pos);
         if (state.is(BlockTags.WOOL) || !state.isRedstoneConductor(worldIn, pos)) //isSimpleFullBlock
             return null;

@@ -1,13 +1,13 @@
 package dev.dubhe.curtain.mixins.rules.better_fence_gate_placement;
 
 import dev.dubhe.curtain.CurtainRules;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.FenceGateBlock;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.FenceGateBlock;
+import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.state.BooleanProperty;
+import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static net.minecraft.world.level.block.HorizontalDirectionalBlock.FACING;
+import static net.minecraft.block.DirectionalBlock.FACING;
 
 @Mixin(FenceGateBlock.class)
 public abstract class FenceGateBlockMixin {
@@ -31,9 +31,9 @@ public abstract class FenceGateBlockMixin {
     FenceGateBlock self = (FenceGateBlock) (Object) this;
 
     @Inject(method = "getStateForPlacement", at = @At(value = "RETURN"), cancellable = true)
-    private void getStateForPlacement(BlockPlaceContext context, CallbackInfoReturnable<BlockState> cir) {
-        Level level = context.getLevel();
-        BlockPos blockPos = context.getClickedPos();
+    private void getStateForPlacement(BlockItemUseContext pContext, CallbackInfoReturnable<BlockState> cir) {
+        World level = pContext.getLevel();
+        BlockPos blockPos = pContext.getClickedPos();
         BlockState blockState = level.getBlockState(blockPos);
         if (CurtainRules.betterFenceGatePlacement && level.getBlockState(blockPos).getBlock() instanceof FenceGateBlock) {
             boolean bl = level.hasNeighborSignal(blockPos) || blockState.getValue(OPEN);

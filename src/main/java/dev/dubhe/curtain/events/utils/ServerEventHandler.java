@@ -3,23 +3,23 @@ package dev.dubhe.curtain.events.utils;
 import dev.dubhe.curtain.CurtainRules;
 import dev.dubhe.curtain.features.logging.LoggerManager;
 import dev.dubhe.curtain.features.player.helpers.FakePlayerResident;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.server.ServerStartedEvent;
-import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
+import net.minecraftforge.fml.event.server.FMLServerStoppingEvent;
 
 public class ServerEventHandler {
     private int timer = 0;
 
     @SubscribeEvent
-    public void onServerStart(ServerStartedEvent event) {
+    public void onServerStart(FMLServerStartedEvent event) {
         if (!event.getServer().isSingleplayer()) FakePlayerResident.onServerStart(event.getServer());
     }
 
     @SubscribeEvent
-    public void onServerStop(ServerStoppingEvent event) {
+    public void onServerStop(FMLServerStoppingEvent event) {
         FakePlayerResident.onServerStop(event.getServer());
     }
 
@@ -34,9 +34,7 @@ public class ServerEventHandler {
 
     @SubscribeEvent
     public void onPlayLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
-        if (event.getEntity() instanceof ServerPlayer player) {
-            if (player.getServer() != null && player.getServer().isSingleplayer() && player.getServer().isSingleplayerOwner(player.getGameProfile()))
-                FakePlayerResident.onServerStart(event.getEntity().getServer());
+        if (event.getEntity() instanceof ServerPlayerEntity player) {
             String playerName = player.getName().getString();
             if (CurtainRules.defaultLoggers.contentEquals("none")) {
                 return;
@@ -50,7 +48,7 @@ public class ServerEventHandler {
 
     @SubscribeEvent
     public void onPlayLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
-        if (event.getEntity() instanceof ServerPlayer player) {
+        if (event.getEntity() instanceof ServerPlayerEntity player) {
             String playerName = player.getName().getString();
             LoggerManager.unsubscribeAllLogger(playerName);
         }

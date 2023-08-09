@@ -7,32 +7,32 @@ import it.unimi.dsi.fastutil.objects.Object2DoubleOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.item.PrimedTnt;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.ProtectionEnchantment;
-import net.minecraft.world.level.Explosion;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkAccess;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.material.Material;
+import net.minecraft.enchantment.ProtectionEnchantment;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.item.TNTEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootContext;
+import net.minecraft.loot.LootParameters;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.Explosion;
+import net.minecraft.world.World;
+import net.minecraft.world.chunk.IChunk;
+import net.minecraft.world.server.ServerWorld;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -45,16 +45,16 @@ import java.util.Random;
 @SuppressWarnings("DuplicatedCode")
 public class OptimizedExplosion {
     private static List<Entity> entitylist;
-    private static Vec3 vec3dmem;
+    private static Vector3d vec3dmem;
     private static long tickmem;
     // For disabling the explosion particles and sound
     public static int explosionSound = 0;
     // masa's optimizations
-    private static Object2DoubleOpenHashMap<Pair<Vec3, AABB>> densityCache = new Object2DoubleOpenHashMap<>();
-    private static MutablePair<Vec3, AABB> pairMutable = new MutablePair<>();
+    private static Object2DoubleOpenHashMap<Pair<Vector3d, AxisAlignedBB>> densityCache = new Object2DoubleOpenHashMap<>();
+    private static MutablePair<Vector3d, AxisAlignedBB> pairMutable = new MutablePair<>();
     private static Object2ObjectOpenHashMap<BlockPos, BlockState> stateCache = new Object2ObjectOpenHashMap<>();
     private static Object2ObjectOpenHashMap<BlockPos, FluidState> fluidCache = new Object2ObjectOpenHashMap<>();
-    private static BlockPos.MutableBlockPos posMutable = new BlockPos.MutableBlockPos(0, 0, 0);
+    private static BlockPos.Mutable posMutable = new BlockPos.Mutable(0, 0, 0);
     private static ObjectOpenHashSet<BlockPos> affectedBlockPositionsSet = new ObjectOpenHashSet<>();
     private static boolean firstRay;
     private static boolean rayCalcDone;
@@ -83,18 +83,18 @@ public class OptimizedExplosion {
         }
 
         float f3 = eAccess.getRadius() * 2.0F;
-        int k1 = Mth.floor(eAccess.getX() - (double) f3 - 1.0D);
-        int l1 = Mth.floor(eAccess.getX() + (double) f3 + 1.0D);
-        int i2 = Mth.floor(eAccess.getY() - (double) f3 - 1.0D);
-        int i1 = Mth.floor(eAccess.getY() + (double) f3 + 1.0D);
-        int j2 = Mth.floor(eAccess.getZ() - (double) f3 - 1.0D);
-        int j1 = Mth.floor(eAccess.getZ() + (double) f3 + 1.0D);
-        Vec3 vec3d = new Vec3(eAccess.getX(), eAccess.getY(), eAccess.getZ());
+        int k1 = MathHelper.floor(eAccess.getX() - (double) f3 - 1.0D);
+        int l1 = MathHelper.floor(eAccess.getX() + (double) f3 + 1.0D);
+        int i2 = MathHelper.floor(eAccess.getY() - (double) f3 - 1.0D);
+        int i1 = MathHelper.floor(eAccess.getY() + (double) f3 + 1.0D);
+        int j2 = MathHelper.floor(eAccess.getZ() - (double) f3 - 1.0D);
+        int j1 = MathHelper.floor(eAccess.getZ() + (double) f3 + 1.0D);
+        Vector3d vec3d = new Vector3d(eAccess.getX(), eAccess.getY(), eAccess.getZ());
 
         if (vec3dmem == null || !vec3dmem.equals(vec3d) || tickmem != eAccess.getLevel().getGameTime()) {
             vec3dmem = vec3d;
             tickmem = eAccess.getLevel().getGameTime();
-            entitylist = eAccess.getLevel().getEntities(null, new AABB(k1, i2, j2, l1, i1, j1));
+            entitylist = eAccess.getLevel().getEntities(null, new AxisAlignedBB(k1, i2, j2, l1, i1, j1));
             explosionSound = 0;
         }
 
@@ -112,12 +112,12 @@ public class OptimizedExplosion {
                 continue;
             }
 
-            if (entity instanceof PrimedTnt && explodingEntity != null &&
+            if (entity instanceof TNTEntity && explodingEntity != null &&
                     entity.getX() == explodingEntity.getX() &&
                     entity.getY() == explodingEntity.getY() &&
                     entity.getZ() == explodingEntity.getZ()) {
                 if (eLogger != null) {
-                    eLogger.onEntityImpacted(entity, new Vec3(0, -0.9923437498509884d, 0));
+                    eLogger.onEntityImpacted(entity, new Vector3d(0, -0.9923437498509884d, 0));
                 }
                 continue;
             }
@@ -128,7 +128,7 @@ public class OptimizedExplosion {
                 if (d12 <= 1.0D) {
                     double d5 = entity.getX() - eAccess.getX();
                     // Change in 1.16 snapshots to fix a bug with TNT jumping
-                    double d7 = (entity instanceof PrimedTnt ? entity.getY() : entity.getEyeY()) - eAccess.getY();
+                    double d7 = (entity instanceof TNTEntity ? entity.getY() : entity.getEyeY()) - eAccess.getY();
                     double d9 = entity.getZ() - eAccess.getZ();
                     double d13 = (double) Math.sqrt(d5 * d5 + d7 * d7 + d9 * d9);
 
@@ -143,7 +143,7 @@ public class OptimizedExplosion {
                         density = densityCache.getOrDefault(pairMutable, Double.MAX_VALUE);
 
                         if (density == Double.MAX_VALUE) {
-                            Pair<Vec3, AABB> pair = Pair.of(vec3d, entity.getBoundingBox());
+                            Pair<Vector3d, AxisAlignedBB> pair = Pair.of(vec3d, entity.getBoundingBox());
                             density = Explosion.getSeenPercent(vec3d, entity);
                             densityCache.put(pair, density);
                         }
@@ -158,16 +158,16 @@ public class OptimizedExplosion {
                         }
 
                         if (eLogger != null) {
-                            eLogger.onEntityImpacted(entity, new Vec3(d5 * d11, d7 * d11, d9 * d11));
+                            eLogger.onEntityImpacted(entity, new Vector3d(d5 * d11, d7 * d11, d9 * d11));
                         }
 
                         entity.setDeltaMovement(entity.getDeltaMovement().add(d5 * d11, d7 * d11, d9 * d11));
 
-                        if (entity instanceof Player player) {
+                        if (entity instanceof PlayerEntity player) {
 
                             if (!player.isSpectator()
-                                    && (!player.isCreative() || !player.getAbilities().flying)) {  //getAbilities
-                                e.getHitPlayers().put(player, new Vec3(d5 * d10, d7 * d10, d9 * d10));
+                                    && (!player.isCreative() || !player.abilities.flying)) {  //getAbilities
+                                e.getHitPlayers().put(player, new Vector3d(d5 * d10, d7 * d10, d9 * d10));
                             }
                         }
                     }
@@ -190,16 +190,16 @@ public class OptimizedExplosion {
 
     public static void doExplosionB(Explosion e, boolean spawnParticles) {
         ExplosionAccessor eAccess = (ExplosionAccessor) e;
-        Level world = eAccess.getLevel();
+        World world = eAccess.getLevel();
         double posX = eAccess.getX();
         double posY = eAccess.getY();
         double posZ = eAccess.getZ();
 
-        boolean damagesTerrain = eAccess.getBlockInteraction() != Explosion.BlockInteraction.NONE;
+        boolean damagesTerrain = eAccess.getBlockInteraction() != Explosion.Mode.NONE;
 
         // explosionSound incremented till disabling the explosion particles and sound
         if (explosionSound < 100 || explosionSound % 100 == 0) {
-            world.playSound(null, posX, posY, posZ, SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 4.0F,
+            world.playSound(null, posX, posY, posZ, SoundEvents.GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F,
                     (1.0F + (world.random.nextFloat() - world.random.nextFloat()) * 0.2F) * 0.7F);
 
             if (spawnParticles) {
@@ -220,18 +220,18 @@ public class OptimizedExplosion {
                 Block block = state.getBlock();
 
                 if (state.getMaterial() != Material.AIR) {
-                    if (block.dropFromExplosion(e) && world instanceof ServerLevel serverLevel) {
-                        BlockEntity blockEntity = state.hasBlockEntity() ? world.getBlockEntity(blockpos) : null;  //hasBlockEntity()
+                    if (block.dropFromExplosion(e) && world instanceof ServerWorld serverLevel) {
+                        TileEntity blockEntity = state.hasTileEntity() ? world.getBlockEntity(blockpos) : null;  //hasBlockEntity()
 
-                        LootContext.Builder lootBuilder = (new LootContext.Builder((ServerLevel) eAccess.getLevel()))
+                        LootContext.Builder lootBuilder = (new LootContext.Builder((ServerWorld) eAccess.getLevel()))
                                 .withRandom(eAccess.getLevel().random)
-                                .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(blockpos))
-                                .withParameter(LootContextParams.TOOL, ItemStack.EMPTY)
-                                .withOptionalParameter(LootContextParams.BLOCK_ENTITY, blockEntity)
-                                .withOptionalParameter(LootContextParams.THIS_ENTITY, eAccess.getSource());
+                                .withParameter(LootParameters.ORIGIN, Vector3d.atCenterOf(blockpos))
+                                .withParameter(LootParameters.TOOL, ItemStack.EMPTY)
+                                .withOptionalParameter(LootParameters.BLOCK_ENTITY, blockEntity)
+                                .withOptionalParameter(LootParameters.THIS_ENTITY, eAccess.getSource());
 
-                        if (eAccess.getBlockInteraction() == Explosion.BlockInteraction.DESTROY)
-                            lootBuilder.withParameter(LootContextParams.EXPLOSION_RADIUS, eAccess.getRadius());
+                        if (eAccess.getBlockInteraction() == Explosion.Mode.DESTROY)
+                            lootBuilder.withParameter(LootParameters.EXPLOSION_RADIUS, eAccess.getRadius());
 
                         state.spawnAfterBreak(serverLevel, blockpos, ItemStack.EMPTY);
 
@@ -251,7 +251,7 @@ public class OptimizedExplosion {
         if (eAccess.isFire()) {
             for (BlockPos blockpos1 : e.getToBlow()) {
                 // Use the same Chunk reference because the positions are in the same xz-column
-                ChunkAccess chunk = world.getChunk(blockpos1.getX() >> 4, blockpos1.getZ() >> 4);
+                IChunk chunk = world.getChunk(blockpos1.getX() >> 4, blockpos1.getZ() >> 4);
 
                 BlockPos down = blockpos1.below(1);
                 if (eAccess.getRandom().nextInt(3) == 0 &&
@@ -462,7 +462,7 @@ public class OptimizedExplosion {
 
     private static void blastCalc(Explosion e) {
         ExplosionAccessor eAccess = (ExplosionAccessor) e;
-        if (blastChanceLocation == null || blastChanceLocation.distToLowCornerSqr(eAccess.getX(), eAccess.getY(), eAccess.getZ()) > 200)
+        if (blastChanceLocation == null || distToLowCornerSqr(blastChanceLocation, eAccess.getX(), eAccess.getY(), eAccess.getZ()) > 200)
             return;
         chances.clear();
         for (int j = 0; j < 16; ++j) {
@@ -540,7 +540,7 @@ public class OptimizedExplosion {
         NumberFormat nf = NumberFormat.getNumberInstance();
         nf.setRoundingMode(RoundingMode.DOWN);
         nf.setMaximumFractionDigits(2);
-        for (Player player : eAccess.getLevel().players()) {
+        for (PlayerEntity player : eAccess.getLevel().players()) {
             Messenger.m(player, "w Pop: ",
                     "c " + nf.format(chance) + " ",
                     "^w Chance for the block to be destroyed by the blast: " + chance,
@@ -566,7 +566,14 @@ public class OptimizedExplosion {
     }
 
     public static BlockPos containing(double x, double y, double z) {
-        return new BlockPos(Mth.floor(x), Mth.floor(y), Mth.floor(z));
+        return new BlockPos(MathHelper.floor(x), MathHelper.floor(y), MathHelper.floor(z));
+    }
+
+    private static double distToLowCornerSqr(BlockPos pos, double x, double y, double z) {
+        double var1 = pos.getX() - x;
+        double var2 = pos.getY() - y;
+        double var3 = pos.getZ() - z;
+        return var1 * var1 + var2 * var2 + var3 * var3;
     }
     // NONE = KEEP
     // DESTROY = DESTROY_WITH_DECAY

@@ -1,8 +1,9 @@
 package dev.dubhe.curtain.mixins;
 
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.Explosion;
-import net.minecraft.world.level.Level;
+
+import net.minecraft.entity.Entity;
+import net.minecraft.world.Explosion;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
@@ -14,10 +15,10 @@ public interface ExplosionAccessor {
     boolean isFire();
 
     @Accessor
-    Explosion.BlockInteraction getBlockInteraction();
+    Explosion.Mode getBlockInteraction();
 
     @Accessor
-    Level getLevel();
+    World getLevel();
 
     @Accessor
     Random getRandom();
