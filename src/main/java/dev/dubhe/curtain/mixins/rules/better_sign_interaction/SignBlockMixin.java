@@ -21,14 +21,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class SignBlockMixin {
     private final AbstractSignBlock self = (AbstractSignBlock) (Object) this;
 
-    @Inject(method = "use", at = @At(value = "HEAD"), cancellable = true)
+    @Inject(method = "use", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getItem()Lnet/minecraft/item/Item;"), cancellable = true)
     public void use(BlockState pState, World pLevel, BlockPos pPos, PlayerEntity pPlayer, Hand pHand, BlockRayTraceResult pHit, CallbackInfoReturnable<ActionResultType> cir) {
         if (CurtainRules.betterSignInteraction && self instanceof WallSignBlock) {
             Direction direction = pState.getValue(WallSignBlock.FACING);
             BlockPos blockPos = pPos.relative(direction, -1);
             BlockState blockState = pLevel.getBlockState(blockPos);
             if (blockState.getBlock() instanceof WallSignBlock) return;
-            BlockRayTraceResult hitResult = new  BlockRayTraceResult(Vector3d.atCenterOf(blockPos), direction, blockPos, false);
+            BlockRayTraceResult hitResult = new BlockRayTraceResult(Vector3d.atCenterOf(blockPos), direction, blockPos, false);
             blockState.use(pLevel, pPlayer, pHand, hitResult);
             cir.setReturnValue(ActionResultType.SUCCESS);
         }

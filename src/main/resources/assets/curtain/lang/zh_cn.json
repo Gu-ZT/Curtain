@@ -159,5 +159,8 @@
   "curtain.rules.anti_cheat_disabled.desc": "防止玩家因为“本服务器未启用飞行”，“移动过快”等原因被踢出",
 
   "curtain.rules.players_sleeping_percentage.name": "入睡玩家百分比",
-  "curtain.rules.players_sleeping_percentage.desc": "设置跳过夜晚所需的入睡玩家所占百分比。"
+  "curtain.rules.players_sleeping_percentage.desc": "设置跳过夜晚所需的入睡玩家所占百分比。",
+
+  "curtain.rules.better_sign_editing.name": "更好的告示牌编辑",
+  "curtain.rules.better_sign_editing.desc": "允许使用名称中包含“笔”的羽毛编辑告示牌"
 }
