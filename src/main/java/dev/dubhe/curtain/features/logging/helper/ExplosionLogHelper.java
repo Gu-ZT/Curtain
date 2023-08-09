@@ -5,6 +5,7 @@ import dev.dubhe.curtain.features.logging.LoggerManager;
 import dev.dubhe.curtain.utils.Messenger;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
+import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -75,7 +76,7 @@ public class ExplosionLogHelper {
                 messages.add(c((k.pos.equals(pos)) ? "r   - TNT" : "w   - ",
                         Messenger.dblt((k.pos.equals(pos)) ? "r" : "y", k.pos.x, k.pos.y, k.pos.z), "w  dV",
                         Messenger.dblt("d", k.accel.x, k.accel.y, k.accel.z),
-                        "w  " + regs.registryOrThrow(ForgeRegistries.ENTITIES.getRegistryKey()).getKey(k.type).getPath(), (v > 1) ? "l (" + v + ")" : ""
+                        "w  " + regs.registryOrThrow(Registry.ENTITY_TYPE_REGISTRY).getKey(k.type).getPath(), (v > 1) ? "l (" + v + ")" : ""
                 ));
             });
         }
