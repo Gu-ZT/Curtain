@@ -103,7 +103,7 @@ public class CurtainRules {
     public static boolean flippingCactus = false;
 
     @Rule(
-            categories = {FEATURE, DISPENSER}
+            categories = {FEATURE}
     )
     public static boolean rotatorBlock = false;
 
@@ -370,4 +370,9 @@ public class CurtainRules {
             categories = FEATURE
     )
     public static boolean emptyShulkerBoxStackAlways = false;
+
+    @Rule(
+            categories = {FEATURE}
+    )
+    public static boolean chickenShearing = false;
 }
