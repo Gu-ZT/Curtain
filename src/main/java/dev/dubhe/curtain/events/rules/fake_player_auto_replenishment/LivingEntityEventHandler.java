@@ -11,7 +11,8 @@ public class LivingEntityEventHandler {
     @SubscribeEvent
     public void onPlayerUsing(LivingEntityUseItemEvent.Finish event) {
         System.out.println(event.getEntity() instanceof EntityPlayerMPFake);
-        if (CurtainRules.fakePlayerAutoReplenishment && event.getEntity() instanceof EntityPlayerMPFake fakePlayer) {
+        if (CurtainRules.fakePlayerAutoReplenishment && event.getEntity() instanceof EntityPlayerMPFake) {
+            EntityPlayerMPFake fakePlayer = (EntityPlayerMPFake) event.getEntity();
             NonNullList<ItemStack> itemStackList = fakePlayer.inventory.items;
             replenishment(fakePlayer.getMainHandItem(), itemStackList);
             replenishment(fakePlayer.getOffhandItem(), itemStackList);

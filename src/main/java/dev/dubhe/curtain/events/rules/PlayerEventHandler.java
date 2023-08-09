@@ -21,23 +21,29 @@ public class PlayerEventHandler {
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent playerTickEvent) {
         if (CurtainRules.openFakePlayerInventory &&
-                playerTickEvent.player instanceof ServerPlayerEntity serverPlayer &&
-                serverPlayer instanceof EntityPlayerMPFake &&
-                serverPlayer.isAlive()
+                playerTickEvent.player instanceof ServerPlayerEntity &&
+                (ServerPlayerEntity) playerTickEvent.player instanceof EntityPlayerMPFake &&
+                ((ServerPlayerEntity) playerTickEvent.player).isAlive()
         ) {
+            ServerPlayerEntity serverPlayer = (ServerPlayerEntity) playerTickEvent.player;
             FAKE_PLAYER_INVENTORY_MENU_MAP.get(serverPlayer).tick();
         }
     }
 
     @SubscribeEvent
     public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
-        if (event.getEntity() instanceof PlayerEntity player)
+        if (event.getEntity() instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) event.getEntity();
             FAKE_PLAYER_INVENTORY_MENU_MAP.put(player, new FakePlayerInventoryMenu(player));
+        }
     }
 
     @SubscribeEvent
     public void onPlayerLeave(PlayerEvent.PlayerLoggedOutEvent event) {
-        if (event.getEntity() instanceof PlayerEntity player) FAKE_PLAYER_INVENTORY_MENU_MAP.remove(player);
+        if (event.getEntity() instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) event.getEntity();
+            FAKE_PLAYER_INVENTORY_MENU_MAP.remove(player);
+        }
     }
 
     // 工具缺失修复(missingTools)
@@ -52,7 +58,8 @@ public class PlayerEventHandler {
     // 假人补货(fakePlayerAutoReplenishment)
     @SubscribeEvent
     public void onUse(ItemStackEvent.Use event) {
-        if (CurtainRules.fakePlayerAutoReplenishment && event.getPlayer() instanceof EntityPlayerMPFake fakePlayer) {
+        if (CurtainRules.fakePlayerAutoReplenishment && event.getPlayer() instanceof EntityPlayerMPFake) {
+            EntityPlayerMPFake fakePlayer = (EntityPlayerMPFake) event.getPlayer();
             FakePlayerAutoReplenishment.autoReplenishment(fakePlayer);
         }
     }
@@ -60,7 +67,8 @@ public class PlayerEventHandler {
     // 假人补货(fakePlayerAutoReplenishment)
     @SubscribeEvent
     public void onHurtAndBreak(ItemStackEvent.HurtAndBreak event) {
-        if (CurtainRules.fakePlayerAutoReplaceTool && event.getPlayer() instanceof EntityPlayerMPFake fakePlayer) {
+        if (CurtainRules.fakePlayerAutoReplaceTool && event.getPlayer() instanceof EntityPlayerMPFake) {
+            EntityPlayerMPFake fakePlayer = (EntityPlayerMPFake) event.getPlayer();
             FakePlayerAutoReplaceTool.autoReplaceTool(fakePlayer);
         }
     }

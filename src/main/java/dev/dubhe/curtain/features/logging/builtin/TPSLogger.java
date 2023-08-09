@@ -22,7 +22,7 @@ public class TPSLogger extends AbstractHudLogger {
     public ITextComponent display(ServerPlayerEntity player) {
         MinecraftServer server = Curtain.minecraftServer;
         final OptionalDouble averageTPS = Arrays.stream(server.tickTimes).average();
-        if (averageTPS == OptionalDouble.empty()) {
+        if (averageTPS.equals(OptionalDouble.empty())) {
             return new StringTextComponent("No TPS data available").withStyle(TextFormatting.RED);
         }
         double MSPT = Arrays.stream(server.tickTimes).average().getAsDouble() * 1.0E-6D;

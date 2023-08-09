@@ -202,7 +202,6 @@ public class BlockRotator {
                         break;
                     }
                 }
-                ;
                 newState = state.rotate(turnCounterClockwise ? Rotation.COUNTERCLOCKWISE_90 : Rotation.CLOCKWISE_90);
             }
         } else if (block instanceof RotatedPillarBlock) {

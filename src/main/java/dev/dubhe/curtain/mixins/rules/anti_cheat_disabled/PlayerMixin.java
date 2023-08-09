@@ -23,7 +23,7 @@ public abstract class PlayerMixin {
 
     @Inject(method = "tryToStartFallFlying", at = @At("HEAD"), cancellable = true)
     private void allowDeploys(CallbackInfoReturnable<Boolean> cir) {
-        if (CurtainRules.antiCheatDisabled && (PlayerEntity) (Object) this instanceof ServerPlayerEntity sp && sp.getServer() != null && sp.getServer().isDedicatedServer()) {
+        if (CurtainRules.antiCheatDisabled && (PlayerEntity) (Object) this instanceof ServerPlayerEntity && ((ServerPlayerEntity) (Object) this).getServer() != null && ((ServerPlayerEntity) (Object) this).getServer().isDedicatedServer()) {
             ItemStack itemStack_1 = getItemBySlot(EquipmentSlotType.CHEST);
             if (itemStack_1.getItem() == Items.ELYTRA && ElytraItem.isFlyEnabled(itemStack_1)) {
                 startFallFlying();

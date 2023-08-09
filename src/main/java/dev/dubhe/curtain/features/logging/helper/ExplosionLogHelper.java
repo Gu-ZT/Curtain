@@ -113,7 +113,6 @@ public class ExplosionLogHelper {
         private final Vector3d pos;
         private final EntityType<?> type;
         private final Vector3d accel;
-
         public EntityChangedStatusWithCount(Entity e, Vector3d accel) {
             this.pos = e.position();
             this.type = e.getType();

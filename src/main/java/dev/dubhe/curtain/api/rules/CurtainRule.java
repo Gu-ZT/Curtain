@@ -46,8 +46,8 @@ public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
         this.validators = validators;
         this.suggestions = field.getType() == boolean.class || field.getType() == Boolean.class ? new String[]{"true", "false"} : suggestions;
         this.field = field;
-        nameTranslationKey = String.format(RULE_NAME, Curtain.MODID, serializedName);
-        descTranslationKey = String.format(RULE_DESC, Curtain.MODID, serializedName);
+        nameTranslationKey = String.format(RULE_NAME,Curtain.MODID, serializedName);
+        descTranslationKey = String.format(RULE_DESC,Curtain.MODID, serializedName);
         try {
             this.defaultValue = (T) field.get(null);
         } catch (IllegalAccessException e) {
@@ -152,7 +152,7 @@ public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
             return (T) (Float) Float.parseFloat(str);
         else if (this.field.getType() == Double.class)
             return (T) (Double) Double.parseDouble(str);
-        else throw new CommandSyntaxException(this, new StringTextComponent(str + " is not a legal value"));
+        else throw new CommandSyntaxException(this, new StringTextComponent(String.format("%s is not a legal value",str)));
     }
 
     @Override
@@ -165,11 +165,11 @@ public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
         if (this.getType() == String.class) {
             ArrayList<String> rt = new ArrayList<>();
             for (String s : this.suggestions) {
-                rt.add("\"" + s + "\"");
+                rt.add(String.format("\"%s\"",s));
             }
             return rt;
         } else {
-            return Arrays.asList(this.suggestions);
+            return new ArrayList<>(Arrays.asList(this.suggestions));
         }
     }
 

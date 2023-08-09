@@ -220,7 +220,8 @@ public class OptimizedExplosion {
                 Block block = state.getBlock();
 
                 if (state.getMaterial() != Material.AIR) {
-                    if (block.dropFromExplosion(e) && world instanceof ServerWorld serverLevel) {
+                    if (block.dropFromExplosion(e) && world instanceof ServerWorld) {
+                        ServerWorld serverLevel = (ServerWorld ) world;
                         TileEntity blockEntity = state.hasTileEntity() ? world.getBlockEntity(blockpos) : null;  //hasBlockEntity()
 
                         LootContext.Builder lootBuilder = (new LootContext.Builder((ServerWorld) eAccess.getLevel()))

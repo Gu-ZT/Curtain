@@ -27,9 +27,9 @@ public abstract class PistonMovingBlockEntityMixin {
 
     @Inject(method = "moveEntityByPiston", at = @At("HEAD"), cancellable = true)
     private static void dontPushSpectators(Direction direction, Entity entity, double d, Direction direction2, CallbackInfo ci) {
-        if (entity instanceof PlayerEntity) {
+        if (CurtainRules.creativeNoClip && entity instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) entity;
-            if (CurtainRules.creativeNoClip && player.isCreative() && player.abilities.flying) {
+            if (player.isCreative() && player.abilities.flying) {
                 ci.cancel();
             }
         }
@@ -37,9 +37,9 @@ public abstract class PistonMovingBlockEntityMixin {
 
     @Redirect(method = "moveCollidedEntities", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;setDeltaMovement(DDD)V"))
     private void ignoreAccel(Entity entity, double x, double y, double z) {
-        if (entity instanceof PlayerEntity) {
+        if (CurtainRules.creativeNoClip && entity instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) entity;
-            if (CurtainRules.creativeNoClip && player.isCreative() && player.abilities.flying) {
+            if (player.isCreative() && player.abilities.flying) {
                 return;
             }
         }

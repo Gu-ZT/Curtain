@@ -43,7 +43,7 @@ public class MenuHelper {
             category.withStyle(style -> style.withClickEvent(
                     new ClickEvent(
                             ClickEvent.Action.RUN_COMMAND,
-                            "/curtain category " + s
+                            String.format("/curtain category %s", s)
                     )
             ));
             main.append(category);

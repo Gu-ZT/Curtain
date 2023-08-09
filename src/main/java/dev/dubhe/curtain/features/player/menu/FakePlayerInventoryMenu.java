@@ -17,6 +17,7 @@ import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,7 +72,7 @@ public class FakePlayerInventoryMenu extends CustomMenu {
     }
 
     @Override
-    public ItemStack getItem(int slot) {
+    public @Nonnull ItemStack getItem(int slot) {
         Pair<NonNullList<ItemStack>, Integer> pair = getItemSlot(slot);
         if (pair != null) {
             return pair.getFirst().get(pair.getSecond());
@@ -157,7 +158,7 @@ public class FakePlayerInventoryMenu extends CustomMenu {
     }
 
     @Override
-    public ItemStack removeItem(int slot, int amount) {
+    public @Nonnull ItemStack removeItem(int slot, int amount) {
         Pair<NonNullList<ItemStack>, Integer> pair = getItemSlot(slot);
         NonNullList<ItemStack> list = null;
         if (pair != null) {
@@ -171,7 +172,7 @@ public class FakePlayerInventoryMenu extends CustomMenu {
     }
 
     @Override
-    public ItemStack removeItemNoUpdate(int slot) {
+    public @Nonnull ItemStack removeItemNoUpdate(int slot) {
         Pair<NonNullList<ItemStack>, Integer> pair = getItemSlot(slot);
         NonNullList<ItemStack> list = null;
         if (pair != null) {
@@ -187,7 +188,7 @@ public class FakePlayerInventoryMenu extends CustomMenu {
     }
 
     @Override
-    public void setItem(int slot, ItemStack stack) {
+    public void setItem(int slot, @Nonnull ItemStack stack) {
         Pair<NonNullList<ItemStack>, Integer> pair = getItemSlot(slot);
         NonNullList<ItemStack> list = null;
         if (pair != null) {
@@ -262,7 +263,6 @@ public class FakePlayerInventoryMenu extends CustomMenu {
 
         useContinuous.addTurnOnFunction(() -> ap.start(EntityPlayerActionPack.ActionType.USE, EntityPlayerActionPack.Action.continuous()));
         useContinuous.addTurnOffFunction(() -> ap.start(EntityPlayerActionPack.ActionType.USE, EntityPlayerActionPack.Action.once()));
-
         this.addButton(0, stopAll);
         this.addButton(5, attackInterval14);
         this.addButton(6, attackContinuous);

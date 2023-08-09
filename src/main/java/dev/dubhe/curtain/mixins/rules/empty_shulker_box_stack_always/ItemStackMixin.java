@@ -20,8 +20,9 @@ public abstract class ItemStackMixin {
     @Inject(method = "getMaxStackSize", at = @At("HEAD"), cancellable = true)
     private void allowEmptyShulkerBoxStacking(CallbackInfoReturnable<Integer> cir)
     {
-        if (CurtainRules.emptyShulkerBoxStackAlways && this.getItem() instanceof BlockItem item)
+        if (CurtainRules.emptyShulkerBoxStackAlways && this.getItem() instanceof BlockItem)
         {
+            BlockItem item = (BlockItem) this.getItem();
             if (item.getBlock() instanceof ShulkerBoxBlock && !InventoryUtils.shulkerBoxHasItems((ItemStack) (Object) this))
             {
                 cir.setReturnValue(CurtainRules.shulkerBoxStackSize);

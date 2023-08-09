@@ -26,7 +26,9 @@ public abstract class ItemStackMixin {
 
     @Inject(method = "hurtAndBreak", at = @At("HEAD"))
     private <T extends LivingEntity> void hurtAndBreak(int amount, T entity, Consumer<T> onBroken, CallbackInfo ci) {
-        if (entity instanceof PlayerEntity player)
+        if (entity instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) entity;
             MinecraftForge.EVENT_BUS.post(new ItemStackEvent.HurtAndBreak((ItemStack) (Object) this, amount, player));
+        }
     }
 }

@@ -101,8 +101,8 @@
   "curtain.rules.merge_tnt.name": "合并TNT",
   "curtain.rules.merge_tnt.desc": "合并静止的点燃的TNT实体",
 
-  "curtain.rules.ctrl_q_crafting_fix.name": "Ctrl+Q合成修复",
-  "curtain.rules.ctrl_q_crafting_fix.desc": "在合成时允许使用Ctrl+Q快捷键扔出结果格内所有物品",
+  "curtain.rules.ctrl_q_crafting_fix.name": "Ctrl✚Q合成修复",
+  "curtain.rules.ctrl_q_crafting_fix.desc": "在合成时允许使用Ctrl✚Q快捷键扔出结果格内所有物品",
 
   "curtain.rules.quick_leaf_decay.name": "快速叶子腐烂",
   "curtain.rules.quick_leaf_decay.desc": "在砍树后树叶会快速掉落",
