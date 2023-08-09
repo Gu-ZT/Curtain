@@ -61,9 +61,9 @@ public class MenuHelper {
      * @param name 分类名
      * @return 分类聊天组件
      */
-    public static TextComponent category(String name) {
-        TextComponent main = new StringTextComponent("");
-        TextComponent display = new StringTextComponent(name);
+    public static IFormattableTextComponent category(String name) {
+        IFormattableTextComponent main = new StringTextComponent("");
+        IFormattableTextComponent display = new StringTextComponent(name);
         if (RuleManager.CATEGORIES_RULES.containsKey(name)) {
             display = TranslationHelper.translate(CATEGORIES.formatted(Curtain.MODID, name));
         }

@@ -1,12 +1,7 @@
 package dev.dubhe.curtain.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.ArgumentType;
-import com.mojang.brigadier.arguments.BoolArgumentType;
-import com.mojang.brigadier.arguments.DoubleArgumentType;
-import com.mojang.brigadier.arguments.FloatArgumentType;
-import com.mojang.brigadier.arguments.IntegerArgumentType;
-import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.arguments.*;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import dev.dubhe.curtain.Curtain;
@@ -22,12 +17,10 @@ import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.TextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.ClickEvent;
-
 import static dev.dubhe.curtain.utils.TranslationKeys.AS_DEFAULT;
 import static dev.dubhe.curtain.utils.TranslationKeys.CHANGE;
 import static dev.dubhe.curtain.utils.TranslationKeys.CHANGE_DEFAULT;
 import static net.minecraft.command.ISuggestionProvider.suggest;
-
 
 public class RuleCommand {
     public static void register(CommandDispatcher<CommandSource> dispatcher, RuleManager manager) {
@@ -50,7 +43,7 @@ public class RuleCommand {
     }
 
     private static int showCategory(CommandContext<CommandSource> context) {
-        TextComponent component = MenuHelper.category(context.getArgument("name", String.class));
+        IFormattableTextComponent component = MenuHelper.category(context.getArgument("name", String.class));
         context.getSource().sendSuccess(component, false);
         return 1;
     }

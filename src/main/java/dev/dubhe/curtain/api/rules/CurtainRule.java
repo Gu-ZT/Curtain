@@ -12,6 +12,7 @@ import dev.dubhe.curtain.Curtain;
 import dev.dubhe.curtain.utils.TranslationHelper;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.ISuggestionProvider;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextComponent;
 
@@ -36,7 +37,6 @@ public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
     private final String descTranslationKey;
 
     private CurtainRule(String[] categories, List<IValidator<T>> validators, String[] suggestions, Field field) {
-
         this(categories, validators, suggestions, field, CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, field.getName()));
     }
 
@@ -44,7 +44,7 @@ public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
     private CurtainRule(String[] categories, List<IValidator<T>> validators, String[] suggestions, Field field, String serializedName) {
         this.categories = categories;
         this.validators = validators;
-        this.suggestions = suggestions;
+        this.suggestions = field.getType() == boolean.class || field.getType() == Boolean.class ? new String[]{"true", "false"} : suggestions;
         this.field = field;
         nameTranslationKey = RULE_NAME.formatted(Curtain.MODID, serializedName);
         descTranslationKey = RULE_DESC.formatted(Curtain.MODID, serializedName);
@@ -176,12 +176,11 @@ public class CurtainRule<T> implements ArgumentType<T>, CommandExceptionType {
     public String[] getCategories() {
         return categories;
     }
-
-    public TextComponent getNameComponent() {
+    public IFormattableTextComponent getNameComponent() {
         return TranslationHelper.translate(this.getNameTranslationKey());
     }
 
-    public TextComponent getDescComponent() {
+    public IFormattableTextComponent getDescComponent() {
         return TranslationHelper.translate(this.getDescTranslationKey());
     }
 
