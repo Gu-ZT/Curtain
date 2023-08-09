@@ -155,6 +155,9 @@
   "curtain.rules.chicken_shearing.name": "Chicken Shearing",
   "curtain.rules.chicken_shearing.desc": "Chickens can be sheared to get feathers. Beware! every time u shear a chicken, it gets damaged!",
 
-  "curtain.rules.anti_cheat_disabled.name": "AntiCheatDisabled",
-  "curtain.rules.anti_cheat_disabled.desc": "Prevents players from rubberbanding when moving too fast"
+  "curtain.rules.anti_cheat_disabled.name": "Anti Cheat Disabled",
+  "curtain.rules.anti_cheat_disabled.desc": "Prevents players from rubberbanding when moving too fast",
+
+  "curtain.rules.players_sleeping_percentage.name": "Players Sleeping Percentage",
+  "curtain.rules.players_sleeping_percentage.desc": "Set the percentage of players who need to skip sleeping at night."
 }
