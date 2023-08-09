@@ -21,7 +21,7 @@ public class LogCommand {
                         .suggests((context, builder) -> suggest(LoggerManager.getLoggerSet(), builder))
                         .executes(context -> {
                             String loggerName = StringArgumentType.getString(context, "loggerName");
-                            ServerPlayer player = context.getSource().getPlayer();
+                            ServerPlayer player = context.getSource().getPlayerOrException();
                             if (player == null) {
                                 return 0;
                             }

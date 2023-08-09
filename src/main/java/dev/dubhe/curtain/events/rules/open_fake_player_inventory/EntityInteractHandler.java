@@ -3,6 +3,7 @@ package dev.dubhe.curtain.events.rules.open_fake_player_inventory;
 import dev.dubhe.curtain.CurtainRules;
 import dev.dubhe.curtain.features.player.patches.EntityPlayerMPFake;
 import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ChestMenu;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -36,7 +37,8 @@ public class EntityInteractHandler {
                 );
             }
             if (provider != null)
-                entityInteract.getEntity().openMenu(provider);
+                if (entityInteract.getEntity() instanceof Player player)
+                    player.openMenu(provider);
         }
 
     }

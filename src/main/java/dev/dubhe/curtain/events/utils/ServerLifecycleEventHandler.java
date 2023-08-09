@@ -1,14 +1,13 @@
 package dev.dubhe.curtain.events.utils;
 
 import dev.dubhe.curtain.Curtain;
-import dev.dubhe.curtain.utils.PlanExecution;
 import dev.dubhe.curtain.api.rules.RuleManager;
 import dev.dubhe.curtain.commands.LogCommand;
 import dev.dubhe.curtain.commands.PlayerCommand;
 import dev.dubhe.curtain.commands.RuleCommand;
+import dev.dubhe.curtain.events.WorldTickEvent;
+import dev.dubhe.curtain.utils.PlanExecution;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.event.server.ServerStoppedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -26,9 +25,8 @@ public class ServerLifecycleEventHandler {
     }
 
     @SubscribeEvent
-    public void onServerTick(TickEvent.ServerTickEvent event) {
-        ServerLevel level = event.getServer().getLevel(Level.OVERWORLD);
-        if (null != level) {
+    public void onServerTick(WorldTickEvent event) {
+        if (event.getWorld() instanceof ServerLevel level) {
             long time = level.getGameTime();
             if (Curtain.planExecution != null) {
                 Curtain.planExecution.execute(time);

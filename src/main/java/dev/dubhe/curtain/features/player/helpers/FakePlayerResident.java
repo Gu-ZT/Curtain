@@ -101,7 +101,7 @@ public class FakePlayerResident {
         String dimension = fakePlayer.get("dimension").getAsString();
         String gamemode = fakePlayer.get("gamemode").getAsString();
         boolean flying = fakePlayer.get("flying").getAsBoolean();
-        EntityPlayerMPFake.createFakePlayer(username, server, pos_x, pos_y, pos_z, yaw, pitch,
+        EntityPlayerMPFake.createFake(username, server, pos_x, pos_y, pos_z, yaw, pitch,
                 ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(dimension)),
                 GameType.byName(gamemode), flying);
     }

@@ -6,7 +6,7 @@ import dev.dubhe.curtain.api.rules.Rule;
 import dev.dubhe.curtain.api.rules.Validators;
 import dev.dubhe.curtain.utils.TranslationHelper;
 import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.ServerInterface;
 import net.minecraft.world.entity.Entity;
@@ -43,7 +43,7 @@ public class CurtainRules {
                 return false;
             }
             if (value < 0 || value > 32) {
-                source.sendFailure(Component.literal("view distance has to be between 0 and 32"));
+                source.sendFailure(new TextComponent("view distance has to be between 0 and 32"));
                 return false;
             }
             MinecraftServer server = source.getServer();
@@ -55,7 +55,7 @@ public class CurtainRules {
 
                 return true;
             } else {
-                source.sendFailure(Component.literal("view distance can only be changed on a server"));
+                source.sendFailure(new TextComponent("view distance can only be changed on a server"));
                 return false;
             }
         }
@@ -230,18 +230,13 @@ public class CurtainRules {
     )
     public static boolean optimizedTNT = false;
 
-    @Rule(
-            categories = {SURVIVAL, FEATURE}
-    )
-    public static boolean xpFromExplosions = false;
-
     public static class CheckOptimizedTntEnabledValidator implements IValidator<Integer> {
 
         @Override
         public boolean validate(CommandSourceStack source, CurtainRule<Integer> rule, String newValue) {
             boolean b = optimizedTNT || rule.isDefault(newValue);
             if (!b) {
-                source.sendFailure(Component.literal("optimizedTNT must be enabled"));
+                source.sendFailure(new TextComponent("optimizedTNT must be enabled"));
             }
             return b;
         }
@@ -275,7 +270,7 @@ public class CurtainRules {
             double value = Double.parseDouble(newValue);
             boolean b = ((value >= 0 && value < Math.PI * 2) || rule.isDefault(newValue));
             if (!b) {
-                source.sendFailure(Component.literal("Must be between 0 and 2pi, or -1"));
+                source.sendFailure(new TextComponent("Must be between 0 and 2pi, or -1"));
             }
             return b;
         }

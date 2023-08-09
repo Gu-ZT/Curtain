@@ -5,9 +5,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import dev.dubhe.curtain.CurtainRules;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TranslatableComponent;
 import org.apache.commons.io.IOUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -36,7 +36,7 @@ public class TranslationHelper {
      */
     public static @NotNull MutableComponent translate(String key, ChatFormatting formatting, Style style, Object... args) {
         Map<String, String> trans = TRANS_MAP.getOrDefault(CurtainRules.language, new HashMap<>());
-        return Component.translatable(key, trans.getOrDefault(key, key).formatted(args), args);
+        return new TranslatableComponent(key, trans.getOrDefault(key, key).formatted(args), args);
     }
 
     /**
@@ -48,7 +48,7 @@ public class TranslationHelper {
      */
     public static @NotNull MutableComponent translate(String key, Object... args) {
         Map<String, String> trans = TRANS_MAP.getOrDefault(CurtainRules.language, new HashMap<>());
-        return Component.translatable(key, trans.getOrDefault(key, key).formatted(args), args);
+        return new TranslatableComponent(key, trans.getOrDefault(key, key).formatted(args), args);
     }
 
     /**

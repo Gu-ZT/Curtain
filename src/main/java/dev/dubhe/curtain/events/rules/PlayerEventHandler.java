@@ -7,6 +7,7 @@ import dev.dubhe.curtain.features.player.helpers.FakePlayerAutoReplenishment;
 import dev.dubhe.curtain.features.player.menu.FakePlayerInventoryMenu;
 import dev.dubhe.curtain.features.player.patches.EntityPlayerMPFake;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.TickEvent;
@@ -30,12 +31,13 @@ public class PlayerEventHandler {
 
     @SubscribeEvent
     public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
-        FAKE_PLAYER_INVENTORY_MENU_MAP.put(event.getEntity(), new FakePlayerInventoryMenu(event.getEntity()));
+        if (event.getEntity() instanceof Player player)
+            FAKE_PLAYER_INVENTORY_MENU_MAP.put(player, new FakePlayerInventoryMenu(player));
     }
 
     @SubscribeEvent
     public void onPlayerLeave(PlayerEvent.PlayerLoggedOutEvent event) {
-        FAKE_PLAYER_INVENTORY_MENU_MAP.remove(event.getEntity());
+        if (event.getEntity() instanceof Player player) FAKE_PLAYER_INVENTORY_MENU_MAP.remove(player);
     }
 
     // 工具缺失修复(missingTools)
