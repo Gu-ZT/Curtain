@@ -1,5 +1,6 @@
 package dev.dubhe.curtain;
 
+import dev.dubhe.curtain.api.PlanExecution;
 import dev.dubhe.curtain.api.rules.RuleManager;
 import dev.dubhe.curtain.events.MyEventHandlers;
 import dev.dubhe.curtain.features.logging.LoggerManager;
@@ -21,10 +22,10 @@ import java.util.List;
 public class Curtain implements ICurtain {
     public static final String MODID = "curtain";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
-    public static final List<ICurtain> subMods = new ArrayList<>();
+    public static final List<ICurtain> SUB_MODS = new ArrayList<>();
+    public static PlanExecution planExecution = null;
     public static RuleManager rules = null;
-
-    public static MinecraftServer minecraftServer;
+    public static MinecraftServer minecraftServer = null;
 
     public Curtain() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -45,7 +46,7 @@ public class Curtain implements ICurtain {
      * @param curtain 附属入口
      */
     public static void addSubMod(ICurtain curtain) {
-        Curtain.subMods.add(curtain);
+        Curtain.SUB_MODS.add(curtain);
     }
 
     private void setTrans() {

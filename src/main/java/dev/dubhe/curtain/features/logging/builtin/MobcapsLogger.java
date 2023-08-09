@@ -15,7 +15,7 @@ public class MobcapsLogger extends AbstractHudLogger {
 
     @Override
     public Component display(ServerPlayer player) {
-        ResourceKey<Level> dim = player.level.dimension();
+        ResourceKey<Level> dim = player.level().dimension();
         Component msg = SpawnReporter.printMobcapsForDimension(player.getServer().getLevel(dim), false).get(0);
         return msg;
     }

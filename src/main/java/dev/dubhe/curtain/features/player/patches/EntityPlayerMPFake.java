@@ -68,7 +68,7 @@ public class EntityPlayerMPFake extends ServerPlayer {
             instance.teleportTo(worldIn, x, y, z, (float) yaw, (float) pitch);
             instance.setHealth(20.0f);
             instance.unsetRemoved();
-            instance.maxUpStep = 0.6F;//I dont know why set this
+            instance.setMaxUpStep(0.6F);//I dont know why set this
             instance.gameMode.changeGameModeForPlayer(gamemode);
             server.getPlayerList().broadcastAll(new ClientboundRotateHeadPacket(instance, (byte) (instance.yHeadRot * 256 / 360)), dimensionId);
             server.getPlayerList().broadcastAll(new ClientboundTeleportEntityPacket(instance), dimensionId);
@@ -85,7 +85,7 @@ public class EntityPlayerMPFake extends ServerPlayer {
     public static EntityPlayerMPFake createShadow(MinecraftServer server, ServerPlayer player) {
         player.getServer().getPlayerList().remove(player);
         player.connection.disconnect(Component.translatable("multiplayer.disconnect.duplicate_login"));
-        ServerLevel worldIn = player.getLevel();//.getWorld(player.dimension);
+        ServerLevel worldIn = (ServerLevel) player.level();
         GameProfile gameprofile = player.getGameProfile();
         EntityPlayerMPFake playerShadow = new EntityPlayerMPFake(server, worldIn, gameprofile, true);
         //playerShadow.setChatSession(player.getChatSession());
@@ -95,11 +95,11 @@ public class EntityPlayerMPFake extends ServerPlayer {
         playerShadow.connection.teleport(player.getX(), player.getY(), player.getZ(), player.getYRot(), player.getXRot());
         playerShadow.gameMode.changeGameModeForPlayer(player.gameMode.getGameModeForPlayer());
         ((IServerPlayer) playerShadow).getActionPack().copyFrom(((IServerPlayer) player).getActionPack());
-        playerShadow.maxUpStep = 0.6F;
+        playerShadow.setMaxUpStep(0.6F);
         playerShadow.entityData.set(DATA_PLAYER_MODE_CUSTOMISATION, player.getEntityData().get(DATA_PLAYER_MODE_CUSTOMISATION));
 
 
-        server.getPlayerList().broadcastAll(new ClientboundRotateHeadPacket(playerShadow, (byte) (player.yHeadRot * 256 / 360)), playerShadow.level.dimension());
+        server.getPlayerList().broadcastAll(new ClientboundRotateHeadPacket(playerShadow, (byte) (player.yHeadRot * 256 / 360)), playerShadow.level().dimension());
         server.getPlayerList().broadcastAll(new ClientboundPlayerInfoUpdatePacket(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, playerShadow));
         //player.world.getChunkManager().updatePosition(playerShadow);
         playerShadow.getAbilities().flying = player.getAbilities().flying;
@@ -133,7 +133,7 @@ public class EntityPlayerMPFake extends ServerPlayer {
     public void tick() {
         if (this.getServer().getTickCount() % 10 == 0) {
             this.connection.resetPosition();
-            this.getLevel().getChunkSource().move(this);
+            ((ServerLevel) this.level()).getChunkSource().move(this);
         }
         try {
             super.tick();
@@ -167,7 +167,7 @@ public class EntityPlayerMPFake extends ServerPlayer {
 
     @Override
     protected void checkFallDamage(double y, boolean onGround, @NotNull BlockState state, @NotNull BlockPos pos) {
-        doCheckFallDamage(y, onGround);
+        doCheckFallDamage(this.getX(), y, this.getZ(), onGround);
     }
 
     @Override
