@@ -74,7 +74,7 @@ public class Button {
         this.onItem = onItem;
         this.offItem = offItem;
         this.itemCount = itemCount;
-        this.compoundTag.putBoolean("GcaClear", true);
+        this.compoundTag.putBoolean("CurtainGUIItem", true);
     }
 
     public void checkButton(IInventory container, int slot) {
