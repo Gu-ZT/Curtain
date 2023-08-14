@@ -1,5 +1,21 @@
 # Changelog
 
+## [Unreleased](https://github.com/Gu-ZT/Curtain/tree/HEAD)
+
+[Full Changelog](https://github.com/Gu-ZT/Curtain/compare/1.3.2...HEAD)
+
+**Fixed bugs:**
+
+- \[Bug\] 点击假人背包中的按钮会将其拿下来而不会消失 [\#137](https://github.com/Gu-ZT/Curtain/issues/137)
+
+## [1.3.2](https://github.com/Gu-ZT/Curtain/tree/1.3.2) (2023-08-14)
+
+[Full Changelog](https://github.com/Gu-ZT/Curtain/compare/1.3.1...1.3.2)
+
+**Merged pull requests:**
+
+- fixed \#137 [\#138](https://github.com/Gu-ZT/Curtain/pull/138) ([Gu-ZT](https://github.com/Gu-ZT))
+
 ## [1.3.1](https://github.com/Gu-ZT/Curtain/tree/1.3.1) (2023-08-09)
 
 [Full Changelog](https://github.com/Gu-ZT/Curtain/compare/1.3.0...1.3.1)
