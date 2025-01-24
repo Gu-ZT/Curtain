@@ -10,7 +10,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class LivingEntityEventHandler {
     @SubscribeEvent
     public void onPlayerUsing(LivingEntityUseItemEvent.Finish event) {
-        System.out.println(event.getEntity() instanceof EntityPlayerMPFake);
         if (CurtainRules.fakePlayerAutoReplenishment && event.getEntity() instanceof EntityPlayerMPFake fakePlayer) {
             NonNullList<ItemStack> itemStackList = fakePlayer.getInventory().items;
             replenishment(fakePlayer.getMainHandItem(), itemStackList);
