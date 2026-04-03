@@ -11,13 +11,17 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.ServerInterface;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.fml.ModList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static dev.dubhe.curtain.api.rules.Categories.*;
-
 
 @SuppressWarnings("unused")
 public class CurtainRules {
     public static final ThreadLocal<Boolean> impendingFillSkipUpdates = ThreadLocal.withInitial(() -> false);
+    public static final Logger LOG = LoggerFactory.getLogger("curtain");
+    public static final String curtainVersion = ModList.get().getModContainerById("curtain").orElseThrow().getModInfo().getVersion().toString();
 
     public static class LanguageValidator implements IValidator<String> {
         @Override
@@ -380,4 +384,7 @@ public class CurtainRules {
             categories = SURVIVAL
     )
     public static boolean betterSignEditing = false;
+    public static boolean superSecretSetting = false;
+    public static boolean smoothClientAnimations = false;
+    public static boolean tickSyncedWorldBorders = false;
 }

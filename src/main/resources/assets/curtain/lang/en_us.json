@@ -6,7 +6,6 @@
   "curtain.menu.change": "The value of %s has been changed to %s",
   "curtain.menu.change.default": "The default value of %s has been changed to %s",
   "curtain.menu.as_default": "[Set as default]",
-
   "curtain.categories.feature": "FEATURE",
   "curtain.categories.creative": "CREATIVE",
   "curtain.categories.command": "COMMAND",
@@ -16,148 +15,102 @@
   "curtain.categories.client": "CLIENT",
   "curtain.categories.tnt": "TNT",
   "curtain.categories.bot": "BOT",
-
+  "curtain.categories.experimental": "EXPERIMENTAL",
   "curtain.rules.language.name": "Language",
   "curtain.rules.language.desc": "The Language of Curtain.",
-
   "curtain.rules.xp_no_cooldown.name": "XpNoCoolDown",
   "curtain.rules.xp_no_cooldown.desc": "Players absorb XP instantly, without delay.",
-
   "curtain.rules.allow_spawning_offline_players.name": "AllowSpawningOfflinePlayers",
   "curtain.rules.allow_spawning_offline_players.desc": "Weather allow spawn offline players using /player command.",
-
   "curtain.rules.command_player.name": "CommandPlayer",
   "curtain.rules.command_player.desc": "Enable /player command to control/summon players.",
-
   "curtain.rules.view_distance.name": "ViewDistance",
   "curtain.rules.view_distance.desc": "Change the server sight distance, set to 0 to use the default value.",
-
   "curtain.rules.command_log.name": "CommandLog",
   "curtain.rules.command_log.desc": "Enables /log command to monitor events via chat and overlays.",
-
   "curtain.rules.missing_tools.name": "MissingTools",
   "curtain.rules.missing_tools.desc": "Glass can be broken faster with pickaxes.",
-
   "curtain.rules.flipping_cactus.name": "FlippingCactus",
   "curtain.rules.flipping_cactus.desc": "Players can flip and rotate blocks when holding cactus.",
-
   "curtain.rules.rotator_block.name": "RotatorBlock",
   "curtain.rules.rotator_block.desc": "Cactus in dispensers rotates blocks.",
-
   "curtain.rules.placement_rotation_fix.name": "PlacementRotationFix",
   "curtain.rules.placement_rotation_fix.desc": "fixes block placement rotation issue when player rotates quickly while placing blocks.",
-
   "curtain.rules.fill_updates.name": "FillUpdates",
   "curtain.rules.fill_updates.desc": "fill/clone/setblock and structure blocks cause block updates",
-
   "curtain.rules.interaction_updates.name": "InteractionUpdates",
   "curtain.rules.interaction_updates.desc": "placing blocks cause block updates",
-
   "curtain.rules.default_loggers.name": "DefaultLoggers",
   "curtain.rules.default_loggers.desc": "sets these loggers in their default configurations for all new players",
-
   "curtain.rules.hud_logger_update_interval.name": "HUDLoggerUpdateInterval",
   "curtain.rules.hud_logger_update_interval.desc": "Overwrite HUD loggers update interval (gametick).",
-
   "curtain.rules.open_fake_player_inventory.name": "Fake Player Inventory",
   "curtain.rules.open_fake_player_inventory.desc": "Allow player to open the fake player's inventory",
-
   "curtain.rules.open_fake_player_inventory.menu.slot": "Slot %d",
   "curtain.rules.open_fake_player_inventory.menu.stop_all": "STOP ALL ACTION",
   "curtain.rules.open_fake_player_inventory.menu.attack_interval_14": "Attack every 14 gt: %s",
   "curtain.rules.open_fake_player_inventory.menu.attack_continuous": "Attack continuous: %s",
   "curtain.rules.open_fake_player_inventory.menu.use_continuous": "Use continuous: %s",
-
   "curtain.rules.open_fake_player_ender_chest.name": "Fake Player Ender Chest",
   "curtain.rules.open_fake_player_ender_chest.desc": "Allow player to open the fake player's ender chest",
-
   "curtain.rules.stackable_shulker_boxes.name": "Stackable Shulker Boxes",
   "curtain.rules.stackable_shulker_boxes.desc": "Empty shulker boxes can stack when thrown on the ground.",
-
   "curtain.rules.super_lead.name": "Super Lead",
   "curtain.rules.super_lead.desc": "Villagers and monsters can be tethered (tethering monsters requires the client to install Curtain as well)",
-
   "curtain.rules.desert_shrubs.name": "Desert Shrubs",
   "curtain.rules.desert_shrubs.desc": "Saplings turn into dead shrubs in hot climates and no water access",
-
   "curtain.rules.explosion_no_block_damage.name": "Explosion No Block Damage",
   "curtain.rules.explosion_no_block_damage.desc": "Explosions won't destroy blocks",
-
   "curtain.rules.creative_no_clip.name": "Creative No Clip",
   "curtain.rules.creative_no_clip.desc": "On servers it needs to be set on both\nclient and server to function properly.\nHas no effect when set on the server only\nCan allow to phase through walls\nif only set on the carpet client side\nbut requires some trapdoor magic to\nallow the player to enter blocks",
-
   "curtain.rules.optimized_tnt.name": "Optimized TNT",
   "curtain.rules.optimized_tnt.desc": "TNT causes less lag when exploding in the same spot and in liquids",
-
   "curtain.rules.tnt_random_range.name": "TNT Random Range",
   "curtain.rules.tnt_random_range.desc": "Sets the tnt random explosion range to a fixed value\nSet to -1 for default behavior",
-
   "curtain.rules.tnt_primer_momentum_removed.name": "TNT Primer Momentum Removed",
   "curtain.rules.tnt_primer_momentum_removed.desc": "Removes random TNT momentum when primed",
-
   "curtain.rules.hardcode_tnt_angle.name": "Hardcode TNT angle",
   "curtain.rules.hardcode_tnt_angle.desc": "Sets the horizontal random angle on TNT for debugging of TNT contraptions\nSet to -1 for default behavior",
-
   "curtain.rules.merge_tnt.name": "Merge TNT",
   "curtain.rules.merge_tnt.desc": "Merges stationary primed TNT entities",
-
   "curtain.rules.ctrl_q_crafting_fix.name": "Ctrl+Q Crafting Fix",
   "curtain.rules.ctrl_q_crafting_fix.desc": "Dropping entire stacks works also from on the crafting UI result slot",
-
   "curtain.rules.quick_leaf_decay.name": "Quick Leaf Decay",
   "curtain.rules.quick_leaf_decay.desc": "Leaves fall off quickly after cutting down a tree",
-
   "curtain.rules.custom_motd.name": "Custom MOTD",
   "curtain.rules.custom_motd.desc": "Sets a different motd message on client trying to connect to the server\nuse '_' to use the startup setting from server.properties",
-
   "curtain.rules.turtle_egg_trampled_disabled.name": "Turtle Egg Trampled Disabled",
   "curtain.rules.turtle_egg_trampled_disabled.desc": "Stopping turtle eggs from being destroyed by physical trampling",
-
   "curtain.rules.farmland_trampled_disabled.name": "Farmland Trampled Disabled",
   "curtain.rules.farmland_trampled_disabled.desc": "Stopping farmlands from being destroyed by physical trampling",
-
   "curtain.rules.fake_player_name_prefix.name": "Fake Player Name Prefix",
   "curtain.rules.fake_player_name_prefix.desc": "Add the specified prefix to the name of the fake player summoned by the /player command",
-
   "curtain.rules.fake_player_name_suffix.name": "Fake Player Name Suffix",
   "curtain.rules.fake_player_name_suffix.desc": "Add the specified prefix to the name of the fake player summoned by the /player command",
-
   "curtain.rules.scaffolding_distance.name": "Scaffolding Distance",
   "curtain.rules.scaffolding_distance.desc": "Max distance for scaffolding.",
-
   "curtain.rules.fake_player_auto_fish.name": "fakePlayerAutoFish",
   "curtain.rules.fake_player_auto_fish.desc": "Make fake player to auto fish.",
-
   "curtain.rules.better_sign_interaction.name": "Better Sign Interaction",
   "curtain.rules.better_sign_interaction.desc": "Only the axe with \"Strip\" in its name is allowed to peel logs",
-
   "curtain.rules.better_wood_strip.name": "Better Wood Strip",
   "curtain.rules.better_wood_strip.desc": "Make the block attached to the sign interact when you right-click it",
-
   "curtain.rules.better_fence_gate_placement.name": "Better Fence Gate Placement",
   "curtain.rules.better_fence_gate_placement.desc": "Make the placed fence gate have the same block status as the fence gate you clicked",
-
   "curtain.rules.fake_player_resident.name": "Fake Player Resident",
   "curtain.rules.fake_player_resident.desc": "Keep the fake player when exiting the level",
-
   "curtain.rules.fake_player_auto_replenishment.name": "Fake Player Auto Replenishment",
   "curtain.rules.fake_player_auto_replenishment.desc": "Make fake player to auto replenishment",
-
   "curtain.rules.fake_player_auto_replace_tool.name": "Fake Player Auto Replace Tool",
   "curtain.rules.fake_player_auto_replace_tool.desc": "Make fake player to auto replace almost damaged tool",
-
   "curtain.rules.block_placement_ignore_entity.name": "Block Placement Ignore Entity",
   "curtain.rules.block_placement_ignore_entity.desc": "Disable entity collision check before block placement, aka you can place blocks inside entities",
-
   "curtain.rules.empty_shulker_box_stack_always.name": "Empty Shulker Box Stack Always",
   "curtain.rules.empty_shulker_box_stack_always.desc": "Empty Shulker Boxes will always stack, even inside inventories.",
-
   "curtain.rules.chicken_shearing.name": "Chicken Shearing",
   "curtain.rules.chicken_shearing.desc": "Chickens can be sheared to get feathers. Beware! every time u shear a chicken, it gets damaged!",
-
   "curtain.rules.anti_cheat_disabled.name": "AntiCheatDisabled",
   "curtain.rules.anti_cheat_disabled.desc": "Prevents players from rubberbanding when moving too fast",
-
   "curtain.rules.better_sign_editing.name": "Better Sign Editing",
   "curtain.rules.better_sign_editing.desc": "Possible to use feather editing sign with \"pen\" in the name"
 }

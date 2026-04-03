@@ -16,6 +16,7 @@
   "curtain.categories.client": "客户端",
   "curtain.categories.tnt": "TNT",
   "curtain.categories.bot": "假人",
+  "curtain.categories.experimental": "实验",
 
   "curtain.rules.language.name": "语言",
   "curtain.rules.language.desc": "窗帘输出文本的本地化语言",

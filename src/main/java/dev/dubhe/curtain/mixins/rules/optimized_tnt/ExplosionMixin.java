@@ -34,7 +34,7 @@ public class ExplosionMixin {
 
     @Inject(method = "explode", at = @At("HEAD"), cancellable = true)
     private void onExplosionA(CallbackInfo ci) {
-        if (CurtainRules.optimizedTNT) {
+        if (CurtainRules.optimizedTNT && level != null) {
             OptimizedExplosion.doExplosionA((Explosion) (Object) this, eLogger);
             ci.cancel();
         }
@@ -42,16 +42,16 @@ public class ExplosionMixin {
 
     @Inject(method = "finalizeExplosion", at = @At("HEAD"), cancellable = true)
     private void onExplosionB(boolean spawnParticles, CallbackInfo ci) {
-        if (eLogger != null) {
-            eLogger.setAffectBlocks(!toBlow.isEmpty());
-            eLogger.onExplosionDone(this.level.getGameTime());
+        if (eLogger != null && level != null) {
+        eLogger.setAffectBlocks(!toBlow.isEmpty());
+        eLogger.onExplosionDone(level.getGameTime());
         }
-        if (CurtainRules.explosionNoBlockDamage) {
-            toBlow.clear();
+    if (CurtainRules.explosionNoBlockDamage) {
+        toBlow.clear();
         }
-        if (CurtainRules.optimizedTNT) {
-            OptimizedExplosion.doExplosionB((Explosion) (Object) this, spawnParticles);
-            ci.cancel();
+    if (CurtainRules.optimizedTNT && level != null) {
+        OptimizedExplosion.doExplosionB((Explosion) (Object) this, spawnParticles);
+        ci.cancel();
         }
     }
 
@@ -65,8 +65,8 @@ public class ExplosionMixin {
 
     @Inject(method = "<init>(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;Lnet/minecraft/world/level/ExplosionDamageCalculator;DDDFZLnet/minecraft/world/level/Explosion$BlockInteraction;)V", at = @At(value = "RETURN"))
     private void onExplosionCreated(Level world, Entity entity, DamageSource damageSource, ExplosionDamageCalculator explosionBehavior, double x, double y, double z, float power, boolean createFire, Explosion.BlockInteraction destructionType, CallbackInfo ci) {
-        if (!world.isClientSide) {
-            eLogger = new ExplosionLogHelper(x, y, z, power, createFire, destructionType, level.registryAccess());
+        if (world != null && !world.isClientSide) {
+        eLogger = new ExplosionLogHelper(x, y, z, power, createFire, destructionType, world.registryAccess());
         }
     }
 

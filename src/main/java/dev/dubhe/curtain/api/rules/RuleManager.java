@@ -13,11 +13,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class RuleManager {
     public static final List<Class<?>> LIMIT = new ArrayList<>();
@@ -26,7 +22,7 @@ public class RuleManager {
     public static final Map<String, List<String>> CATEGORIES_RULES = new HashMap<>();
     public final Map<String, CurtainRule<?>> ruleMap = new HashMap<>();
     public final Map<String, CurtainRule<?>> defaultRuleMap = new HashMap<>();
-    private final MinecraftServer server;
+    private MinecraftServer server;
     private final String id;
 
     static {

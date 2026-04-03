@@ -5,14 +5,22 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "curtain.refmap.json",
   "mixins": [
+    "ChunkMap_tickMixin",
     "DirectionMixin",
     "EntityMixin",
     "ExplosionAccessor",
+    "Level_tickMixin",
+    "MinecraftServer_coreMixin",
+    "MinecraftServer_tickspeedMixin",
     "MobCategoryMixin",
     "NaturalSpawnerMixin",
     "PistonBaseBlockMixin",
     "PrimedTntMixin",
     "ServerChunkCacheMixin",
+    "ServerFunctionManager_tickMixin",
+    "ServerGamePacketListenerImpl_tickMixin",
+    "ServerLevel_tickMixin",
+    "WorldBorder_tickMixin",
     "events.fishing_hook.FishingHookMixin",
     "events.item_stack.ItemStackMixin",
     "events.item_stack.PickaxeItemMixin",
@@ -59,6 +67,8 @@
     "rules.xp_no_cooldown.PlayerMixin"
   ],
   "client": [
+    "ClientLevel_tickSpeedMixin",
+    "Timer_tickSpeedMixin",
     "rules.creative_no_clip.client.LevelRendererMixin"
   ],
   "injectors": {

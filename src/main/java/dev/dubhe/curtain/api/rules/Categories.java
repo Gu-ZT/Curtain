@@ -13,6 +13,7 @@ public class Categories {
     public static final String BUGFIX = "bugfix";
     public static final String CLIENT = "client";
     public static final String TNT = "tnt";
+    public static final String EXPERIMENTAL = "experimental";
 
     public static List<String> getCategories() {
         ArrayList<String> rt = new ArrayList<>();

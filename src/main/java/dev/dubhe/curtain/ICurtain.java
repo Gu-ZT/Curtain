@@ -2,6 +2,7 @@ package dev.dubhe.curtain;
 
 import dev.dubhe.curtain.api.rules.RuleManager;
 import dev.dubhe.curtain.utils.TranslationHelper;
+import net.minecraft.server.MinecraftServer;
 
 import java.io.InputStream;
 
@@ -25,4 +26,7 @@ public interface ICurtain {
     default void addRules(Class<?> rulesClass) {
         RuleManager.addRules(rulesClass);
     }
+
+    default void onServerClosed(MinecraftServer server) {}
+    default void onTick(MinecraftServer server) {}
 }

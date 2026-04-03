@@ -5,6 +5,7 @@ import dev.dubhe.curtain.api.rules.RuleManager;
 import dev.dubhe.curtain.commands.LogCommand;
 import dev.dubhe.curtain.commands.PlayerCommand;
 import dev.dubhe.curtain.commands.RuleCommand;
+import dev.dubhe.curtain.commands.TickCommand;
 import dev.dubhe.curtain.events.WorldTickEvent;
 import dev.dubhe.curtain.utils.PlanExecution;
 import net.minecraft.server.level.ServerLevel;
@@ -22,6 +23,7 @@ public class ServerLifecycleEventHandler {
         RuleCommand.register(event.getServer().getCommands().getDispatcher(), Curtain.rules);
         PlayerCommand.register(event.getServer().getCommands().getDispatcher());
         LogCommand.register(event.getServer().getCommands().getDispatcher());
+        TickCommand.register(event.getServer().getCommands().getDispatcher());
     }
 
     @SubscribeEvent
